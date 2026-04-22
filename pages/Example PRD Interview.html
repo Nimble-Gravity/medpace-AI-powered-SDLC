@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Example PRD Interview — Site Coordinator Hub</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500;1,9..144,700&family=Roboto:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap');
+
+:root {
+  --navy:   #210f36; --navy2:  #2e1a47; --teal:   #2f6b66;
+  --mint:   #408c84; --amber:  #e8a317; --slate:  #5d5c6a;
+  --slatel: #91919f; --off:    #f7f7f7; --border: #dedede;
+  --white:  #FFFFFF; --blueD: #639aab;
+  --tealL:  rgba(47,107,102,.1);
+  --amberL: rgba(232,163,23,.1);
+  --blueL:  rgba(99,154,171,.12);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Roboto',sans-serif;background:var(--off);color:var(--navy);font-size:14px;line-height:1.6;}
+
+/* PAGE HEADER */
+.page-header{background:var(--navy);padding:48px max(64px,calc((100% - 1100px)/2)) 40px;position:relative;overflow:hidden;}
+.page-header::before{content:'';position:absolute;top:-60px;right:-60px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(64,140,132,.12),transparent 70%);}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--mint);margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.eyebrow::before{content:'';display:block;width:20px;height:1px;background:var(--mint);}
+.page-title{font-family:'Fraunces',serif;font-size:40px;line-height:1.1;color:var(--white);margin-bottom:12px;}
+.page-title em{color:var(--amber);font-style:italic;}
+.page-sub{font-size:15px;color:var(--slatel);max-width:580px;line-height:1.65;margin-bottom:28px;}
+.header-chips{display:flex;gap:12px;flex-wrap:wrap;}
+.chip{font-size:11px;color:var(--slatel);background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);padding:5px 12px;border-radius:99px;display:flex;align-items:center;gap:6px;}
+.chip-dot{width:6px;height:6px;border-radius:50%;}
+
+/* STEP STRIP */
+.step-strip{background:var(--navy2);border-bottom:1px solid rgba(255,255,255,.07);padding:14px max(64px,calc((100% - 1100px)/2));display:flex;gap:0;align-items:center;flex-wrap:wrap;}
+.step-item{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--slatel);padding:4px 0;}
+.step-num{width:22px;height:22px;border-radius:50%;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.step-item.done .step-num{background:rgba(64,140,132,.3);color:var(--mint);}
+.step-item.active .step-num{background:var(--mint);color:var(--white);}
+.step-item.upcoming .step-num{background:rgba(255,255,255,.1);color:var(--slatel);}
+.step-item.done{color:var(--slatel);}
+.step-item.active{color:var(--white);}
+.step-arrow{padding:0 16px;color:rgba(255,255,255,.2);font-size:12px;}
+.step-item a{color:var(--mint);text-decoration:none;}
+
+/* CONTENT */
+.content{padding:48px max(64px,calc((100% - 1100px)/2)) 80px;}
+
+/* HOW-TO CARDS */
+.how-to{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:56px;}
+.how-card{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:22px 24px;position:relative;overflow:hidden;}
+.how-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.how-card:nth-child(1)::before{background:linear-gradient(90deg,var(--mint),var(--teal));}
+.how-card:nth-child(2)::before{background:linear-gradient(90deg,var(--amber),#F97316);}
+.how-card:nth-child(3)::before{background:linear-gradient(90deg,var(--blueD),#38BDF8);}
+.how-num{font-family:'Roboto Mono',monospace;font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--slatel);margin-bottom:10px;}
+.how-title{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:6px;line-height:1.3;}
+.how-body{font-size:13px;color:var(--slate);line-height:1.6;}
+.how-body a{color:var(--mint);text-decoration:none;}
+.how-body a:hover{text-decoration:underline;}
+.how-modifier{margin-top:12px;background:var(--off);border-left:3px solid var(--mint);padding:9px 12px;border-radius:0 4px 4px 0;font-family:'Roboto Mono',monospace;font-size:11px;color:var(--teal);line-height:1.6;}
+
+/* SECTION LABELS */
+.sec-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--teal);margin-bottom:10px;}
+.sec-title{font-family:'Fraunces',serif;font-size:28px;color:var(--navy);margin-bottom:8px;line-height:1.2;}
+.sec-sub{font-size:14px;color:var(--slate);max-width:700px;margin-bottom:32px;line-height:1.6;}
+
+/* TRANSCRIPT WRAPPER */
+.transcript-wrap{background:var(--white);border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.04);}
+.transcript-topbar{background:var(--navy);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.transcript-topbar-left{font-family:'Roboto Mono',monospace;font-size:11px;color:var(--slatel);display:flex;gap:16px;align-items:center;flex-wrap:wrap;}
+.copy-transcript-btn{background:var(--mint);color:var(--white);border:none;padding:7px 20px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Roboto',sans-serif;transition:background 0.15s;letter-spacing:0.3px;white-space:nowrap;flex-shrink:0;}
+.copy-transcript-btn:hover{background:var(--teal);}
+.copy-transcript-btn.copied{background:var(--teal);}
+
+/* INTERVIEW METADATA */
+.interview-meta{padding:20px 32px;border-bottom:1px solid var(--border);background:var(--off);display:flex;gap:32px;flex-wrap:wrap;}
+.meta-field{font-size:12px;color:var(--slate);}
+.meta-field strong{display:block;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--slatel);margin-bottom:3px;}
+
+/* SPEAKER LEGEND */
+.speaker-legend{padding:14px 32px;border-bottom:1px solid var(--border);display:flex;gap:24px;flex-wrap:wrap;background:var(--white);}
+.legend-item{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--slate);}
+.legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+
+/* TRANSCRIPT BODY */
+.transcript-body{padding:0 32px 32px;}
+.part-break{padding:28px 0 6px;display:flex;align-items:center;gap:14px;}
+.part-break:first-child{padding-top:24px;}
+.part-label{font-family:'Roboto Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--slatel);white-space:nowrap;}
+.part-rule{flex:1;height:1px;background:var(--border);}
+
+/* TURNS */
+.turn{display:grid;grid-template-columns:108px 1fr;gap:20px;padding:16px 0;border-top:1px solid var(--border);}
+.speaker-block{padding-top:3px;}
+.speaker-name{font-size:12px;font-weight:600;line-height:1.2;margin-bottom:2px;}
+.speaker-role{font-family:'Roboto Mono',monospace;font-size:10px;letter-spacing:0.5px;text-transform:uppercase;}
+.speaker-name.q,.speaker-role.q{color:var(--mint);}
+.speaker-name.pm,.speaker-role.pm{color:var(--blueD);}
+.speaker-name.a,.speaker-role.a{color:var(--amber);}
+.speech{font-size:13.5px;color:var(--slate);line-height:1.75;}
+
+/* CALLOUT BLOCKS */
+.callout{margin-top:40px;border-radius:12px;padding:28px 32px;}
+.callout.dark{background:var(--navy2);}
+.callout.light{background:var(--white);border:1px solid var(--border);}
+.callout-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;}
+.callout.dark .callout-label{color:var(--mint);}
+.callout.light .callout-label{color:var(--teal);}
+.callout-body{font-size:13.5px;line-height:1.75;}
+.callout.dark .callout-body{color:var(--slatel);}
+.callout.light .callout-body{color:var(--slate);}
+.callout.dark .callout-body strong{color:var(--white);}
+.callout.light .callout-body strong{color:var(--navy);}
+.gap-list{margin-top:16px;display:flex;flex-direction:column;gap:8px;}
+.gap-item{display:flex;gap:12px;align-items:flex-start;font-size:13px;color:var(--slatel);}
+.gap-item.dark{color:rgba(255,255,255,.45);}
+.gap-tag{font-family:'Roboto Mono',monospace;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;background:rgba(64,140,132,.15);color:var(--mint);padding:2px 8px;border-radius:3px;white-space:nowrap;flex-shrink:0;margin-top:1px;}
+
+/* FOOTER */
+.page-footer{background:var(--navy);padding:28px max(64px,calc((100% - 1100px)/2));display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.footer-note{font-size:12px;color:var(--slatel);}
+.footer-note a{color:var(--mint);text-decoration:none;}
+
+@media (max-width:900px){
+  .how-to{grid-template-columns:1fr 1fr;}
+  .interview-meta{gap:20px;}
+}
+@media (max-width:768px){
+  .page-header,.content,.page-footer{padding-left:24px;padding-right:24px;}
+  .step-strip{padding-left:24px;padding-right:24px;}
+  .how-to{grid-template-columns:1fr;}
+  .turn{grid-template-columns:80px 1fr;gap:14px;}
+  .transcript-body,.interview-meta,.speaker-legend{padding-left:20px;padding-right:20px;}
+  .transcript-topbar{padding:12px 16px;}
+}
+</style>
+</head>
+<body>
+<script src="../nav.js"></script>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="eyebrow">PRD UX Analysis Skill · Step 2 of 3</div>
+  <h1 class="page-title">Practice <em>Transcript</em></h1>
+  <p class="page-sub">A realistic product discovery interview for a clinical site coordinator tool. Use it as input for the PRD UX Analysis Skill — no PRD of your own required.</p>
+  <div class="header-chips">
+    <div class="chip"><div class="chip-dot" style="background:var(--mint);"></div>Realistic gaps included</div>
+    <div class="chip"><div class="chip-dot" style="background:var(--amber);"></div>Medpace clinical context</div>
+    <div class="chip"><div class="chip-dot" style="background:var(--blueD);"></div>One-click copy</div>
+  </div>
+</div>
+
+<!-- STEP STRIP -->
+<div class="step-strip">
+  <div class="step-item done">
+    <div class="step-num">1</div>
+    <span>Copy the Skill from <a href="../index.html">the Skill page</a></span>
+  </div>
+  <div class="step-arrow">→</div>
+  <div class="step-item active">
+    <div class="step-num">2</div>
+    <span>Copy this interview transcript</span>
+  </div>
+  <div class="step-arrow">→</div>
+  <div class="step-item upcoming">
+    <div class="step-num">3</div>
+    <span>Paste both into Claude — interview modifier + Skill first, then transcript</span>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+  <!-- HOW TO USE -->
+  <div class="how-to">
+    <div class="how-card">
+      <div class="how-num">Step 01 — On the Skill page</div>
+      <div class="how-title">Copy the PRD UX Analysis Skill</div>
+      <div class="how-body">Go to <a href="../index.html">the Skill page</a> and copy the full prompt from "The Skill" section. That's the instruction set Claude will use to analyse whatever you give it.</div>
+    </div>
+    <div class="how-card">
+      <div class="how-num">Step 02 — On this page</div>
+      <div class="how-title">Copy this transcript + add the modifier</div>
+      <div class="how-body">Hit "Copy transcript" below. Because this is an interview, not a formal PRD, prepend this modifier <em>before</em> the Skill when you paste into Claude:
+        <div class="how-modifier">The following is a stakeholder interview transcript, not a PRD. Extract the implied requirements, then run the UX Analysis on what you extracted. Flag where requirements are inferred vs. explicitly stated.</div>
+      </div>
+    </div>
+    <div class="how-card">
+      <div class="how-num">Step 03 — In Claude</div>
+      <div class="how-title">Run the analysis, compare the output</div>
+      <div class="how-body">Open claude.ai or Claude Projects, paste in order: modifier → Skill → transcript. Claude will produce a full six-section UX Analysis. After reading the output, compare it to the gap list at the bottom of this page to see what it found.</div>
+    </div>
+  </div>
+
+  <!-- TRANSCRIPT -->
+  <div class="sec-label">The Interview</div>
+  <h2 class="sec-title">Site Coordinator Hub — Product Discovery</h2>
+  <p class="sec-sub">A 30-minute discovery session with a product manager and a lead site coordinator. This interview was conducted before any design work began — the kind of brief a designer might actually receive. It has the detail and the gaps of a real session.</p>
+
+  <div class="transcript-wrap">
+    <div class="transcript-topbar">
+      <div class="transcript-topbar-left">
+        <span>Product Discovery Interview</span>
+        <span>·</span>
+        <span>Site Coordinator Hub · v1</span>
+        <span>·</span>
+        <span>March 12, 2026</span>
+      </div>
+      <button class="copy-transcript-btn" id="copyBtn" onclick="copyTranscript()">Copy transcript</button>
+    </div>
+
+    <div class="interview-meta">
+      <div class="meta-field"><strong>Project</strong>Site Coordinator Workflow Dashboard — v1</div>
+      <div class="meta-field"><strong>Interviewer</strong>Sarah Chen, UX Design</div>
+      <div class="meta-field"><strong>Attendees</strong>Marcus Webb (PM) · Brittany Osei (Lead Site Coordinator)</div>
+      <div class="meta-field"><strong>Objective</strong>Understand the coordinator's current workflow and define v1 scope</div>
+    </div>
+
+    <div class="speaker-legend">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--mint);"></div><strong style="color:var(--mint);font-size:12px;">Sarah</strong> — UX Designer (interviewer)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--amber);"></div><strong style="color:var(--amber);font-size:12px;">Brittany</strong> — Lead Site Coordinator (end user)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--blueD);"></div><strong style="color:var(--blueD);font-size:12px;">Marcus</strong> — Product Manager</div>
+    </div>
+
+    <div class="transcript-body" id="transcriptContent">
+
+      <div class="part-break"><span class="part-label">Part 1 — Current workflow</span><div class="part-rule"></div></div>
+
+      <div class="turn">
+        <div class="speaker-block"><div class="speaker-name q">Sarah</div><div class="speaker-role q">UX Design</div></div>
+        <div class="speech">Thanks for making time. Before we get into specifics — Brittany, can you walk me through what a typical morning looks like? What are you doing the moment you sit down?</div>
+      </div>
+
+      <div class="turn">
+        <div class="speaker-block"><div class="speaker-name a">Brittany</div><div class="speaker-role a">Coordinator</div></div>
+        <div class="speech">The first thing I do is check email. Honestly, that's where everything lives right now. I'm looking for anything from patients about cancelling or rescheduling, anything from the sponsor about protocol updates, and if I have a monitoring visit coming up I'm trying to figure out if everything's in order.</div>
+      </div>
+
+      <div class="turn">
+        <div class="speaker-block"><div class="speaker-name q">Sarah</div><div class="speaker-role q">UX Design</div></div>
+        <div class="speech">What does "in order" mean for a monitoring visit?</div>
+      </div>
+
+      <div class="turn">
+        <div class="speaker-block"><div class="speaker-name a">Brittany</div><div class="speaker-role a">Coordinator</div></div>
+        <div class="speech">A CRA is going to come in and review source documents against what's in the system. I need to make sure every patient who's due for a data entry review actually has their data entered, and any flags from the last visit are resolved. Right now I track all of that in a spreadsheet. It's not — it's not great.</div>
+      </div>
+
+      <div class="turn">
+        <div class="speaker-block"><div class="speaker-name pm">Marcus</div><div class="speaker-role pm">Product</div></div>
+        <div class="speech">That spreadsheet is exactly what we're trying to replace. The goal is to give Brittany one place where she can see which patients need attention, what's coming up in the next two weeks, and what's already overdue.</div>
+      </div>
+
+      <div class="part-break"><span class="part-label">Part 2 — Patient management</span><div class="part-rule"></div></div>
+
+      <div class="turn">
+        <div class="speaker-block"><div class="speaker-name q">Sarah</div><div class="speaker-role q">UX Design</div></div>
+        <div class="speech">When you say "patients who need attention" — what does that actually mean? What puts a patient into that category?</div>
+      </div>
+
+      <div class="turn">
+        <div class="speaker-block"><div class="speaker-name a">Brittany</div><div class="speaker-role a">Coordinator</div></div>
+        <div class="speech">It could be a lot of things. A visit window that's closing — they have a protocol visit due within a certain timeframe and they're getting close to the deadline. Or a patient we tried to contact and couldn't reach. Or lab results that came back flagged and need a clinician to review them. Or a protocol deviation we need to document.</div>
+      </div>
+
+      <div class="turn">
+        <div class="speaker-block"><div class="speaker-name q">Sarah</div><div class="speaker-role q">UX Design</div></div>
+        <div class="speech">Those sound like very different levels of urgency. Are they weighted differently in your mind?</div>
+      </div>
+
+      <div class="turn">
+        <div class="speaker-block"><div class="speaker-name a">Brittany</div><div class="speaker-role a">Coordinator</div></div>
+        <div class="speech">Yes, definitely. A closing visit window is urgent in a way that an unreviewed lab result might not be. But right now everything is mixed together in email and I can't really triage.</div>
+      </div>
+
+      <div class="turn">
+        <div class="speaker-block"><div class="speaker-name pm">Marcus</div><div class="speaker-role pm">Product</div></div>
+        <div class="speech">We're thinking about a priority system — red for urgent, amber for follow-up needed, green for on track. We haven't fully worked out what triggers each level yet.</div>
+      </div>
+
+      <div class="turn">
+        <div class="speaker-block"><div class="speaker-name q">Sarah</div><div class="speaker-role q">UX Design</div></div>
+        <div class="speech">How many patients would a coordinator typically be managing at once?</div>
+      </div>
+
+      <div class="turn">
+        <div class="speaker-block"><div class="speaker-name a">Brittany</div><div class="speaker-role a">Coordinator</div></div>
+        <div class="speech">Depends on the study. Anywhere from 10 to 40 patients across one or two protocols, sometimes three if they're smaller studies.</div>
+      </div>
+
+      <div class="turn">
+        <div class="speaker-block"><div class="speaker-name q">Sarah</div><div class="speaker-role q">UX Design</div></div>
+        <div class="speech">What do you need to see at a glance for each patient?</div>
+      </div>
+
+      <div class="turn">
+        <div class="speaker-block"><div class="speaker-name a">Brittany</div><div class="speaker-role a">Coordinator</div></div>
+        <div class="speech">Their ID — we go by patient ID rather than name for HIPAA reasons. Their current status in the study. When their next visit is. And whether there's anything flagged on their record.</div>
+      </div>
+
+      <div class="turn">
+        <div class="speaker-block"><div class="speaker-name q">Sarah</div><div class="speaker-role q">UX Design</div></div>
+        <div class="speech">What statuses does a patient move through over the life of the study?</div>
+      </div>
+
+      <div class="turn">
+        <div class="speaker-block"><div class="speaker-name a">Brittany</div><div class="speaker-role a">Coordinator</div></div>
+        <div class="speech">Top-level: screened, enrolled, on treatment, completed, withdrawn. But there are sub-statuses too — a patient could be enrolled but on a treatment hold, or on treatment with a potential protocol deviation flag open against them. There's nuance there that matters.</div>
+      </div>
+
+      <div class="turn">
+        <div class="speaker-block"><div class="speaker-name pm">Marcus</div><div class="speaker-role pm">Product</div></div>
+        <div class="speech">For v1 we were thinking just the top-level statuses in the list view. The sub-status detail lives inside the patient record.</div>
+      </div>
+
+      <div class="part-break"><span class="part-label">Part 3 — Patient record and actions</span><div class="part-rule"></div></div>
+
+      <div class="turn">
+        <div class="speaker-block"><div class="speaker-name q">Sarah</div><div class="speaker-role q">UX Design</div></div>
+        <div class="speech">What does clicking into a patient record need to show you?</div>
+      </div>
+
+      <div class="turn">
+        <div class="speaker-block"><div class="speaker-name a">Brittany</div><div class="speaker-role a">Coordinator</div></div>
+        <div class="speech">Visit history — every visit they've had, what happened, any source document notes. Their upcoming visit schedule. And any open items: queries, flags, outstanding labs.</div>
+      </div>
+
+      <div class="turn">
+        <div class="speaker-block"><div class="speaker-name q">Sarah</div><div class="speaker-role q">UX Design</div></div>
+        <div class="speech">Is the record mostly read-only, or are there actions you'd need to take from there?</div>
+      </div>
+
+      <div class="turn">
+        <div class="speaker-block"><div class="speaker-name a">Brittany</div><div class="speaker-role a">Coordinator</div></div>
+        <div class="speech">You'd definitely take actions from there. Log a contact attempt — if I called a patient and they didn't answer I need to record that. And send a reminder — if a visit is coming up in a week I might want to send the patient a reminder.</div>
+      </div>
+
+      <div class="turn">
+        <div class="speaker-block"><div class="speaker-name q">Sarah</div><div class="speaker-role q">UX Design</div></div>
+        <div class="speech">When you say "send a reminder" — what does that actually look like from the patient's end?</div>
+      </div>
+
+      <div class="turn">
+        <div class="speaker-block"><div class="speaker-name a">Brittany</div><div class="speaker-role a">Coordinator</div></div>
+        <div class="speech">Right now I send an email. Sometimes I call. Some patients prefer texts. I guess whatever the system supports — I'm not really sure what's technically possible here.</div>
+      </div>
+
+      <div class="turn">
+        <div class="speaker-block"><div class="speaker-name q">Sarah</div><div class="speaker-role q">UX Design</div></div>
+        <div class="speech">Can coordinators schedule visits directly from within this tool?</div>
+      </div>
+
+      <div class="turn">
+        <div class="speaker-block"><div class="speaker-name pm">Marcus</div><div class="speaker-role pm">Product</div></div>
+        <div class="speech">That's a phase two feature. For v1 we want visibility only. Scheduling stays in the existing system.</div>
+      </div>
+
+      <div class="part-break"><span class="part-label">Part 4 — Monitoring visit preparation</span><div class="part-rule"></div></div>
+
+      <div class="turn">
+        <div class="speaker-block"><div class="speaker-name q">Sarah</div><div class="speaker-role q">UX Design</div></div>
+        <div class="speech">Let's talk about monitoring visit prep. You said you need to be ready before the CRA arrives — what does "ready" look like, concretely?</div>
+      </div>
+
+      <div class="turn">
+        <div class="speaker-block"><div class="speaker-name a">Brittany</div><div class="speaker-role a">Coordinator</div></div>
+        <div class="speech">I need to know which patients are going to be reviewed during the visit, which source documents are still outstanding, and whether any protocol deviations are documented but not yet submitted. The CRA will also want to see the delegation log is up to date, but that's usually something the PI handles.</div>
+      </div>
+
+      <div class="turn">
+        <div class="speaker-block"><div class="speaker-name q">Sarah</div><div class="speaker-role q">UX Design</div></div>
+        <div class="speech">What's the delegation log?</div>
+      </div>
+
+      <div class="turn">
+        <div class="speaker-block"><div class="speaker-name a">Brittany</div><div class="speaker-role a">Coordinator</div></div>
+        <div class="speech">It's a record of everyone on the study team and what they're each authorized to do. I can obtain consent and enter data, but I can't do medical assessments — that's the PI or sub-investigator. It needs to be current before every monitoring visit.</div>
+      </div>
+
+      <div class="turn">
+        <div class="speaker-block"><div class="speaker-name pm">Marcus</div><div class="speaker-role pm">Product</div></div>
+        <div class="speech">We're not building the delegation log into v1. But the tool does need to handle different user roles — a coordinator sees one view, the PI sees something different, and a CRA doing a monitoring visit should have a read-only view of the coordinator's perspective.</div>
+      </div>
+
+      <div class="turn">
+        <div class="speaker-block"><div class="speaker-name q">Sarah</div><div class="speaker-role q">UX Design</div></div>
+        <div class="speech">What specifically does the PI need to see that a coordinator doesn't?</div>
+      </div>
+
+      <div class="turn">
+        <div class="speaker-block"><div class="speaker-name pm">Marcus</div><div class="speaker-role pm">Product</div></div>
+        <div class="speech">We haven't fully worked that out yet. Probably medical assessments and any queries that require physician sign-off. We'll figure out the exact permission matrix in a follow-up session.</div>
+      </div>
+
+      <div class="part-break"><span class="part-label">Part 5 — Users, access, and success</span><div class="part-rule"></div></div>
+
+      <div class="turn">
+        <div class="speaker-block"><div class="speaker-name q">Sarah</div><div class="speaker-role q">UX Design</div></div>
+        <div class="speech">How many people would typically be using this at a single site?</div>
+      </div>
+
+      <div class="turn">
+        <div class="speaker-block"><div class="speaker-name a">Brittany</div><div class="speaker-role a">Coordinator</div></div>
+        <div class="speech">On a medium-sized study — two or three coordinators, one PI, maybe a sub-investigator. Then the CRA comes in roughly once a month for a monitoring visit.</div>
+      </div>
+
+      <div class="turn">
+        <div class="speaker-block"><div class="speaker-name q">Sarah</div><div class="speaker-role q">UX Design</div></div>
+        <div class="speech">Does this need to work on mobile?</div>
+      </div>
+
+      <div class="turn">
+        <div class="speaker-block"><div class="speaker-name a">Brittany</div><div class="speaker-role a">Coordinator</div></div>
+        <div class="speech">I'm almost always at my desk when I'm doing this work. But occasionally I'll check something at the site when I'm not at my desk — like if a patient shows up and I need to quickly pull their record to confirm a visit window.</div>
+      </div>
+
+      <div class="turn">
+        <div class="speaker-block"><div class="speaker-name pm">Marcus</div><div class="speaker-role pm">Product</div></div>
+        <div class="speech">Desktop-first, definitely. But it needs to be at least functional on a phone for those situations.</div>
+      </div>
+
+      <div class="turn">
+        <div class="speaker-block"><div class="speaker-name q">Sarah</div><div class="speaker-role q">UX Design</div></div>
+        <div class="speech">Last question — what does success look like? If this tool is working in six months, what's different about your day?</div>
+      </div>
+
+      <div class="turn">
+        <div class="speaker-block"><div class="speaker-name a">Brittany</div><div class="speaker-role a">Coordinator</div></div>
+        <div class="speech">I wouldn't start my day in email. I'd open the dashboard and in under two minutes I'd know what needs my attention today, what's coming up this week, and whether I'm ready for any upcoming monitoring visits. Right now I spend the first hour of every morning just figuring out where I stand. That hour is completely wasted.</div>
+      </div>
+
+    </div><!-- /.transcript-body -->
+  </div><!-- /.transcript-wrap -->
+
+  <!-- WHAT THE SKILL SHOULD FIND -->
+  <div class="callout dark" style="margin-top:40px;">
+    <div class="callout-label">After you run the Skill</div>
+    <div class="callout-body">
+      <strong>These are the gaps that were deliberately left open in this transcript.</strong> Run the Skill first — then come back and compare. If the analysis surfaces these issues (and others), it's doing its job.
+      <div class="gap-list">
+        <div class="gap-item dark"><span class="gap-tag">Undefined trigger</span>The red/amber/green priority system has no defined threshold — "we haven't fully worked out what triggers each level" leaves the designer with no criteria to design against.</div>
+        <div class="gap-item dark"><span class="gap-tag">Missing channel</span>The patient reminder action has no specified delivery mechanism — email, SMS, push, call — leaving a core interaction undefined.</div>
+        <div class="gap-item dark"><span class="gap-tag">Role permissions</span>PI vs. coordinator access is explicitly deferred ("we'll figure out the exact permission matrix in a follow-up session"). The CRA read-only scope is described loosely but not specified.</div>
+        <div class="gap-item dark"><span class="gap-tag">Undefined threshold</span>Visit window "closing" is never defined — how many days before the protocol deadline does a visit become urgent? This drives the entire priority system.</div>
+        <div class="gap-item dark"><span class="gap-tag">Sub-status design</span>Sub-statuses (treatment hold, protocol deviation open) are acknowledged as meaningful but deferred to "the patient record" without any design discussion.</div>
+        <div class="gap-item dark"><span class="gap-tag">Mobile scope</span>"Functional on a phone" is never defined — which actions, which views, what level of fidelity.</div>
+        <div class="gap-item dark"><span class="gap-tag">No error states</span>No discussion of what happens when data fails to load, a save fails, or the connection drops mid-session.</div>
+        <div class="gap-item dark"><span class="gap-tag">No empty states</span>A new study with no enrolled patients, a coordinator with no flagged items, a monitoring visit with no outstanding documents — none of these zero-data states are mentioned.</div>
+        <div class="gap-item dark"><span class="gap-tag">Contact attempt</span>What fields are required when logging a contact attempt? What happens after multiple failed attempts? Is there an escalation path?</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout light" style="margin-top:20px;">
+    <div class="callout-label">Using this as a starting point for your own Skills</div>
+    <div class="callout-body">This transcript is also an example of how Claude can help you build Skills and briefs from scratch. Rather than writing a PRD from nothing, try describing the app you're designing to Claude and ask it to generate a discovery interview — then use that as your Skill input. The same applies to Skills themselves: describe the analysis you need and ask Claude to draft the instruction set. <strong>Start with a conversation, not a blank page.</strong></div>
+  </div>
+
+</div><!-- /.content -->
+
+<!-- FOOTER -->
+<div class="page-footer">
+  <div class="footer-note">PRD UX Analysis Skill · Practice Material · 2026</div>
+  <div class="footer-note"><a href="../index.html">← Back to the Skill</a></div>
+</div>
+
+<script>
+function copyTranscript() {
+  let text = 'PRODUCT DISCOVERY INTERVIEW — Site Coordinator Hub\n';
+  text += 'Date: March 12, 2026\n';
+  text += 'Project: Site Coordinator Workflow Dashboard — v1\n';
+  text += 'Interviewer: Sarah Chen, UX Design\n';
+  text += 'Attendees: Marcus Webb (PM) · Brittany Osei (Lead Site Coordinator)\n';
+  text += 'Objective: Understand the coordinator current workflow and define v1 scope\n\n';
+
+  const body = document.getElementById('transcriptContent');
+  Array.from(body.children).forEach(el => {
+    if (el.classList.contains('part-break')) {
+      const label = el.querySelector('.part-label');
+      if (label) text += '\n--- ' + label.innerText + ' ---\n\n';
+    } else if (el.classList.contains('turn')) {
+      const nameEl = el.querySelector('.speaker-name');
+      const roleEl = el.querySelector('.speaker-role');
+      const speechEl = el.querySelector('.speech');
+      if (nameEl && speechEl) {
+        const role = roleEl ? roleEl.innerText : '';
+        text += nameEl.innerText + (role ? ' (' + role + ')' : '') + ':\n';
+        text += speechEl.innerText + '\n\n';
+      }
+    }
+  });
+
+  navigator.clipboard.writeText(text.trim()).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy transcript'; btn.classList.remove('copied'); }, 2500);
+  });
+}
+</script>
+</body>
+</html>
