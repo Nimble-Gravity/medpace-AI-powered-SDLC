@@ -1,23 +1,356 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRD UX Analysis</title>
-    <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>PRD UX Analysis Skill</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap');
+
+:root {
+  --navy:   #0D1B2A; --navy2:  #132233; --teal:   #028090;
+  --mint:   #02C39A; --amber:  #F2B705; --slate:  #4A6572;
+  --slatel: #8FAAB3; --off:    #F5F7F8; --border: #DDE3E7;
+  --white:  #FFFFFF; --violet: #7C3AED; --violetL:#EDE9FE;
+  --tealL:  #E6F4F6; --fmG:    #0D9488; --blueD:  #0369A1;
+  --blueL:  #E0F2FE; --okG:    #065F46; --okBg:   #D1FAE5;
+  --code:   #1E1E2E; --codeF:  #CDD6F4;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--navy);font-size:14px;line-height:1.6;}
+
+/* PAGE HEADER */
+.page-header{background:var(--navy);padding:48px 64px 40px;position:relative;overflow:hidden;}
+.page-header::before{content:'';position:absolute;top:-60px;right:-60px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(2,195,154,.15),transparent 70%);}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--mint);margin-bottom:14px;}
+.title{font-family:'Instrument Serif',serif;font-size:44px;line-height:1.1;color:var(--white);margin-bottom:12px;}
+.title em{color:var(--amber);font-style:italic;}
+.subtitle{font-size:15px;color:var(--slatel);max-width:580px;line-height:1.65;}
+.header-chips{display:flex;gap:16px;margin-top:24px;flex-wrap:wrap;}
+.chip{font-size:11px;color:var(--slatel);background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);padding:5px 12px;border-radius:99px;display:flex;align-items:center;gap:6px;}
+.chip-dot{width:7px;height:7px;border-radius:50%;}
+
+/* SECTIONS */
+.section{padding:48px 64px;}
+.section+.section{border-top:1px solid var(--border);}
+.sec-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--teal);margin-bottom:10px;}
+.sec-title{font-family:'Instrument Serif',serif;font-size:28px;color:var(--navy);margin-bottom:8px;line-height:1.2;}
+.sec-sub{font-size:14px;color:var(--slate);max-width:660px;margin-bottom:32px;line-height:1.6;}
+
+/* WHAT IT PRODUCES */
+.output-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.output-card{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:20px;position:relative;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,.05);}
+.output-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.oc1::before{background:linear-gradient(90deg,var(--teal),var(--mint));}
+.oc2::before{background:linear-gradient(90deg,var(--amber),#F97316);}
+.oc3::before{background:linear-gradient(90deg,var(--violet),#A78BFA);}
+.oc4::before{background:linear-gradient(90deg,var(--blueD),#38BDF8);}
+.oc5::before{background:linear-gradient(90deg,var(--fmG),var(--mint));}
+.oc6::before{background:linear-gradient(90deg,#9F1239,#FB7185);}
+.output-num{font-family:'Instrument Serif',serif;font-size:40px;line-height:1;color:var(--border);position:absolute;top:14px;right:16px;}
+.output-title{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:6px;padding-right:32px;line-height:1.3;}
+.output-body{font-size:12px;color:var(--slate);line-height:1.6;}
+
+/* THE SKILL PROMPT */
+.prompt-wrap{background:var(--code);border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.2);}
+.prompt-topbar{background:#2A2A3E;padding:10px 18px;display:flex;align-items:center;gap:8px;}
+.pb-dot{width:10px;height:10px;border-radius:50%;}
+.prompt-label{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#888;margin-left:8px;}
+.copy-btn{margin-left:auto;background:var(--teal);color:white;border:none;padding:5px 14px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;letter-spacing:0.5px;}
+.copy-btn:hover{background:#026e7c;}
+.prompt-body{padding:28px 32px;}
+.prompt-body pre{font-family:'DM Mono',monospace;font-size:13px;color:var(--codeF);line-height:1.7;white-space:pre-wrap;}
+.prompt-body .amber{color:var(--amber);}
+.prompt-body .green{color:var(--mint);}
+.prompt-body .comment{color:#6272A4;font-style:italic;}
+
+/* HOW TO USE */
+.steps{display:flex;flex-direction:column;gap:16px;}
+.step{display:flex;gap:20px;align-items:flex-start;background:var(--white);border:1px solid var(--border);border-radius:10px;padding:20px 24px;box-shadow:0 2px 6px rgba(0,0,0,.05);}
+.step-num{width:36px;height:36px;border-radius:50%;background:var(--navy);color:var(--mint);font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.step-content h4{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:4px;}
+.step-content p{font-size:13px;color:var(--slate);line-height:1.55;}
+.step-content code{font-family:'DM Mono',monospace;font-size:12px;background:var(--tealL);color:var(--teal);padding:1px 6px;border-radius:3px;}
+
+/* VARIATIONS */
+.var-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+.var-card{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:20px;box-shadow:0 2px 6px rgba(0,0,0,.05);}
+.var-tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 8px;border-radius:4px;margin-bottom:10px;}
+.var-title{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:6px;}
+.var-body{font-size:12px;color:var(--slate);line-height:1.6;margin-bottom:12px;}
+.var-prompt{background:var(--off);border-left:3px solid var(--border);padding:10px 12px;border-radius:0 6px 6px 0;font-size:12px;font-family:'DM Mono',monospace;color:var(--navy);line-height:1.5;}
+
+/* KNOWLEDGE BASE */
+.kb-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+.kb-card{background:var(--navy);border-radius:10px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,.1);}
+.kb-icon{font-size:24px;margin-bottom:10px;}
+.kb-title{font-size:13px;font-weight:700;color:var(--mint);margin-bottom:6px;}
+.kb-body{font-size:12px;color:var(--slatel);line-height:1.55;}
+
+/* FOOTER */
+.page-footer{background:var(--navy);padding:28px 64px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.footer-note{font-size:12px;color:var(--slatel);}
+.footer-note a{color:var(--mint);text-decoration:none;}
+</style>
 </head>
 <body>
-    <header>
-        <h1>PRD UX Analysis</h1>
-    </header>
-    <main>
-        <section>
-            <h2>Introduction</h2>
-            <p>This document presents the UX analysis for the product...</p>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2026 Medpace.</p>
-    </footer>
+
+<!-- HEADER -->
+<div class="page-header">
+  <div class="eyebrow">AI Design Tools Workshop · Skill Reference</div>
+  <h1 class="title">PRD UX Analysis <em>Skill</em></h1>
+  <p class="subtitle">A reusable prompt template that encodes senior UX thinking. Paste any PRD into Claude with this skill and get a structured analysis of gaps, ambiguities, and design questions in under 60 seconds.</p>
+  <div class="header-chips">
+    <div class="chip"><div class="chip-dot" style="background:var(--mint);"></div>Works in Claude.ai chat</div>
+    <div class="chip"><div class="chip-dot" style="background:var(--violet);"></div>Works in Claude Design</div>
+    <div class="chip"><div class="chip-dot" style="background:var(--blueD);"></div>Works in Cursor via @PRD attachment</div>
+    <div class="chip"><div class="chip-dot" style="background:var(--amber);"></div>Save to Claude Projects for team reuse</div>
+  </div>
+</div>
+
+<!-- WHAT IT PRODUCES -->
+<div class="section" style="background:var(--white);">
+  <div class="sec-label">Output</div>
+  <h2 class="sec-title">What the skill produces</h2>
+  <p class="sec-sub">Six structured sections, each targeting a different failure mode that PRDs commonly miss. Claude references specific requirement IDs throughout so every finding is traceable.</p>
+  <div class="output-grid">
+    <div class="output-card oc1">
+      <div class="output-num">1</div>
+      <div class="output-title">UX Gaps</div>
+      <div class="output-body">Requirements that exist in the PRD but have no design guidance — where decisions are being deferred to the designer without the information needed to make them.</div>
+    </div>
+    <div class="output-card oc2">
+      <div class="output-num">2</div>
+      <div class="output-title">Missing States</div>
+      <div class="output-body">Edge cases the PRD doesn't specify: empty states, loading states, error states, zero-data views, permission conflicts, and data-freshness scenarios.</div>
+    </div>
+    <div class="output-card oc3">
+      <div class="output-num">3</div>
+      <div class="output-title">Interaction Ambiguities</div>
+      <div class="output-body">'What' is described but not 'how'. "User can filter" — but by what, in what order, with what feedback, and what happens to the URL state?</div>
+    </div>
+    <div class="output-card oc4">
+      <div class="output-num">4</div>
+      <div class="output-title">Accessibility Flags</div>
+      <div class="output-body">Requirements that will be hard to meet accessibly as written — surfaced before design begins, not after an audit catches them.</div>
+    </div>
+    <div class="output-card oc5">
+      <div class="output-num">5</div>
+      <div class="output-title">Open Design Questions</div>
+      <div class="output-body">Questions the designer needs answered before wireframing can begin — extracted automatically so you go into the first design review prepared.</div>
+    </div>
+    <div class="output-card oc6">
+      <div class="output-num">6</div>
+      <div class="output-title">Suggested UX Principles</div>
+      <div class="output-body">2–3 design principles that should guide the feature, derived from the user roles, workflow context, and constraints described in the PRD.</div>
+    </div>
+  </div>
+</div>
+
+<!-- THE SKILL PROMPT -->
+<div class="section">
+  <div class="sec-label">The Skill</div>
+  <h2 class="sec-title">Copy this prompt</h2>
+  <p class="sec-sub">Paste this into Claude.ai (or any Claude interface) before your PRD text. The <span style="color:var(--amber);font-weight:600;">[paste your PRD here]</span> placeholder is where your PRD goes.</p>
+
+  <div class="prompt-wrap">
+    <div class="prompt-topbar">
+      <div class="pb-dot" style="background:#FF5F57;"></div>
+      <div class="pb-dot" style="background:#FEBC2E;"></div>
+      <div class="pb-dot" style="background:#28C840;"></div>
+      <div class="prompt-label">PRD UX Analysis Skill — v1.0</div>
+      <button class="copy-btn" onclick="copyPrompt()">Copy prompt</button>
+    </div>
+    <div class="prompt-body">
+      <pre id="prompt-text"><span class="comment">// PRD UX Analysis Skill
+// Use: Paste this before any PRD to surface UX gaps before design begins.</span>
+
+You are a senior UX designer reviewing a product requirements document.
+Analyse the PRD below and produce a structured UX Analysis covering six sections:
+
+<span class="amber">1. UX GAPS</span>
+   Requirements that exist in the PRD but have no design guidance — where a design
+   decision is being deferred to the designer without the information to make it.
+   For each gap: name it, quote the relevant requirement ID, and describe what
+   the designer needs to know before they can make this decision.
+
+<span class="amber">2. MISSING STATES</span>
+   Edge cases and states the PRD does not specify. For each:
+   — Empty state (no data, first use, filtered to zero results)
+   — Error state (API failure, sync failure, permission error)
+   — Loading state (skeleton, progressive disclosure, timeout)
+   — Zero-data state (newly created trial with no patients yet)
+   — Permission conflict state (role sees partial data)
+   Be specific about which features or screens each missing state applies to.
+
+<span class="amber">3. INTERACTION AMBIGUITIES</span>
+   Places where the PRD describes WHAT happens but not HOW.
+   For each: quote the requirement, describe what is underspecified
+   (trigger, feedback, transition, error handling, keyboard behaviour).
+   Example: "F-14 says 'dropdown multi-select' but doesn't specify:
+   does applying a filter update the table immediately or require a button press?"
+
+<span class="amber">4. ACCESSIBILITY FLAGS</span>
+   Requirements that are likely to be hard to meet accessibly as written.
+   Reference WCAG 2.1 AA where relevant. Flag:
+   — Colour-only status indicators without icon or text fallback
+   — Interactive elements without specified keyboard navigation
+   — Dynamic content updates without specified ARIA live region behaviour
+   — Touch target size concerns for dense data tables
+
+<span class="amber">5. OPEN DESIGN QUESTIONS</span>
+   Questions the designer needs answered before wireframing begins.
+   Format each as: [QUESTION] → [Why it matters for design] → [Who owns the answer]
+   Prioritise by design impact. List no more than 8.
+
+<span class="amber">6. SUGGESTED UX PRINCIPLES</span>
+   Based on the user roles, workflow context, and constraints in this PRD,
+   suggest 2–3 design principles that should guide this feature.
+   Format: [Principle name]: [One sentence description] — [One concrete implication]
+
+<span class="comment">// Instructions:
+// — Be specific. Reference requirement IDs (e.g. F-11, AC-03) wherever relevant.
+// — Prioritise findings by design impact, not document order.
+// — Sections 1–5 should have 3–6 findings each. Section 6 should have exactly 2–3 principles.
+// — Do not summarise the PRD. Analyse it.</span>
+
+PRD:
+<span class="green">[paste your PRD here]</span></pre>
+    </div>
+  </div>
+</div>
+
+<!-- HOW TO USE -->
+<div class="section" style="background:var(--white);">
+  <div class="sec-label">Usage</div>
+  <h2 class="sec-title">How to run the skill</h2>
+  <p class="sec-sub">Three ways to use it, depending on which tool you're in. The output is identical — the tool choice depends on what you want to do with it next.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h4>Claude.ai — simplest, works for everyone</h4>
+        <p>Open claude.ai. Start a new conversation. Copy the prompt above → paste it → then paste your PRD below it → hit Enter. Claude will produce the full six-section analysis. Use this when you just need the analysis as a document to read and act on.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h4>Claude Projects — for team reuse and shared context</h4>
+        <p>Save the skill prompt to a Claude Project alongside your design system docs, brand guidelines, and previous analyses. Now every team member who opens that Project gets Claude pre-loaded with your full design context. Ask: <code>"Run the UX Analysis skill on the enrollment PRD"</code> and it already knows your system.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4>Cursor + Claude Code — when you want to act on the analysis immediately</h4>
+        <p>Open the PRD file in Cursor. Type <code>@PRD_Patient_Enrollment_Table.docx</code> to attach it. Paste the skill prompt into the chat. The analysis will appear inline. Then immediately follow up: <code>"Now generate a prototype that addresses the top 3 UX gaps you just identified."</code> This turns analysis into design in one continuous session.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h4>Claude Design — when analysis drives the prototype</h4>
+        <p>Paste the skill prompt into Claude Design followed by the PRD. After the analysis appears, follow up: <code>"Based on the UX gaps you identified, design the patient enrollment table with those issues resolved."</code> The prototype will directly address the gaps — not just generate a generic screen.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VARIATIONS -->
+<div class="section">
+  <div class="sec-label">Variations</div>
+  <h2 class="sec-title">Adapt the skill for different contexts</h2>
+  <p class="sec-sub">The base skill works for any PRD. These variations tune it for specific research and design scenarios.</p>
+
+  <div class="var-grid">
+    <div class="var-card">
+      <div class="var-tag" style="background:var(--tealL);color:var(--teal);">User Research</div>
+      <div class="var-title">Interview synthesis → requirements</div>
+      <div class="var-body">Replace the PRD with a stakeholder interview transcript. Prepend this modifier before the skill prompt:</div>
+      <div class="var-prompt">The following is a stakeholder interview transcript, not a PRD. Extract implied requirements, then run the UX Analysis on what you extracted. Flag where requirements are inferred vs. explicitly stated.</div>
+    </div>
+    <div class="var-card">
+      <div class="var-tag" style="background:var(--violetL);color:var(--violet);">Design Review</div>
+      <div class="var-title">Prototype analysis → evolved spec</div>
+      <div class="var-body">Feed a working prototype HTML file to Cursor and prepend this modifier:</div>
+      <div class="var-prompt">The following is a working prototype HTML file, not a PRD. Analyse it as a UX artefact: what design decisions were made, which should be locked in, which should be revisited, and what new requirements emerged that weren't in the original spec.</div>
+    </div>
+    <div class="var-card">
+      <div class="var-tag" style="background:var(--blueL);color:var(--blueD);">Clinical / Regulated</div>
+      <div class="var-title">Add 21 CFR Part 11 compliance lens</div>
+      <div class="var-body">For clinical monitoring features, add a seventh section after Section 6:</div>
+      <div class="var-prompt">7. REGULATORY DESIGN IMPLICATIONS: For each requirement, identify design decisions driven by 21 CFR Part 11, ICH E6 GCP, or HIPAA compliance. Flag where compliance requirements constrain or conflict with good UX practice.</div>
+    </div>
+    <div class="var-card">
+      <div class="var-tag" style="background:var(--okBg);color:var(--okG);">Feasibility</div>
+      <div class="var-title">Early feasibility study screen analysis</div>
+      <div class="var-body">For Brittany's feasibility study work, replace Section 6 with this:</div>
+      <div class="var-prompt">6. PARTICIPANT BURDEN ASSESSMENT: For each data collection requirement, assess the cognitive and time burden on study participants. Flag where requirements create friction that could affect completion rates or data quality.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SHARED KNOWLEDGE BASE -->
+<div class="section" style="background:var(--navy);">
+  <div class="sec-label" style="color:var(--mint);">Extending the practice</div>
+  <h2 class="sec-title" style="color:var(--white);">Building a shared knowledge base</h2>
+  <p class="sec-sub" style="color:var(--slatel);">The skill becomes more powerful when the outputs accumulate. Here's how to build a knowledge base that amplifies everyone's work.</p>
+
+  <div class="kb-row">
+    <div class="kb-card">
+      <div class="kb-icon">📁</div>
+      <div class="kb-title">Capture outputs</div>
+      <div class="kb-body">Every UX analysis, prototype, and evolved spec goes into a shared folder. Name files consistently: [Feature]_UX_Analysis_[date].md so they're searchable.</div>
+    </div>
+    <div class="kb-card">
+      <div class="kb-icon">🧠</div>
+      <div class="kb-title">Claude Projects</div>
+      <div class="kb-body">Add your key docs to a Claude Project. Every team member gets Claude pre-loaded with your design context, past analyses, and design system rules.</div>
+    </div>
+    <div class="kb-card">
+      <div class="kb-icon">⚡</div>
+      <div class="kb-title">Encode expertise as skills</div>
+      <div class="kb-body">Custom skills like this one encode team expertise and make it reusable. Each skill is a documented decision about how this team works — a living standard.</div>
+    </div>
+    <div class="kb-card">
+      <div class="kb-icon">🔄</div>
+      <div class="kb-title">Close the loop</div>
+      <div class="kb-body">PRD → UX analysis → prototype → evolved spec → updated PRD. Each cycle, the knowledge base gets richer and the next project starts from a higher baseline.</div>
+    </div>
+  </div>
+
+  <div style="margin-top:32px;background:#132233;border-left:4px solid var(--amber);padding:20px 24px;border-radius:0 8px 8px 0;">
+    <div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--amber);margin-bottom:8px;">Team prompt library — start here</div>
+    <div style="font-size:13px;color:var(--slatel);line-height:1.7;">
+      After today's session, start a shared <strong style="color:var(--white);">Claude Project</strong> called "UX Design Team — AI Skills". Add:
+      this PRD UX Analysis skill · the prototype prompts from the workshop · your design system tokens · previous analysis outputs.
+      Any team member who opens that Project gets Claude with full context. Ahmed owns this. Goal: have it running by end of week 2.
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="page-footer">
+  <div class="footer-note">AI Design Tools Workshop · UX Design Team · April 2026</div>
+  <div class="footer-note">Skill v1.0 · Works in <a href="https://claude.ai">Claude.ai</a> · Claude Projects · Cursor + Claude Code · Claude Design</div>
+</div>
+
+<script>
+function copyPrompt() {
+  const text = document.getElementById('prompt-text').innerText
+    .replace(/^\/\/ PRD UX Analysis Skill[\s\S]*?do not summarise the PRD\. Analyse it\.\n\nPRD:\n/m, match => match)
+    .replace(/\u2014/g, '--');
+  // Get clean text without the syntax highlighting spans
+  const el = document.getElementById('prompt-text');
+  navigator.clipboard.writeText(el.innerText).then(() => {
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent = 'Copied!';
+    btn.style.background = '#02C39A';
+    setTimeout(() => { btn.textContent = 'Copy prompt'; btn.style.background = ''; }, 2000);
+  });
+}
+</script>
 </body>
 </html>
