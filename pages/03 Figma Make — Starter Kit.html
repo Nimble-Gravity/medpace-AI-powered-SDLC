@@ -238,15 +238,13 @@
   <div class="section-inner">
     <div class="section-label">Overview</div>
     <h2>What this kit <em>produces</em></h2>
-    <p class="section-sub">Seven artifacts that chain together — each one feeding the next.</p>
+    <p class="section-sub">Five artifacts that chain together — each one feeding the next.</p>
     <div class="numbered-items">
       <div class="numbered-item"><div class="item-num">1</div><div class="item-content"><h3>Problem Brief</h3><p>A markdown document defining the core problem, design priorities, edge cases, and success criteria. Add it to the Figma Make guidelines folder — it becomes the foundation every subsequent session builds on.</p></div></div>
       <div class="numbered-item"><div class="item-num">2</div><div class="item-content"><h3>User Personas</h3><p>Structured persona docs with goals, frustrations, behaviours, and one critical design implication each. In the guidelines folder, Make designs for real humans automatically — without being told to in every prompt.</p></div></div>
       <div class="numbered-item"><div class="item-num">3</div><div class="item-content"><h3>Brand Brief</h3><p>A living design token reference — colors, type scale, spacing, tone of voice, and what the brand should never look like. In the guidelines folder, it's the fastest path to consistently on-brand output.</p></div></div>
-      <div class="numbered-item"><div class="item-num">4</div><div class="item-content"><h3>Microcopy Document</h3><p>All UI text upfront: buttons, errors, empty states, onboarding, tooltips. In the guidelines folder, Make uses real copy instead of placeholders automatically — transforms what prototype reviews feel like.</p></div></div>
-      <div class="numbered-item"><div class="item-num">5</div><div class="item-content"><h3>Interactive User Flow</h3><p>A clickable HTML flow diagram with happy paths, skip paths, and error states. Faster to build and share than a Figma flow, and works in any browser.</p></div></div>
-      <div class="numbered-item"><div class="item-num">6</div><div class="item-content"><h3>Component Build</h3><p>The actual Make generation prompt — written to reference all prior artifacts. The output quality difference versus a blank prompt is categorical, not incremental.</p></div></div>
-      <div class="numbered-item"><div class="item-num">7</div><div class="item-content"><h3>Iteration Prompts</h3><p>Six high-leverage follow-up prompts for hierarchy, accessibility, responsiveness, data states, and the Persona Check — the most underused review in the kit.</p></div></div>
+      <div class="numbered-item"><div class="item-num">4</div><div class="item-content"><h3>Component Build</h3><p>The actual Make generation prompt — written to reference all three prior artifacts. With the brief, personas, and brand doc in the guidelines folder, the output quality difference versus a blank prompt is categorical, not incremental.</p></div></div>
+      <div class="numbered-item"><div class="item-num">5</div><div class="item-content"><h3>Iteration Prompts</h3><p>Six high-leverage follow-up prompts for hierarchy, accessibility, responsiveness, data states, and the Persona Check — the most underused review in the kit.</p></div></div>
     </div>
     <div class="notice">
       <span class="notice-dot">●</span>
@@ -281,8 +279,8 @@
         <div class="setup-cbody">
           <span class="setup-badge" style="background:var(--accent-light);color:var(--accent);">Recommended path</span>
           <h3>Build your context files before you design</h3>
-          <p>Steps 1–4 of this kit generate markdown documents — your problem brief, user personas, brand tokens, and microcopy. Add these to the <strong>guidelines folder in Figma Make</strong> as you generate them. Make includes everything in the guidelines folder automatically in every session — when you finally prompt for a screen, it already understands the user, the problem, the brand, and the copy. None of that needs to be in the design prompt.</p>
-          <div class="setup-note"><strong>Add to guidelines folder:</strong> problem-brief.md · personas.md · brand-tokens.md · microcopy.md — built across steps 1–4. The quality difference versus a blank prompt is not incremental.</div>
+          <p>Steps 1–3 of this kit generate markdown documents — your problem brief, user personas, and brand tokens. Add these to the <strong>guidelines folder in Figma Make</strong> as you generate them. Make includes everything in the guidelines folder automatically in every session — when you finally prompt for a screen, it already understands the user, the problem, and the brand. None of that needs to be in the design prompt.</p>
+          <div class="setup-note"><strong>Add to guidelines folder:</strong> problem-brief.md · personas.md · brand-tokens.md — built across steps 1–3. The quality difference versus a blank prompt is not incremental.</div>
         </div>
       </div>
     </div>
@@ -558,13 +556,13 @@ Format as markdown. Save this file to the guidelines folder in Figma Make.</div>
     </div>
     <div class="step-nav-strip">
       <a href="#sec-3">← User Personas</a>
-      <a class="next-link" href="#sec-5">Next: Microcopy →</a>
+      <a class="next-link" href="#sec-7">Next: Build →</a>
     </div>
   </div>
 </section>
 
-<!-- STEP 4 -->
-<section class="section" id="sec-5">
+<!-- STEP 4 REMOVED (Microcopy) AND STEP 5 REMOVED (User Flow) - see below for new Step 04 Build -->
+<section class="section" id="sec-5-removed" style="display:none">
   <div class="section-inner">
     <div class="section-label">Step 04</div>
     <h2><em>Microcopy</em></h2>
@@ -635,8 +633,8 @@ Output as structured markdown by UI section. Save this file to the guidelines fo
   </div>
 </section>
 
-<!-- STEP 5 -->
-<section class="section" id="sec-6">
+<!-- STEP 5 REMOVED (User Flow) -->
+<section class="section" id="sec-6-removed" style="display:none">
   <div class="section-inner">
     <div class="section-label">Step 05</div>
     <h2>User <em>Flow</em></h2>
@@ -707,10 +705,10 @@ Style: dark background, styled nodes, directional arrows. Shareable with non-tec
 <!-- STEP 6 -->
 <section class="section" id="sec-7">
   <div class="section-inner">
-    <div class="section-label">Step 06</div>
+    <div class="section-label">Step 04</div>
     <h2>Build the <em>Component</em></h2>
     <p class="section-sub">Now you're ready. And you have context behind you.</p>
-    <p class="section-body">This is the prompt most people start with. Starting here without steps 1–5 means Make guesses at the problem, the user, the brand, and the copy. With those four documents in the <strong>guidelines folder</strong>, this becomes a fundamentally different request — Make arrives pre-loaded with all that context. The example below is a Medpace clinical monitoring screen — the principle applies to any screen you're building.</p>
+    <p class="section-body">This is the prompt most people start with. Starting here without steps 1–3 means Make guesses at the problem, the user, and the brand. With those three documents in the <strong>guidelines folder</strong>, this becomes a fundamentally different request — Make arrives pre-loaded with all that context. The example below is a Medpace clinical monitoring screen — the principle applies to any screen you're building.</p>
     <div class="prompt-wrap">
       <div class="prompt-toggle">
         <button class="toggle-btn active" onclick="switchTab(this,'p6e','p6t')">Example</button>
@@ -718,10 +716,10 @@ Style: dark background, styled nodes, directional arrows. Shareable with non-tec
       </div>
       <div class="prompt-block">
         <div class="prompt-header">
-          <span class="prompt-label-txt">Guidelines folder: brief · personas · brand doc · microcopy</span>
+          <span class="prompt-label-txt">Guidelines folder: brief · personas · brand doc</span>
           <button class="copy-btn" onclick="copyActive(this)"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="4" y="4" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.2"></rect><path d="M2 8H1.5A.5.5 0 011 7.5v-6A.5.5 0 011.5 1h6a.5.5 0 01.5.5V2" stroke="currentColor" stroke-width="1.2"></path></svg> Copy prompt</button>
         </div>
-        <div class="prompt-text active" id="p6e">Build Medpace's <span class="hi">patient enrollment management screen</span> for ONCO-2024-003 as a React component. The design brief, CRA persona doc, brand tokens, and microcopy doc are in the guidelines folder — use them. Don't guess at brand decisions; if the brand doc specifies something, follow it exactly.
+        <div class="prompt-text active" id="p6e">Build Medpace's <span class="hi">patient enrollment management screen</span> for ONCO-2024-003 as a React component. The design brief, CRA persona doc, and brand tokens are in the guidelines folder — use them. Don't guess at brand decisions; if the brand doc specifies something, follow it exactly.
 
 Layout I want to see:
 
@@ -755,14 +753,13 @@ Style: Internal enterprise clinical monitoring tool. White table on light grey b
 Tech: React functional component, Tailwind for styling, no other dependencies. Single file.</div>
         <div class="prompt-text" id="p6t">Build <span class="ph">[product name]</span>'s <span class="hi"><span class="ph">[screen or component name]</span></span> as a <span class="ph">[React component / HTML page]</span>.
 
-Using the design brief, personas, brand doc, and microcopy from the guidelines folder as your guide:
+Using the design brief, personas, and brand doc from the guidelines folder as your guide:
 
 Layout:
 <span class="ph">[Describe key sections and hierarchy]</span>
 
 Requirements:
-- Match brand tokens from the attached doc exactly
-- Use copy from the microcopy doc — no placeholder text
+- Match brand tokens from the brand doc exactly
 - Optimise for <span class="ph">[primary persona + key behaviour]</span>
 - Hover states and transitions throughout
 
@@ -771,14 +768,14 @@ Tech: <span class="ph">[React + Tailwind / HTML + CSS]</span>. Single file.</div
     </div>
     <div class="insight">
       <div class="insight-eyebrow">The compounding effect</div>
-      <p>With 4 documents in the guidelines folder, you're giving Make the equivalent of a <strong>design system + user research + creative brief + content strategy</strong> automatically loaded into every session. The output difference compared to a blank prompt is categorical, not incremental.</p>
+      <p>With 3 documents in the guidelines folder, you're giving Make the equivalent of a <strong>design system + user research + creative brief</strong> automatically loaded into every session. The output difference compared to a blank prompt is categorical, not incremental.</p>
     </div>
     <div class="tips" style="margin-top:20px;">
       <div class="tip"><span class="tip-arrow">→</span><span><strong>One screen at a time.</strong> Scope creep in the prompt produces scope creep in the output.</span></div>
       <div class="tip"><span class="tip-arrow">→</span><span><strong>Use Claude as a prompt co-author.</strong> Describe the screen in plain language and ask: <em>"Turn this into a precise Figma Make prompt."</em> A 3–4 message conversation usually produces a better first prompt than writing one from scratch alone.</span></div>
     </div>
     <div class="step-nav-strip">
-      <a href="#sec-6">← User Flow</a>
+      <a href="#sec-4">← Brand Brief</a>
       <a class="next-link" href="#sec-8">Next: Iterate →</a>
     </div>
   </div>
@@ -787,7 +784,7 @@ Tech: <span class="ph">[React + Tailwind / HTML + CSS]</span>. Single file.</div
 <!-- STEP 7 -->
 <section class="section" id="sec-8">
   <div class="section-inner">
-    <div class="section-label">Step 07</div>
+    <div class="section-label">Step 05</div>
     <h2>Iterate &amp; <em>Refine</em></h2>
     <p class="section-sub">The first output is a skeleton. These prompts shape it.</p>
     <p class="section-body">Follow-up prompts are where most of the craft happens. These six patterns each target a different failure mode in generated output. Use them individually — one at a time — and always describe what you want rather than what went wrong.</p>
@@ -945,11 +942,11 @@ Tech: <span class="ph">[React + Tailwind / HTML + CSS]</span>. Single file.</div
 
 <footer>
   <span>Figma Make · Medpace Workshop Guide · 2026</span>
-  <span>Setup · 7 Steps · Medpace Examples · Attach artifacts across sessions</span>
+  <span>Context-first · 5 Steps · Medpace Examples</span>
 </footer>
 
 <script>
-  const sectionIds = ['sec-0','sec-1','sec-prep','sec-2','sec-3','sec-4','sec-5','sec-6','sec-7','sec-8','sec-avoid'];
+  const sectionIds = ['sec-0','sec-1','sec-prep','sec-2','sec-3','sec-4','sec-7','sec-8','sec-avoid'];
   const dots = document.querySelectorAll('.nav-dot');
 
   function scrollTo(i) {
