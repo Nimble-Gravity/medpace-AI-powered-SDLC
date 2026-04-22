@@ -124,12 +124,67 @@
   /* FOOTER */
   footer { background: var(--dark); padding: 40px max(40px,calc((100% - var(--max)) / 2)); display: flex; justify-content: space-between; align-items: center; font-family: 'Roboto Mono', monospace; font-size: 0.65rem; letter-spacing: 0.06em; color: var(--text-mid); }
 
+  /* META ROW (hero) */
+  .meta-row { display: flex; flex-wrap: wrap; gap: 0; border-top: 1px solid rgba(255,255,255,.1); padding-top: 24px; margin-top: 32px; }
+  .meta-item { padding-right: 32px; border-right: 1px solid rgba(255,255,255,.1); margin-right: 32px; padding-bottom: 4px; }
+  .meta-item:last-child { border-right: none; margin-right: 0; }
+  .meta-label { font-family: 'Roboto Mono', monospace; font-size: 9px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 5px; }
+  .meta-val { font-size: 13px; color: rgba(255,255,255,.55); line-height: 1.4; }
+
+  /* SETUP CARDS */
+  .setup-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 32px; }
+  .setup-card { background: white; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .setup-top { height: 4px; }
+  .setup-cbody { padding: 22px 24px; }
+  .setup-badge { font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; padding: 3px 9px; border-radius: 3px; display: inline-block; margin-bottom: 12px; }
+  .setup-card h3 { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 8px; line-height: 1.4; }
+  .setup-card p { font-size: 0.83rem; color: var(--text-muted); line-height: 1.65; }
+  .setup-note { margin-top: 14px; background: var(--bg); border: 1px solid var(--border); padding: 10px 14px; border-radius: 4px; font-size: 0.78rem; color: var(--text); line-height: 1.55; }
+  .setup-note strong { color: var(--accent); }
+
+  /* MODES GRID */
+  .modes-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
+  .mode-card { background: white; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+  .mode-top { height: 3px; }
+  .mode-cbody { padding: 16px 18px; }
+  .mode-name { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .mode-desc { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 12px; line-height: 1.45; }
+  .mode-for { font-family: 'Roboto Mono', monospace; font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 5px; }
+  .mode-examples { font-size: 0.78rem; color: var(--text-mid); line-height: 1.5; font-style: italic; }
+
+  /* AVOID PAIRS */
+  .pairs { display: flex; flex-direction: column; gap: 20px; }
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .pair-card { background: white; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+  .pair-top { height: 4px; }
+  .pair-card.bad .pair-top { background: #c43b31; }
+  .pair-card.good .pair-top { background: var(--accent); }
+  .pair-cbody { padding: 16px 18px; }
+  .pair-label { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; }
+  .pair-card.bad .pair-label { color: #c43b31; }
+  .pair-card.good .pair-label { color: var(--accent); }
+  .pair-example { font-family: 'Roboto Mono', monospace; font-size: 11px; padding: 10px 12px; border-radius: 4px; margin-bottom: 8px; line-height: 1.6; }
+  .pair-card.bad .pair-example { background: rgba(196,59,49,.07); color: #c43b31; }
+  .pair-card.good .pair-example { background: var(--accent-light); color: var(--green); }
+  .pair-why { font-size: 0.78rem; color: var(--text-muted); line-height: 1.55; }
+
+  /* PRO TIP */
+  .pro-tip { background: var(--dark); border-radius: 8px; padding: 28px 32px; margin-top: 40px; }
+  .pt-label { font-family: 'Roboto Mono', monospace; font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--mono-accent); margin-bottom: 12px; }
+  .pt-quote { font-family: 'Fraunces', serif; font-size: 1.05rem; color: rgba(255,255,255,.65); font-style: italic; line-height: 1.75; margin-bottom: 18px; }
+  .pt-body { padding-top: 18px; border-top: 1px solid rgba(255,255,255,.08); font-size: 0.83rem; color: rgba(255,255,255,.4); line-height: 1.7; }
+  .pt-body strong { color: rgba(255,255,255,.7); display: block; margin-bottom: 8px; }
+  .pt-ex { font-family: 'Roboto Mono', monospace; font-size: 11px; background: rgba(255,255,255,.06); color: var(--accent); padding: 1px 7px; border-radius: 3px; }
+
   @media (max-width: 680px) {
     h1 { font-size: 2.4rem; }
     .section, .hero { padding: 48px 24px; }
     header { padding: 0 20px; }
     .nav-dots { display: none; }
     footer { padding: 28px 24px; flex-direction: column; gap: 8px; text-align: center; }
+    .setup-grid { grid-template-columns: 1fr; }
+    .modes-grid { grid-template-columns: repeat(2,1fr); }
+    .pair { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -142,7 +197,7 @@
     <span class="sep">·</span>
     <span>Starter Kit</span>
   </div>
-  <div class="header-right">7 Steps · Prompt Templates</div>
+  <div class="header-right">Setup · 7 Steps · Medpace Examples</div>
 </header>
 
 <div class="progress-strip"><div class="progress-fill" id="prog" style="width: 15.075298%;"></div></div>
@@ -150,13 +205,15 @@
 <div class="nav-dots" id="navDots">
   <button class="nav-dot" onclick="scrollTo(0)" title="Intro"></button>
   <button class="nav-dot" onclick="scrollTo(1)" title="Overview"></button>
-  <button class="nav-dot active" onclick="scrollTo(2)" title="Problem Framing"></button>
-  <button class="nav-dot" onclick="scrollTo(3)" title="User Personas"></button>
-  <button class="nav-dot" onclick="scrollTo(4)" title="Brand Brief"></button>
-  <button class="nav-dot" onclick="scrollTo(5)" title="Microcopy"></button>
-  <button class="nav-dot" onclick="scrollTo(6)" title="User Flow"></button>
-  <button class="nav-dot" onclick="scrollTo(7)" title="Build"></button>
-  <button class="nav-dot" onclick="scrollTo(8)" title="Iterate"></button>
+  <button class="nav-dot" onclick="scrollTo(2)" title="Before You Prompt"></button>
+  <button class="nav-dot active" onclick="scrollTo(3)" title="Problem Framing"></button>
+  <button class="nav-dot" onclick="scrollTo(4)" title="User Personas"></button>
+  <button class="nav-dot" onclick="scrollTo(5)" title="Brand Brief"></button>
+  <button class="nav-dot" onclick="scrollTo(6)" title="Microcopy"></button>
+  <button class="nav-dot" onclick="scrollTo(7)" title="User Flow"></button>
+  <button class="nav-dot" onclick="scrollTo(8)" title="Build"></button>
+  <button class="nav-dot" onclick="scrollTo(9)" title="Iterate"></button>
+  <button class="nav-dot" onclick="scrollTo(10)" title="What to Avoid"></button>
 </div>
 
 <!-- HERO -->
@@ -170,6 +227,12 @@
       <span class="tag"><span class="dot-g"></span>Attach artifacts across steps</span>
       <span class="tag"><span class="dot-g"></span>Example + template for each prompt</span>
       <span class="tag"><span class="dot-g"></span>One-click copy</span>
+    </div>
+    <div class="meta-row">
+      <div class="meta-item"><div class="meta-label">Tool</div><div class="meta-val">figma.com/make</div></div>
+      <div class="meta-item"><div class="meta-label">Cost</div><div class="meta-val">300 credits per prompt</div></div>
+      <div class="meta-item"><div class="meta-label">Output</div><div class="meta-val">Interactive prototype → copies to Figma canvas</div></div>
+      <div class="meta-item"><div class="meta-label">Best for</div><div class="meta-val">Screens that need to live in Figma</div></div>
     </div>
   </div>
 </section>
@@ -191,7 +254,86 @@
     </div>
     <div class="notice">
       <span class="notice-dot">●</span>
-      <span>The example project throughout is <strong>Luma</strong> — a project management app for freelancers managing multiple clients. Each step has an <strong>Example</strong> tab (Luma) and a <strong>Template</strong> tab (fill-in-the-blank).</span>
+      <span>Steps 01–05 use <strong>Luma</strong> (a freelancer project management app) as the running example. Step 06 uses a <strong>Medpace clinical screen</strong>. Each step has an <strong>Example</strong> tab and a <strong>Template</strong> tab.</span>
+    </div>
+    <div class="step-nav-strip">
+      <span></span>
+      <a class="next-link" href="#sec-prep">Before You Prompt →</a>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE YOU PROMPT -->
+<section class="section" id="sec-prep">
+  <div class="section-inner">
+    <div class="section-label">Before You Type Anything</div>
+    <h2>Best first <em>actions.</em></h2>
+    <p class="section-sub">How you set up Figma Make before prompting shapes output quality more than any single word in your prompt.</p>
+
+    <div class="setup-grid">
+      <div class="setup-card">
+        <div class="setup-top" style="background:var(--accent);"></div>
+        <div class="setup-cbody">
+          <span class="setup-badge" style="background:var(--accent-light);color:var(--accent);">Recommended path</span>
+          <h3>If you have a design ready — attach it first</h3>
+          <p>Click the <code style="background:var(--bg);padding:1px 6px;border-radius:3px;font-family:monospace;font-size:12px;">+</code> attachment icon and attach your Figma frame <em>before</em> writing a word. This is the biggest unlock in Figma Make. It gives Make visual grounding — it understands your actual components, spacing, and colour tokens rather than inventing them from scratch. The difference in output quality is significant.</p>
+          <div class="setup-note"><strong>Medpace example:</strong> Attach a frame from your clinical monitoring file. Make will apply your existing badge styles, nav structure, and colour tokens — instead of defaulting to generic SaaS blue.</div>
+        </div>
+      </div>
+      <div class="setup-card">
+        <div class="setup-top" style="background:var(--mono-accent);"></div>
+        <div class="setup-cbody">
+          <span class="setup-badge" style="background:rgba(232,163,23,.12);color:var(--mono-accent);">Starting from scratch</span>
+          <h3>Pick your mode intentionally — before prompting</h3>
+          <p>The four buttons at the bottom of Make constrain how it generates output. Picking the wrong mode before prompting is the most common cause of layouts that fight you — Make optimises structure for that mode from the first generation, and changing modes later forces a full rebuild.</p>
+          <div class="setup-note"><strong>Rule:</strong> Set the mode before you paste your prompt. Changing mode mid-session means starting over — you lose whatever structure was working.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-label" style="margin-bottom:16px;">The Four Modes</div>
+    <div class="modes-grid">
+      <div class="mode-card">
+        <div class="mode-top" style="background:var(--accent);"></div>
+        <div class="mode-cbody">
+          <div class="mode-name">Visualization</div>
+          <div class="mode-desc">Data · charts · dashboards · KPI views</div>
+          <div class="mode-for" style="color:var(--accent);">Medpace — use for</div>
+          <div class="mode-examples">Patient enrollment tables, site performance dashboards, protocol deviation summaries, enrollment velocity charts</div>
+        </div>
+      </div>
+      <div class="mode-card">
+        <div class="mode-top" style="background:var(--mono-accent);"></div>
+        <div class="mode-cbody">
+          <div class="mode-name">Website</div>
+          <div class="mode-desc">Marketing pages · portals · landing pages</div>
+          <div class="mode-for" style="color:var(--mono-accent);">Medpace — use for</div>
+          <div class="mode-examples">Sponsor-facing study portals, participant recruitment pages, study information pages</div>
+        </div>
+      </div>
+      <div class="mode-card">
+        <div class="mode-top" style="background:var(--dark2);"></div>
+        <div class="mode-cbody">
+          <div class="mode-name">Component</div>
+          <div class="mode-desc">Isolated UI elements — best for iteration</div>
+          <div class="mode-for" style="color:var(--text-mid);">Medpace — use for</div>
+          <div class="mode-examples">Status badge variants, patient record panels, filter toolbars, eligibility form sections, risk flag components</div>
+        </div>
+      </div>
+      <div class="mode-card">
+        <div class="mode-top" style="background:var(--text-muted);"></div>
+        <div class="mode-cbody">
+          <div class="mode-name">Mobile App</div>
+          <div class="mode-desc">Constrained to mobile viewport</div>
+          <div class="mode-for" style="color:var(--text-muted);">Medpace — use for</div>
+          <div class="mode-examples">CRA pre-visit summary view, site coordinator quick-update screen, participant check-in flow</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-nav-strip">
+      <a href="#sec-1">← Overview</a>
+      <a class="next-link" href="#sec-2">Step 01: Problem Framing →</a>
     </div>
   </div>
 </section>
@@ -250,7 +392,7 @@ Format with clear headers. I will attach this to all future Make sessions.</div>
       <div class="tip"><span class="tip-arrow">→</span><span><strong>Be specific about what it shouldn't feel like</strong> — that constraint is often more useful than describing what it should be.</span></div>
     </div>
     <div class="step-nav-strip">
-      <span></span>
+      <a href="#sec-prep">← Before You Prompt</a>
       <a class="next-link" href="#sec-3">Next: User Personas →</a>
     </div>
   </div>
@@ -537,7 +679,7 @@ Style: dark background, styled nodes, directional arrows. Shareable with non-tec
     <div class="section-label">Step 06</div>
     <h2>Build the <em>Component</em></h2>
     <p class="section-sub">Now you're ready. And you have context behind you.</p>
-    <p class="section-body">This is the prompt most people start with. Starting here without steps 1–5 means Make guesses at the problem, the user, the brand, and the copy. With those artifacts attached via the <strong>+ button</strong>, this becomes a fundamentally different request.</p>
+    <p class="section-body">This is the prompt most people start with. Starting here without steps 1–5 means Make guesses at the problem, the user, the brand, and the copy. With those artifacts attached via the <strong>+ button</strong>, this becomes a fundamentally different request. The example below is a Medpace clinical monitoring screen — the principle applies to any screen you're building.</p>
     <div class="prompt-wrap">
       <div class="prompt-toggle">
         <button class="toggle-btn active" onclick="switchTab(this,'p6e','p6t')">Example</button>
@@ -548,29 +690,36 @@ Style: dark background, styled nodes, directional arrows. Shareable with non-tec
           <span class="prompt-label-txt">Attach: brief · personas · brand doc · microcopy</span>
           <button class="copy-btn" onclick="copyActive(this)"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="4" y="4" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.2"></rect><path d="M2 8H1.5A.5.5 0 011 7.5v-6A.5.5 0 011.5 1h6a.5.5 0 01.5.5V2" stroke="currentColor" stroke-width="1.2"></path></svg> Copy prompt</button>
         </div>
-        <div class="prompt-text active" id="p6e">Build Luma's <span class="hi">project dashboard screen</span> as a React component. I'm attaching the design brief, persona doc, brand system, and microcopy doc — use them. Don't guess at brand decisions; if the brand doc specifies something, follow it exactly.
+        <div class="prompt-text active" id="p6e">Build Medpace's <span class="hi">patient enrollment management screen</span> for ONCO-2024-003 as a React component. I'm attaching the design brief, CRA persona doc, and brand tokens — use them. Don't guess at brand decisions; if the brand doc specifies something, follow it exactly.
 
 Layout I want to see:
 
-Left sidebar (fixed, 220px):
-- Luma wordmark at the top with a subtle version indicator
-- Navigation: Overview, Projects, Clients, Invoices, Time Log — each with an icon and label
-- Active state must be clear but not heavy
-- Bottom of sidebar: user avatar + name + a settings gear icon
-- The sidebar should feel substantial but not take over — this is where users orient, not where they work
+Sticky header strip:
+- Study name "ONCO-2024-003" left-aligned + enrollment progress bar showing 8/15 (53%) right of it
+- Below the title: four stat cards in a row — Total Screened (12) · Enrolled (8) · Withdrawn (1) · Completed (1)
+- These stats are read-only — no click actions
 
-Main content area:
-- Greeting header: "Good morning, [First name]" — use the name "Maya" for the prototype. Below it, today's date and a one-line status ("3 projects due this week"). This should feel glanceable, not dashboard-y.
-- Three KPI cards in a row: Active projects (count), Pending invoice amount (£ value), Hours logged this week (number + bar showing progress toward a weekly goal). These are read-only — clicking one navigates to that section.
-- Project list below: show 5 projects. Each row: project name, client name, a coloured status pill (In progress / Awaiting feedback / Overdue / On hold), next deadline, and a quick-action button ("Log time" or "Send invoice" depending on status). The Overdue row should feel visually different — not alarming, just notable.
-- Empty state: if the project list were empty, show the copy from the attached microcopy doc (do not write new copy here).
+Patient table below the header:
+Columns in this order: Patient ID · Site · Status · Enrolled Date · Last Visit · Days Since Visit · Risk Flag · Next Action
+
+12 rows of realistic clinical data across three sites:
+Cedars-Sinai Medical Center (LA) · Mayo Clinic Rochester MN · Johns Hopkins Hospital MD
+
+Status mix across rows: Screened ×2, Enrolled ×5, On Treatment ×3, Withdrawn ×1, Completed ×1
+Risk flags: 1 Protocol Deviation (red badge), 2 At Risk (amber badge), rest empty
+Days Since Visit: colour-code red if >30 days, amber 15–30, green 0–14 — these are real clinical thresholds
+
+Filter bar above table: Status dropdown · Site dropdown · "Show flagged only" toggle with a live badge count showing how many flagged rows exist. Toggling it filters the table immediately.
+
+Each row: three-dot action menu (rightmost).
 
 Specific requirements:
-- No purple. No blue. Follow the brand doc colour palette.
-- Use the mono font from the brand doc for all numerical values (times, amounts, counts)
-- Overdue status pill: use the semantic error colour from the brand doc, low opacity fill, not a bright red badge
-- Hover state on each project row should reveal the quick-action button — don't show it all the time
-- The whole component should be keyboard navigable — tab order should be logical
+- Risk Flag column must be the most visually dominant element in each row — a CRA's eye should land there first
+- Hover on each row: reveal the Next Action button — don't show it when not hovering
+- Empty state when no patients match active filters: "No patients match your current filters." + "Clear all filters" link below it. Do not show a bare empty table.
+- The full table must be keyboard navigable — logical tab order, Enter triggers the row's Next Action
+
+Style: Internal enterprise clinical monitoring tool. White table on light grey background. Teal/navy header strip. High information density. Closer to Salesforce Health Cloud than any consumer app. Not playful. Not rounded.
 
 Tech: React functional component, Tailwind for styling, no other dependencies. Single file.</div>
         <div class="prompt-text" id="p6t">Build <span class="ph">[product name]</span>'s <span class="hi"><span class="ph">[screen or component name]</span></span> as a <span class="ph">[React component / HTML page]</span>.
@@ -668,18 +817,102 @@ Tech: <span class="ph">[React + Tailwind / HTML + CSS]</span>. Single file.</div
     </div>
     <div class="step-nav-strip">
       <a href="#sec-7">← Build the Component</a>
+      <a class="next-link" href="#sec-avoid">What to Avoid →</a>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT TO AVOID -->
+<section class="section" id="sec-avoid">
+  <div class="section-inner">
+    <div class="section-label">Common Mistakes</div>
+    <h2>What to avoid in <em>first prompts.</em></h2>
+    <p class="section-sub">These patterns produce outputs you'll spend more time fighting than refining.</p>
+
+    <div class="pairs">
+
+      <div class="pair">
+        <div class="pair-card bad">
+          <div class="pair-top"></div>
+          <div class="pair-cbody">
+            <div class="pair-label">❌ Too vague</div>
+            <div class="pair-example">"Make a clinical monitoring dashboard"</div>
+            <div class="pair-why">No user, no data, no layout constraints. Make produces a generic chart grid with placeholder headers. You'll spend the next five prompts trying to recover structure instead of moving forward.</div>
+          </div>
+        </div>
+        <div class="pair-card good">
+          <div class="pair-top"></div>
+          <div class="pair-cbody">
+            <div class="pair-label">✓ Specific — name the user, the data, the column</div>
+            <div class="pair-example">"Design a CRA monitoring screen with an 8-column patient table including Days Since Last Visit (colour-coded red/amber/green), a sticky header showing study ONCO-2024-003 and 8/15 enrollment progress, and a 'Show flagged only' filter toggle."</div>
+            <div class="pair-why">Names the user (CRA), the key differentiating column, a real interaction, a specific study ID, and a concrete UI element. Make can generate something immediately useful.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pair">
+        <div class="pair-card bad">
+          <div class="pair-top"></div>
+          <div class="pair-cbody">
+            <div class="pair-label">❌ Too much at once</div>
+            <div class="pair-example">"Build a clinical trial management platform with a patient table, site dashboard, sponsor reporting module, protocol deviation tracker, and admin settings."</div>
+            <div class="pair-why">Make will generate something that looks like an app but works like a wireframe of nothing in particular. Scope one screen. Get it right. Move to the next screen in a separate session.</div>
+          </div>
+        </div>
+        <div class="pair-card good">
+          <div class="pair-top"></div>
+          <div class="pair-cbody">
+            <div class="pair-label">✓ Scoped — one screen, one user, one moment</div>
+            <div class="pair-example">"Design just the patient enrollment table — the main monitoring view a CRA opens on Monday mornings to review all active patients across their 3 assigned sites. That's the whole scope."</div>
+            <div class="pair-why">One screen, one user, one workflow moment. Make generates the full screen well. The site dashboard comes in its own session once this one is right.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pair">
+        <div class="pair-card bad">
+          <div class="pair-top"></div>
+          <div class="pair-cbody">
+            <div class="pair-label">❌ No style direction</div>
+            <div class="pair-example">"Build a participant eligibility screening form."</div>
+            <div class="pair-why">Without a visual reference, Make defaults to a generic consumer-app style — rounded, colourful, friendly. Clinical tools need to feel structured and authoritative. The aesthetic mismatch will take 3–4 prompts to correct.</div>
+          </div>
+        </div>
+        <div class="pair-card good">
+          <div class="pair-top"></div>
+          <div class="pair-cbody">
+            <div class="pair-label">✓ Toned — add a reference and a "not this"</div>
+            <div class="pair-example">"Build a participant eligibility screening form. Style: internal clinical research tool — white background, structured section headers, accessible typography. Similar to REDCap but significantly better designed. Not a consumer app, not playful."</div>
+            <div class="pair-why">"Similar to REDCap" gives Make a concrete reference it understands. "Not a consumer app" explicitly rules out the default aesthetic. The first output needs far less correction.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="pro-tip">
+      <div class="pt-label">Pro Tip</div>
+      <p class="pt-quote">"Treat the first generation as a skeleton, not a final result. Get the structure right first, then iterate on style."</p>
+      <div class="pt-body">
+        <strong>What this means in practice:</strong>
+        If the layout is wrong after two targeted prompts, start over with a tighter brief — don't try to fix structure through style prompts. Once the skeleton is right (correct columns, correct hierarchy, correct sections), follow-ups like <span class="pt-ex">"make the nav sticky"</span> or <span class="pt-ex">"replace the chart with a bar chart"</span> are fast and reliable. A well-structured clinical data table with imperfect styling is three prompts from done. A poorly-structured screen with beautiful styling is a restart.
+      </div>
+    </div>
+
+    <div class="step-nav-strip">
+      <a href="#sec-8">← Iterate &amp; Refine</a>
       <a class="next-link" href="#sec-2">↩ Start from Step 1</a>
     </div>
   </div>
 </section>
 
 <footer>
-  <span>Figma Make · Starter Kit · 2026</span>
-  <span>7 Steps · Prompt Templates · Attach artifacts across sessions</span>
+  <span>Figma Make · Medpace Workshop Guide · 2026</span>
+  <span>Setup · 7 Steps · Medpace Examples · Attach artifacts across sessions</span>
 </footer>
 
 <script>
-  const sectionIds = ['sec-0','sec-1','sec-2','sec-3','sec-4','sec-5','sec-6','sec-7','sec-8'];
+  const sectionIds = ['sec-0','sec-1','sec-prep','sec-2','sec-3','sec-4','sec-5','sec-6','sec-7','sec-8','sec-avoid'];
   const dots = document.querySelectorAll('.nav-dot');
 
   function scrollTo(i) {
