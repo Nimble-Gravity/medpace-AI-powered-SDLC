@@ -111,6 +111,16 @@ body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--navy);fo
 .skill-prop-title{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:6px;}
 .skill-prop-body{font-size:13px;color:var(--slate);line-height:1.6;}
 
+/* BEST PRACTICES */
+.bp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+.bp-item{padding:28px;border-right:1px solid var(--border);}
+.bp-item:last-child{border-right:none;}
+.bp-num{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;color:var(--slatel);margin-bottom:14px;}
+.bp-title{font-size:15px;font-weight:700;color:var(--navy);margin-bottom:8px;line-height:1.3;}
+.bp-body{font-size:13px;color:var(--slate);line-height:1.65;margin-bottom:16px;}
+.bp-code{display:block;font-family:'DM Mono',monospace;font-size:12px;color:var(--teal);background:var(--tealL);padding:8px 12px;border-radius:6px;line-height:1.6;}
+.bp-code .dim{color:var(--slatel);}
+
 /* VARIATIONS */
 .var-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
 .var-stack{display:grid;grid-template-columns:1fr;gap:16px;}
@@ -135,6 +145,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--navy);fo
 @media (max-width: 900px) {
   .var-grid{grid-template-columns:repeat(2,1fr);}
   .skill-properties{grid-template-columns:repeat(2,1fr);}
+  .bp-grid{grid-template-columns:repeat(2,1fr);}
+  .bp-item:nth-child(2){border-right:none;}
+  .bp-item{border-bottom:1px solid var(--border);}
+  .bp-item:last-child{border-bottom:none;}
   .skill-equation{grid-template-columns:1fr;grid-template-rows:auto auto auto auto auto;}
   .skill-eq-connector{padding:4px 28px !important;justify-content:flex-start !important;}
   .skill-eq-block:nth-child(1),.skill-eq-block:nth-child(3),.skill-eq-block:nth-child(5){border:none;border-bottom:1px solid rgba(255,255,255,.07);}
@@ -143,6 +157,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--navy);fo
 @media (max-width: 768px) {
   .skill-properties{grid-template-columns:1fr;}
   .skill-equation{grid-template-columns:1fr;}
+  .bp-grid{grid-template-columns:1fr;}
+  .bp-item{border-right:none;border-bottom:1px solid var(--border);}
+  .bp-item:last-child{border-bottom:none;}
   .nav-wrapper{padding:12px 24px;gap:16px;}
   .page-header{padding:32px 24px 28px;}
   .section{padding:32px 24px;}
@@ -231,6 +248,61 @@ body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--navy);fo
         <div class="skill-prop-title">Evolvable</div>
         <div class="skill-prop-body">Modify the prompt as the team learns. Add a compliance section, tune the output format, encode more of your specific domain expertise over time.</div>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- BEST PRACTICES -->
+<div class="section">
+  <div class="sec-label">Best Practices</div>
+  <h2 class="sec-title">Writing skills that <em>hold up</em></h2>
+  <p class="sec-sub">Four patterns used in this skill that make the difference between a prompt that works once and one that works reliably across every PRD.</p>
+
+  <div class="bp-grid">
+    <div class="bp-item">
+      <div class="bp-num">01</div>
+      <div class="bp-title">Use <code style="font-family:'DM Mono',monospace;font-size:13px;background:var(--tealL);color:var(--teal);padding:1px 6px;border-radius:3px;">//</code> for meta-instructions</div>
+      <div class="bp-body">Prefixing instructions with <code style="font-family:'DM Mono',monospace;font-size:12px;background:var(--tealL);color:var(--teal);padding:1px 5px;border-radius:3px;">//</code> signals to Claude that these are rules governing how to run the skill — not content to reproduce in the output. Claude reads comment-style syntax as directives, not prose.</div>
+      <code class="bp-code"><span class="dim">// Do not summarise the PRD.</span>
+<span class="dim">// Analyse it.</span></code>
+    </div>
+    <div class="bp-item">
+      <div class="bp-num">02</div>
+      <div class="bp-title">Constrain the output shape</div>
+      <div class="bp-body">Without length constraints, Claude over-produces — burying important findings in noise. Without a floor, it can be too brief on sections that need depth. Specify both the format and the count for every output section.</div>
+      <code class="bp-code"><span class="dim">// Sections 1–5: 3–6 findings each.</span>
+<span class="dim">// Section 6: exactly 2–3 principles.</span></code>
+    </div>
+    <div class="bp-item">
+      <div class="bp-num">03</div>
+      <div class="bp-title">Force traceability</div>
+      <div class="bp-body">Explicitly require Claude to cite source IDs. Without this instruction, findings are vague and unactionable — you can't tell what requirement triggered them or who to take them to. Named references make every finding a starting point for a conversation.</div>
+      <code class="bp-code"><span class="dim">// Reference requirement IDs</span>
+<span class="dim">// (e.g. F-11, AC-03) wherever relevant.</span></code>
+    </div>
+  </div>
+
+  <div class="bp-grid" style="margin-top:-1px;border-top:none;border-radius:0 0 12px 12px;">
+    <div class="bp-item">
+      <div class="bp-num">04</div>
+      <div class="bp-title">Override the default behavior</div>
+      <div class="bp-body">Claude's instinct with a long document is to summarise it first, then comment. That's the wrong behavior for a skill. Name what you don't want, not just what you do — the explicit prohibition is what breaks the pattern.</div>
+      <code class="bp-code"><span class="dim">// Prioritise by design impact,</span>
+<span class="dim">// not document order.</span></code>
+    </div>
+    <div class="bp-item">
+      <div class="bp-num">05</div>
+      <div class="bp-title">Name the role, not just the task</div>
+      <div class="bp-body">Opening with <em>"You are a senior UX designer"</em> isn't decoration — it activates a different reasoning frame than a generic prompt. Claude applies domain-appropriate standards, makes judgment calls the way that role would, and flags things that role would care about.</div>
+      <code class="bp-code"><span class="dim">You are a senior UX designer</span>
+<span class="dim">reviewing a PRD.</span></code>
+    </div>
+    <div class="bp-item">
+      <div class="bp-num">06</div>
+      <div class="bp-title">Encode the output format explicitly</div>
+      <div class="bp-body">Don't describe what you want — show it. Specifying the exact format for each finding (name → requirement ID → implication) means every output has the same structure, making it scannable and usable without reformatting.</div>
+      <code class="bp-code"><span class="dim">Format: [Gap name]</span>
+<span class="dim">→ [Req ID] → [What's needed]</span></code>
     </div>
   </div>
 </div>
@@ -340,9 +412,6 @@ Analyse the PRD below and produce a structured UX Analysis covering six sections
 // — Prioritise findings by design impact, not document order.
 // — Sections 1–5 should have 3–6 findings each. Section 6 should have exactly 2–3 principles.
 // — Do not summarise the PRD. Analyse it.</span>
-
-PRD:
-<span class="green">[paste your PRD here]</span></pre>
     </div>
   </div>
 </div>
