@@ -1,66 +1,153 @@
 (function () {
   const inSubdir = window.location.pathname.includes('/pages/');
   const root = inSubdir ? '../' : '';
+  const currentFile = decodeURIComponent(window.location.pathname.split('/').pop() || '');
+  const isHome = currentFile === 'index.html' || currentFile === '';
 
-  // Inject nav styles (hardcoded so pages don't need matching CSS variables)
+  // ── Styles ──────────────────────────────────────────────────────────────────
   const style = document.createElement('style');
   style.textContent =
-    ".nav-wrapper{background:#210f36;padding:12px max(64px,calc((100vw - 1280px) / 2));border-bottom:1px solid rgba(64,140,132,.2);display:flex;align-items:center;gap:24px;font-family:'Roboto',sans-serif;}" +
-    '.nav-home{font-size:13px;font-weight:600;color:#4f9990;text-decoration:none;display:flex;align-items:center;gap:6px;transition:color .2s;}' +
-    '.nav-home:hover{color:#fff;}' +
-    ".nav-home::before{content:'⌂';font-size:14px;}" +
-    '.nav-divider{width:1px;height:20px;background:rgba(255,255,255,.2);}' +
-    '.nav-dropdown{position:relative;}' +
-    ".nav-toggle{background:transparent;border:none;color:#91919f;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:8px;transition:color .2s;font-family:'Roboto',sans-serif;}" +
-    '.nav-toggle:hover{color:#4f9990;}' +
-    ".nav-toggle::after{content:'▼';font-size:10px;transition:transform .2s;}" +
-    '.nav-dropdown.open .nav-toggle::after{transform:rotate(180deg);}' +
-    '.nav-menu{position:absolute;top:100%;left:0;background:#2e1a47;border:1px solid rgba(64,140,132,.3);border-radius:8px;min-width:220px;margin-top:8px;display:none;flex-direction:column;z-index:1000;box-shadow:0 8px 20px rgba(0,0,0,.3);}' +
-    '.nav-dropdown.open .nav-menu{display:flex;}' +
-    '.nav-item{color:#91919f;text-decoration:none;padding:12px 16px;font-size:13px;transition:all .2s;border-left:3px solid transparent;}' +
-    '.nav-item:hover{background:rgba(64,140,132,.1);color:#4f9990;border-left-color:#2f6b66;}' +
-    '.nav-item.active{background:rgba(64,140,132,.15);color:#4f9990;border-left-color:#4f9990;}' +
-    '@media(max-width:768px){.nav-wrapper{padding:12px 24px!important;gap:16px;}}';
+    ".nav-wrapper{background:#210f36;padding:10px max(48px,calc((100vw - 1280px) / 2));border-bottom:1px solid rgba(64,140,132,.2);display:flex;align-items:center;gap:20px;font-family:'Roboto',sans-serif;flex-wrap:wrap;" +
+    "position:fixed;top:0;left:0;right:0;z-index:1000;transform:translateY(0);transition:transform .3s ease,box-shadow .3s ease;}" +
+    '.nav-wrapper.nav-hidden{transform:translateY(-100%);}' +
+    '.nav-wrapper.nav-scrolled{box-shadow:0 4px 20px rgba(0,0,0,.4);}' +
+    '.nav-divider{width:1px;height:20px;background:rgba(255,255,255,.15);flex-shrink:0;}' +
+    '.nav-seq{display:flex;align-items:center;gap:0;flex-wrap:wrap;}' +
+    '.nav-step{display:flex;align-items:center;gap:7px;text-decoration:none;padding:6px 12px;border-radius:6px;transition:background .2s,color .2s;position:relative;}' +
+    '.nav-step-num{font-size:10px;font-weight:700;color:#4f9990;letter-spacing:.08em;opacity:.7;line-height:1;}' +
+    '.nav-step-label{font-size:13px;font-weight:500;color:#7a7a8c;white-space:nowrap;transition:color .2s;}' +
+    '.nav-step:hover .nav-step-label{color:#c8c8d8;}' +
+    '.nav-step:hover .nav-step-num{opacity:1;}' +
+    '.nav-step.active .nav-step-num{opacity:1;color:#4f9990;}' +
+    '.nav-step.active .nav-step-label{color:#fff;font-weight:600;}' +
+    '.nav-step.active{background:rgba(64,140,132,.12);}' +
+    '.nav-step.active::after{content:"";position:absolute;bottom:0;left:12px;right:12px;height:2px;background:#4f9990;border-radius:2px 2px 0 0;}' +
+    '.nav-arrow{color:rgba(255,255,255,.2);font-size:14px;padding:0 2px;user-select:none;flex-shrink:0;}' +
+    '.nav-next-banner{background:#210f36;border-top:1px solid rgba(64,140,132,.2);}' +
+    ".nav-next-link{display:flex;align-items:center;gap:20px;padding:36px max(64px,calc((100% - 1280px) / 2));text-decoration:none;transition:background .25s;font-family:'Roboto',sans-serif;}" +
+    '.nav-next-link:hover{background:rgba(64,140,132,.06);}' +
+    '.nav-next-eyebrow{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#4f9990;white-space:nowrap;}' +
+    '.nav-next-title{font-size:17px;font-weight:600;color:#fff;}' +
+    '.nav-next-num{font-size:17px;font-weight:700;color:#4f9990;margin-right:4px;}' +
+    '.nav-next-arrow{margin-left:auto;font-size:22px;color:#4f9990;transition:transform .25s;}' +
+    '.nav-next-link:hover .nav-next-arrow{transform:translateX(5px);}' +
+    '@media(max-width:900px){.nav-step-label{max-width:120px;overflow:hidden;text-overflow:ellipsis;}.nav-next-link{padding:28px 24px;}}' +
+    '@media(max-width:640px){.nav-step-label{display:none;}.nav-step{padding:6px 8px;}.nav-step-num{font-size:12px;opacity:1;}}';
   document.head.appendChild(style);
 
-  // Inject nav HTML synchronously (no flash)
-  const currentFile = decodeURIComponent(window.location.pathname.split('/').pop() || '');
+  // ── Nav HTML ─────────────────────────────────────────────────────────────────
   const navEl = document.createElement('div');
   navEl.className = 'nav-wrapper';
   navEl.innerHTML =
-    '<a href="' + root + 'index.html" class="nav-home">Home</a>' +
+    '<a href="' + root + 'index.html" class="nav-step' + (isHome ? ' active' : '') + '" aria-current="' + (isHome ? 'page' : '') + '">' +
+    '<span class="nav-step-num">00</span>' +
+    '<span class="nav-step-label">Design with AI</span>' +
+    '</a>' +
     '<div class="nav-divider"></div>' +
-    '<div class="nav-dropdown" id="nav-dropdown">' +
-    '<button class="nav-toggle" id="nav-toggle">Skills &amp; Resources</button>' +
-    '<div class="nav-menu" id="nav-menu"></div>' +
-    '</div>';
+    '<div class="nav-seq" id="nav-seq"></div>';
+
   const currentScript = document.currentScript;
   currentScript.parentNode.insertBefore(navEl, currentScript);
 
-  // Toggle behavior
-  document.getElementById('nav-toggle').addEventListener('click', function (e) {
-    e.stopPropagation();
-    document.getElementById('nav-dropdown').classList.toggle('open');
-  });
-  document.addEventListener('click', function () {
-    document.getElementById('nav-dropdown').classList.remove('open');
-  });
-  document.getElementById('nav-menu').addEventListener('click', function (e) {
-    e.stopPropagation();
-  });
+  // Push page content down so fixed nav doesn't overlap it
+  function syncBodyPadding() {
+    document.body.style.paddingTop = navEl.offsetHeight + 'px';
+  }
+  requestAnimationFrame(syncBodyPadding);
+  window.addEventListener('resize', syncBodyPadding, { passive: true });
 
-  // Populate pages dropdown
-  function addNavItem(filename) {
-    const a = document.createElement('a');
-    a.href = root + 'pages/' + encodeURIComponent(filename);
-    a.className = 'nav-item';
-    a.textContent = filename.replace(/\.[^/.]+$/, '').replace(/^\d+\s+/, '');
-    if (currentFile === filename) a.classList.add('active');
-    document.getElementById('nav-menu').appendChild(a);
+  // ── Scroll hide/show ─────────────────────────────────────────────────────────
+  var lastScrollY = 0;
+  var navVisible = true;
+
+  function showNav() {
+    if (!navVisible) {
+      navEl.classList.remove('nav-hidden');
+      navVisible = true;
+    }
+  }
+  function hideNav() {
+    if (navVisible) {
+      navEl.classList.add('nav-hidden');
+      navVisible = false;
+    }
   }
 
+  window.addEventListener('scroll', function () {
+    var y = window.scrollY;
+    if (y < 60) {
+      showNav();
+      navEl.classList.remove('nav-scrolled');
+    } else {
+      navEl.classList.add('nav-scrolled');
+      if (y > lastScrollY + 8) {
+        hideNav();
+      } else if (y < lastScrollY - 8) {
+        showNav();
+      }
+    }
+    lastScrollY = y;
+  }, { passive: true });
+
+  // Show nav when cursor approaches the top of the screen
+  document.addEventListener('mousemove', function (e) {
+    if (e.clientY < 72) showNav();
+  }, { passive: true });
+
+  // ── Page sequence helpers ────────────────────────────────────────────────────
+  function addNavStep(filename, index) {
+    const seq = document.getElementById('nav-seq');
+    const num = String(index + 1).padStart(2, '0');
+    const label = filename.replace(/\.[^/.]+$/, '').replace(/^\d+\s+/, '');
+    const isActive = currentFile === filename;
+
+    if (index > 0) {
+      const arrow = document.createElement('span');
+      arrow.className = 'nav-arrow';
+      arrow.textContent = '›';
+      seq.appendChild(arrow);
+    }
+
+    const a = document.createElement('a');
+    a.href = root + 'pages/' + encodeURIComponent(filename);
+    a.className = 'nav-step' + (isActive ? ' active' : '');
+    a.setAttribute('aria-current', isActive ? 'page' : '');
+    a.innerHTML =
+      '<span class="nav-step-num">' + num + '</span>' +
+      '<span class="nav-step-label">' + label + '</span>';
+    seq.appendChild(a);
+  }
+
+  function injectNextStep(filename, stepNum) {
+    if (!filename) return;
+    const label = filename.replace(/\.[^/.]+$/, '').replace(/^\d+\s+/, '');
+    const href = root + 'pages/' + encodeURIComponent(filename);
+
+    const banner = document.createElement('div');
+    banner.className = 'nav-next-banner';
+    banner.innerHTML =
+      '<a href="' + href + '" class="nav-next-link">' +
+      '<span class="nav-next-eyebrow">Up next</span>' +
+      '<span class="nav-next-title"><span class="nav-next-num">' + stepNum + '</span>' + label + '</span>' +
+      '<span class="nav-next-arrow">→</span>' +
+      '</a>';
+
+    function insert() {
+      const footer = document.querySelector('.page-footer');
+      if (footer) footer.parentNode.insertBefore(banner, footer);
+      else document.body.appendChild(banner);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', insert);
+    } else {
+      insert();
+    }
+  }
+
+  // ── Load pages ───────────────────────────────────────────────────────────────
   async function loadPages() {
-    const menu = document.getElementById('nav-menu');
+    var pages = [];
 
     // Try local directory listing (works with python -m http.server)
     try {
@@ -71,28 +158,37 @@
         const files = Array.from(doc.querySelectorAll('a[href]'))
           .map(function (a) { return a.getAttribute('href'); })
           .filter(function (h) { return h && !h.startsWith('?') && !h.startsWith('/') && h !== '../' && !h.endsWith('/'); });
-        if (files.length) {
-          files.forEach(function (h) { addNavItem(decodeURIComponent(h)); });
-          return;
-        }
+        if (files.length) pages = files.map(function (h) { return decodeURIComponent(h); });
       }
     } catch (e) {}
 
     // Fall back to GitHub API (works on GitHub Pages)
-    try {
-      const res = await fetch('https://api.github.com/repos/lustandfury/medpace_UX_analysis/contents/pages');
-      const data = await res.json();
-      if (Array.isArray(data)) {
-        data.filter(function (f) { return f.type === 'file'; }).forEach(function (f) { addNavItem(f.name); });
-        return;
-      }
-    } catch (e) {}
+    if (!pages.length) {
+      try {
+        const res = await fetch('https://api.github.com/repos/lustandfury/medpace_UX_analysis/contents/pages');
+        const data = await res.json();
+        if (Array.isArray(data)) {
+          pages = data.filter(function (f) { return f.type === 'file'; }).map(function (f) { return f.name; });
+        }
+      } catch (e) {}
+    }
 
-    const p = document.createElement('a');
-    p.className = 'nav-item';
-    p.textContent = 'No pages yet';
-    p.style.cssText = 'color:#4A6572;pointer-events:none';
-    menu.appendChild(p);
+    pages.forEach(function (name, i) { addNavStep(name, i); });
+
+    // Determine next page and inject footer CTA
+    var nextFile = null;
+    var nextNum = '';
+    if (isHome && pages.length) {
+      nextFile = pages[0];
+      nextNum = '01';
+    } else {
+      var idx = pages.findIndex(function (p) { return p === currentFile; });
+      if (idx >= 0 && idx < pages.length - 1) {
+        nextFile = pages[idx + 1];
+        nextNum = String(idx + 2).padStart(2, '0');
+      }
+    }
+    injectNextStep(nextFile, nextNum);
   }
 
   loadPages();
