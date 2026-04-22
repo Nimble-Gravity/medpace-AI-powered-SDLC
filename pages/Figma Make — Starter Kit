@@ -1,0 +1,721 @@
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Figma Make — Starter Kit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500;1,700&amp;family=Inter:wght@300;400;500&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f2ec;
+    --bg-warm: #efeae0;
+    --dark: #1a1814;
+    --dark2: #252219;
+    --text: #1a1814;
+    --text-mid: #4a4640;
+    --text-muted: #8a8278;
+    --accent: #c9622f;
+    --accent-light: rgba(201,98,47,0.07);
+    --accent-border: rgba(201,98,47,0.2);
+    --border: #d9d4ca;
+    --border-dark: #2e2b25;
+    --mono-bg: #1e1c18;
+    --mono-text: #c8c2b4;
+    --mono-accent: #e8a86a;
+    --green: #3a7d5c;
+    --green-bg: rgba(58,125,92,0.08);
+    --radius: 6px;
+    --max: 740px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.6; font-weight: 400; }
+
+  /* HEADER */
+  header { background: var(--dark); color: #f5f2ec; padding: 0 40px; display: flex; align-items: center; justify-content: space-between; height: 52px; position: sticky; top: 0; z-index: 200; border-bottom: 1px solid var(--border-dark); }
+  .header-left { display: flex; align-items: center; gap: 14px; font-size: 0.78rem; color: #7a746a; }
+  .header-left strong { color: #c8c2b4; font-weight: 500; }
+  .header-left .sep { color: #2e2b25; }
+  .header-right { font-family: 'JetBrains Mono', monospace; font-size: 0.63rem; color: #4a4640; letter-spacing: 0.08em; text-transform: uppercase; }
+
+  /* PROGRESS */
+  .progress-strip { height: 2px; background: var(--border); position: sticky; top: 52px; z-index: 199; }
+  .progress-fill { height: 100%; background: var(--accent); width: 0%; transition: width 0.4s ease; }
+
+  /* HERO */
+  .hero { background: var(--dark); color: #f5f2ec; padding: 80px 40px 72px; border-bottom: 1px solid var(--border-dark); }
+  .hero-inner { max-width: var(--max); margin: 0 auto; }
+  .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 28px; display: flex; align-items: center; gap: 10px; }
+  .eyebrow::before { content: ''; display: block; width: 20px; height: 1px; background: var(--accent); }
+  h1 { font-family: 'Playfair Display', serif; font-size: 3.6rem; font-weight: 700; line-height: 1.08; margin-bottom: 28px; letter-spacing: -0.01em; }
+  h1 em { font-style: italic; color: #5a5248; }
+  .hero-desc { font-size: 1rem; color: #7a746a; line-height: 1.8; max-width: 500px; margin-bottom: 40px; font-weight: 300; }
+  .compat-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag { display: inline-flex; align-items: center; gap: 7px; background: rgba(255,255,255,0.03); border: 1px solid #2a2720; border-radius: 3px; padding: 5px 12px; font-size: 0.73rem; color: #6a6460; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.02em; }
+  .tag .dot-g { width: 5px; height: 5px; border-radius: 50%; background: #3a7d5c; flex-shrink: 0; }
+
+  /* SECTIONS */
+  .section { border-bottom: 1px solid var(--border); padding: 72px 40px; }
+  .section:last-of-type { border-bottom: none; }
+  .section-inner { max-width: var(--max); margin: 0 auto; }
+  .section-label { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+  .section-label::before { content: ''; display: block; width: 14px; height: 1px; background: var(--text-muted); }
+  .section h2 { font-family: 'Playfair Display', serif; font-size: 2.1rem; font-weight: 700; line-height: 1.15; margin-bottom: 8px; letter-spacing: -0.01em; }
+  .section h2 em { font-style: italic; color: var(--text-muted); }
+  .section-sub { font-size: 0.87rem; color: var(--text-muted); font-style: italic; margin-bottom: 36px; }
+  .section-body { font-size: 0.92rem; color: var(--text-mid); line-height: 1.8; margin-bottom: 36px; }
+
+  /* NUMBERED ITEMS */
+  .numbered-items { margin-bottom: 40px; }
+  .numbered-item { display: flex; gap: 28px; padding: 24px 0; border-top: 1px solid var(--border); }
+  .numbered-item:last-child { border-bottom: 1px solid var(--border); }
+  .item-num { font-family: 'Playfair Display', serif; font-size: 1.7rem; font-weight: 700; color: var(--border); line-height: 1; width: 28px; flex-shrink: 0; padding-top: 2px; }
+  .item-content h3 { font-size: 0.88rem; font-weight: 500; margin-bottom: 5px; color: var(--text); }
+  .item-content p { font-size: 0.83rem; color: var(--text-muted); line-height: 1.65; }
+
+  /* PROMPT BLOCK */
+  .prompt-wrap { margin-bottom: 32px; }
+  .prompt-toggle { display: flex; }
+  .toggle-btn { background: none; border: 1px solid var(--border); padding: 7px 16px; font-family: 'JetBrains Mono', monospace; font-size: 0.63rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); cursor: pointer; transition: all 0.15s; }
+  .toggle-btn:first-child { border-radius: 4px 0 0 0; border-right: none; }
+  .toggle-btn:last-child { border-radius: 0 4px 0 0; }
+  .toggle-btn.active { background: var(--mono-bg); color: var(--mono-accent); border-color: var(--mono-bg); }
+  .prompt-block { background: var(--mono-bg); border-radius: 0 4px 4px 4px; overflow: hidden; }
+  .prompt-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+  .prompt-label-txt { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: #3a3830; display: flex; align-items: center; gap: 8px; }
+  .prompt-label-txt::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); display: block; }
+  .copy-btn { display: flex; align-items: center; gap: 6px; background: transparent; border: 1px solid #2e2b25; border-radius: 3px; padding: 5px 12px; font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; letter-spacing: 0.06em; text-transform: uppercase; color: #4a4640; cursor: pointer; transition: all 0.15s; }
+  .copy-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .copy-btn.copied { border-color: #3a7d5c; color: #3a7d5c; }
+  .prompt-text { padding: 24px; font-family: 'JetBrains Mono', monospace; font-size: 0.77rem; line-height: 1.9; color: var(--mono-text); white-space: pre-wrap; display: none; }
+  .prompt-text.active { display: block; }
+  .prompt-text .hi { color: var(--mono-accent); }
+  .prompt-text .ph { color: #4a4540; background: rgba(255,255,255,0.02); padding: 0 4px; border-radius: 2px; font-style: italic; }
+
+  /* INSIGHT */
+  .insight { padding: 20px 24px; background: var(--accent-light); border-left: 2px solid var(--accent); border-radius: 0 4px 4px 0; margin-bottom: 24px; }
+  .insight-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .insight p { font-size: 0.84rem; color: var(--text-mid); line-height: 1.68; }
+  .insight p strong { color: var(--text); font-weight: 500; }
+
+  /* TIPS */
+  .tips { display: flex; flex-direction: column; gap: 9px; }
+  .tip { display: flex; gap: 12px; font-size: 0.82rem; color: var(--text-muted); line-height: 1.55; }
+  .tip-arrow { color: var(--accent); flex-shrink: 0; font-weight: 500; }
+  .tip strong { color: var(--text-mid); font-weight: 500; }
+
+  /* STEP NAV */
+  .step-nav-strip { display: flex; justify-content: space-between; align-items: center; margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--border); }
+  .step-nav-strip a { font-size: 0.82rem; color: var(--text-muted); text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.15s; }
+  .step-nav-strip a:hover { color: var(--accent); }
+  .next-link { font-weight: 500; background: var(--dark) !important; color: #f5f2ec !important; padding: 9px 18px; border-radius: 4px; }
+  .next-link:hover { background: var(--accent) !important; }
+
+  /* NOTICE BOX */
+  .notice { background: var(--bg-warm); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 20px; font-size: 0.82rem; color: var(--text-muted); display: flex; gap: 10px; align-items: flex-start; }
+  .notice-dot { color: var(--accent); flex-shrink: 0; }
+  .notice strong { color: var(--text); font-weight: 500; }
+
+  /* NAV DOTS */
+  .nav-dots { position: fixed; right: 24px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 8px; z-index: 100; }
+  .nav-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--border); cursor: pointer; transition: all 0.2s; border: none; padding: 0; }
+  .nav-dot.active { background: var(--accent); transform: scale(1.5); }
+  .nav-dot:hover { background: var(--text-muted); }
+
+  /* FOOTER */
+  footer { background: var(--dark); padding: 40px; display: flex; justify-content: space-between; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.06em; color: #3a3630; }
+
+  @media (max-width: 680px) {
+    h1 { font-size: 2.4rem; }
+    .section, .hero { padding: 48px 24px; }
+    header { padding: 0 20px; }
+    .nav-dots { display: none; }
+    footer { padding: 28px 24px; flex-direction: column; gap: 8px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <strong>Figma Make</strong>
+    <span class="sep">·</span>
+    <span>Starter Kit</span>
+  </div>
+  <div class="header-right">7 Steps · Prompt Templates</div>
+</header>
+
+<div class="progress-strip"><div class="progress-fill" id="prog" style="width: 15.075298%;"></div></div>
+
+<div class="nav-dots" id="navDots">
+  <button class="nav-dot" onclick="scrollTo(0)" title="Intro"></button>
+  <button class="nav-dot" onclick="scrollTo(1)" title="Overview"></button>
+  <button class="nav-dot active" onclick="scrollTo(2)" title="Problem Framing"></button>
+  <button class="nav-dot" onclick="scrollTo(3)" title="User Personas"></button>
+  <button class="nav-dot" onclick="scrollTo(4)" title="Brand Brief"></button>
+  <button class="nav-dot" onclick="scrollTo(5)" title="Microcopy"></button>
+  <button class="nav-dot" onclick="scrollTo(6)" title="User Flow"></button>
+  <button class="nav-dot" onclick="scrollTo(7)" title="Build"></button>
+  <button class="nav-dot" onclick="scrollTo(8)" title="Iterate"></button>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="sec-0">
+  <div class="hero-inner">
+    <div class="eyebrow">Figma Make · Starter Kit</div>
+    <h1>Brief it like a<br>collaborator,<br><em>not a button.</em></h1>
+    <p class="hero-desc">Most users treat Figma Make like a magic generator. The ones who get exceptional results treat it like a collaborator they need to brief well. This kit walks you through 7 steps — from problem framing to iteration — with copy-ready prompts at every stage.</p>
+    <div class="compat-tags">
+      <span class="tag"><span class="dot-g"></span>Works in Figma Make</span>
+      <span class="tag"><span class="dot-g"></span>Attach artifacts across steps</span>
+      <span class="tag"><span class="dot-g"></span>Example + template for each prompt</span>
+      <span class="tag"><span class="dot-g"></span>One-click copy</span>
+    </div>
+  </div>
+</section>
+
+<!-- OVERVIEW -->
+<section class="section" id="sec-1">
+  <div class="section-inner">
+    <div class="section-label">Overview</div>
+    <h2>What this kit <em>produces</em></h2>
+    <p class="section-sub">Seven artifacts that chain together — each one feeding the next.</p>
+    <div class="numbered-items">
+      <div class="numbered-item"><div class="item-num">1</div><div class="item-content"><h3>Problem Brief</h3><p>A markdown document defining the core problem, design priorities, edge cases, and success criteria. The foundation everything else builds on.</p></div></div>
+      <div class="numbered-item"><div class="item-num">2</div><div class="item-content"><h3>User Personas</h3><p>Structured persona docs with goals, frustrations, behaviours, and one critical design implication each. Attach to Make so it designs for real humans, not assumptions.</p></div></div>
+      <div class="numbered-item"><div class="item-num">3</div><div class="item-content"><h3>Brand Brief</h3><p>A living design token reference — colors, type scale, spacing, tone of voice, and what the brand should never look like. The fastest path to consistently on-brand output.</p></div></div>
+      <div class="numbered-item"><div class="item-num">4</div><div class="item-content"><h3>Microcopy Document</h3><p>All UI text upfront: buttons, errors, empty states, onboarding, tooltips. Attach this so Make uses real copy instead of placeholders — transforms what prototype reviews feel like.</p></div></div>
+      <div class="numbered-item"><div class="item-num">5</div><div class="item-content"><h3>Interactive User Flow</h3><p>A clickable HTML flow diagram with happy paths, skip paths, and error states. Faster to build and share than a Figma flow, and works in any browser.</p></div></div>
+      <div class="numbered-item"><div class="item-num">6</div><div class="item-content"><h3>Component Build</h3><p>The actual Make generation prompt — written to reference all prior artifacts. The output quality difference versus a blank prompt is categorical, not incremental.</p></div></div>
+      <div class="numbered-item"><div class="item-num">7</div><div class="item-content"><h3>Iteration Prompts</h3><p>Six high-leverage follow-up prompts for hierarchy, accessibility, responsiveness, data states, and the Persona Check — the most underused review in the kit.</p></div></div>
+    </div>
+    <div class="notice">
+      <span class="notice-dot">●</span>
+      <span>The example project throughout is <strong>Luma</strong> — a project management app for freelancers managing multiple clients. Each step has an <strong>Example</strong> tab (Luma) and a <strong>Template</strong> tab (fill-in-the-blank).</span>
+    </div>
+  </div>
+</section>
+
+<!-- STEP 1 -->
+<section class="section" id="sec-2">
+  <div class="section-inner">
+    <div class="section-label">Step 01</div>
+    <h2>Problem <em>Framing</em></h2>
+    <p class="section-sub">Do this before you touch a single frame.</p>
+    <p class="section-body">Ask Make to generate a design brief first. This forces clarity on what you're actually solving and gives you a document to attach to every subsequent session. Once attached, Make always knows the "why" behind every decision without you re-explaining it.</p>
+    <div class="prompt-wrap">
+      <div class="prompt-toggle">
+        <button class="toggle-btn active" onclick="switchTab(this,'p1e','p1t')">Example</button>
+        <button class="toggle-btn" onclick="switchTab(this,'p1t','p1e')">Template</button>
+      </div>
+      <div class="prompt-block">
+        <div class="prompt-header">
+          <span class="prompt-label-txt">Figma Make Prompt</span>
+          <button class="copy-btn" onclick="copyActive(this)"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="4" y="4" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.2"></rect><path d="M2 8H1.5A.5.5 0 011 7.5v-6A.5.5 0 011.5 1h6a.5.5 0 01.5.5V2" stroke="currentColor" stroke-width="1.2"></path></svg> Copy prompt</button>
+        </div>
+        <div class="prompt-text active" id="p1e">Generate a <span class="hi">design brief as a markdown document</span> for an app called Luma.
+
+Context: Luma is a project management tool for freelancers — specifically people who run a solo practice and juggle 4 to 8 active client projects at once. Not agencies. Not teams. Individual practitioners who are the designer, the account manager, and the invoice chaser all at the same time.
+
+The core tension: these users are incredibly time-poor, but their work is complex enough that a simple to-do list isn't enough. Tools like Notion are too flexible (too much setup). Tools like Asana feel like they were built for teams and make solo use feel lonely and bureaucratic. We're trying to land somewhere between those two failure modes.
+
+For the brief, include:
+- The core user problem stated in one honest sentence — not a marketing sentence, a real one
+- 3 genuine design tensions we'll have to make calls on throughout the project (e.g. "showing enough detail vs. keeping the overview scannable")
+- 5 specific edge cases: think about someone mid-project with a client who ghosts them, someone who works across 3 time zones, someone who invoices in a currency that isn't USD
+- What "I'm done for the day" actually looks like for this user — not just task completion, but the emotional state we're designing toward
+- 3 products this should never feel like, and why each one is a cautionary tale for us specifically
+- 4 success metrics that are actually measurable, not vanity metrics
+
+Format with clear markdown headers. This document gets attached to every subsequent Make session.</div>
+        <div class="prompt-text" id="p1t">Generate a <span class="hi">design brief as a markdown document</span> for an app called <span class="ph">[product name]</span> — <span class="ph">[what it does and who it's for]</span>.
+
+Include:
+- The core user problem in one sentence
+- 3 competing design priorities
+- 5 edge cases the design must account for
+- What "done" looks like for the user
+- 3 things this product should never feel like
+- Success metrics we could track
+
+Format with clear headers. I will attach this to all future Make sessions.</div>
+      </div>
+    </div>
+    <div class="insight">
+      <div class="insight-eyebrow">Why this works</div>
+      <p>The brief becomes a <strong>reusable artifact</strong>. Attach it to every subsequent Make session using the <strong>+ button</strong> in the prompt bar. Make uses it as silent context — keeping outputs aligned to the same problem without you re-explaining each time.</p>
+    </div>
+    <div class="tips" style="margin-top:20px;">
+      <div class="tip"><span class="tip-arrow">→</span><span><strong>Save the output</strong> as a .md file alongside your Figma file throughout the project.</span></div>
+      <div class="tip"><span class="tip-arrow">→</span><span><strong>Be specific about what it shouldn't feel like</strong> — that constraint is often more useful than describing what it should be.</span></div>
+    </div>
+    <div class="step-nav-strip">
+      <span></span>
+      <a class="next-link" href="#sec-3">Next: User Personas →</a>
+    </div>
+  </div>
+</section>
+
+<!-- STEP 2 -->
+<section class="section" id="sec-3">
+  <div class="section-inner">
+    <div class="section-label">Step 02</div>
+    <h2>User <em>Personas</em></h2>
+    <p class="section-sub">Give Make a human to design for.</p>
+    <p class="section-body">Generate structured persona documents as markdown. These aren't just for your team — they become context you attach to Make so every generated component reflects real user needs, not generic patterns. The more specific the persona, the more distinctive the output.</p>
+    <div class="prompt-wrap">
+      <div class="prompt-toggle">
+        <button class="toggle-btn active" onclick="switchTab(this,'p2e','p2t')">Example</button>
+        <button class="toggle-btn" onclick="switchTab(this,'p2t','p2e')">Template</button>
+      </div>
+      <div class="prompt-block">
+        <div class="prompt-header">
+          <span class="prompt-label-txt">Figma Make Prompt</span>
+          <button class="copy-btn" onclick="copyActive(this)"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="4" y="4" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.2"></rect><path d="M2 8H1.5A.5.5 0 011 7.5v-6A.5.5 0 011.5 1h6a.5.5 0 01.5.5V2" stroke="currentColor" stroke-width="1.2"></path></svg> Copy prompt</button>
+        </div>
+        <div class="prompt-text active" id="p2e">Generate <span class="hi">3 user personas as a markdown document</span> for Luma.
+
+I want these to feel like people I could call on the phone, not composite sketches. Here's the starting direction for each:
+
+Persona 1: A UX designer, probably 30–38, based in a mid-size city (not SF or NYC). Left an agency 2 years ago to go solo. Has 5 active clients right now and is drowning in Slack messages from all of them. Uses Notion but has 4 different project templates and none of them are right. Checks their bank account more than they'd like to admit.
+
+Persona 2: A copywriter or brand strategist, 40s, has been freelance for a decade and is actually good at it — but hates the admin side with a passion. Uses a spreadsheet to track projects, a separate spreadsheet for invoices, and a notes app for everything else. Not particularly technical. Would describe themselves as "organised in my own chaotic way."
+
+Persona 3: A developer who freelances on the side while holding a full-time job. Juggles 2–3 side projects at a time. Very comfortable with tools and has tried everything — Jira, Linear, Basecamp, ClickUp — and hated all of them for being either too heavy or too simple. Has strong opinions. Probably has a custom Notion setup they built themselves.
+
+For each persona, give me:
+- Their name, age, city, and what they'd put as their job title on a LinkedIn profile
+- The 3 tools they use most for managing work and what specifically annoys them about each
+- The thought they have most often while working at 4pm on a Thursday
+- A verbatim quote — something they'd say in a Zoom call, casual, unguarded
+- The moment in their week when Luma would give them the most relief
+- Their gut reaction when they see a new app: excited, skeptical, or "I'll try it once"
+- One thing in the UI that would make them close the tab immediately</div>
+        <div class="prompt-text" id="p2t">Generate <span class="hi">3 detailed user personas as a markdown document</span> for <span class="ph">[product name]</span>, <span class="ph">[one sentence description]</span>.
+
+For each persona include:
+- Name, age, location, job title
+- Tools they use and what they hate about them
+- Their biggest daily frustration
+- What they wish existed
+- A quote they'd actually say out loud
+- How they define a successful workday
+- Relationship with technology: comfortable / reluctant / power-user
+- One thing they'd notice immediately if the design got it wrong
+
+Make them feel like real people, not archetypes.</div>
+      </div>
+    </div>
+    <div class="insight">
+      <div class="insight-eyebrow">Less obvious use</div>
+      <p>After generating personas, ask Make to <strong>pick the most underserved persona</strong> and explain what a design optimised specifically for them would prioritise differently. This surfaces directions you wouldn't reach any other way.</p>
+    </div>
+    <div class="tips" style="margin-top:20px;">
+      <div class="tip"><span class="tip-arrow">→</span><span><strong>Ask for conflict</strong> — request personas with competing needs. Design tension found early is easier to resolve than tension found in review.</span></div>
+      <div class="tip"><span class="tip-arrow">→</span><span>Follow up with: <strong>"Generate an interactive HTML version of these personas"</strong> — shareable with anyone, no Figma access needed.</span></div>
+    </div>
+    <div class="step-nav-strip">
+      <a href="#sec-2">← Problem Framing</a>
+      <a class="next-link" href="#sec-4">Next: Brand Brief →</a>
+    </div>
+  </div>
+</section>
+
+<!-- STEP 3 -->
+<section class="section" id="sec-4">
+  <div class="section-inner">
+    <div class="section-label">Step 03</div>
+    <h2>Brand <em>Brief</em></h2>
+    <p class="section-sub">Stop Make from going off-brand before it starts.</p>
+    <p class="section-body">Generate a design token and style reference document. Attach this to every Make session. It's the single most efficient way to get consistently on-brand output — far more effective than repeating style instructions in every prompt.</p>
+    <div class="prompt-wrap">
+      <div class="prompt-toggle">
+        <button class="toggle-btn active" onclick="switchTab(this,'p3e','p3t')">Example</button>
+        <button class="toggle-btn" onclick="switchTab(this,'p3t','p3e')">Template</button>
+      </div>
+      <div class="prompt-block">
+        <div class="prompt-header">
+          <span class="prompt-label-txt">Figma Make Prompt</span>
+          <button class="copy-btn" onclick="copyActive(this)"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="4" y="4" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.2"></rect><path d="M2 8H1.5A.5.5 0 011 7.5v-6A.5.5 0 011.5 1h6a.5.5 0 01.5.5V2" stroke="currentColor" stroke-width="1.2"></path></svg> Copy prompt</button>
+        </div>
+        <div class="prompt-text active" id="p3e">Create a <span class="hi">brand and design system reference document</span> for Luma.
+
+I have a strong point of view on the brand direction, which I want you to develop into a full system:
+
+The feeling: opening Luma should feel like walking into a very well-organised workspace — not a sterile office, not a cosy coffee shop. Think: a freelancer's studio apartment where everything has a place and the light is good. Calm. Focused. A little bit considered. The kind of tool that respects that the person using it is good at their job.
+
+What it absolutely must not feel like:
+- Asana: too cheerful, too much colour, designed for team cheerleading rather than solo focus
+- Notion: too neutral and beige — feels like a blank sheet of paper, not a tool
+- Harvest: looks like it was designed in 2014 and nobody updated it
+
+Colour direction I'm leaning toward: a near-black or very dark navy for the primary surface (not pure black), with a warm off-white for text, and a single accent colour that reads as "smart" — something like a muted amber or a dusty teal. Not green (too "done"), not blue (too corporate), not purple (too startup-y).
+
+Please develop:
+- A full primary / secondary / accent palette. Give me hex values and a clear rule for when each is used. Include semantic colours for success, warning, and error.
+- Typography: I want a serif for display headings (something with character, not Playfair — too overdone), a clean sans for body and UI, and a mono for data and times. Include the full size scale from 11px to 48px with usage notes.
+- Spacing scale based on 4px. Show me tokens from space-1 through space-12.
+- Elevation: 3 shadow levels — subtle (card), medium (dropdown), prominent (modal)
+- Tone of voice: write me 5 example UI strings that demonstrate the voice. Then tell me the 5 words that should never appear in this product's copy.
+
+Format as markdown with clear section headers. This gets attached to every Make session from this point.</div>
+        <div class="prompt-text" id="p3t">Create a <span class="hi">brand and design token reference document</span> for <span class="ph">[product name]</span>. The brand should feel <span class="ph">[3 adjectives]</span>. Not <span class="ph">[what to avoid]</span>.
+
+Include:
+- Color palette with hex values and usage rules
+- Typography: heading, body, mono fonts with size scale
+- Spacing system (4px base unit)
+- Border radius and shadow definitions
+- Tone of voice: 3 adjectives, 3 anti-adjectives, writing example
+- 2 brands as anti-inspiration
+- Component personality notes (buttons, inputs, empty states)
+
+Format as markdown. I will attach this to future Make sessions.</div>
+      </div>
+    </div>
+    <div class="insight">
+      <div class="insight-eyebrow">Pro move</div>
+      <p>Ask Make to generate a <strong>visual HTML style guide</strong> instead of markdown — a living reference page that renders the actual colors, type scale, and component styles in the browser. Far more useful to share with a team or client than a text document.</p>
+    </div>
+    <div class="step-nav-strip">
+      <a href="#sec-3">← User Personas</a>
+      <a class="next-link" href="#sec-5">Next: Microcopy →</a>
+    </div>
+  </div>
+</section>
+
+<!-- STEP 4 -->
+<section class="section" id="sec-5">
+  <div class="section-inner">
+    <div class="section-label">Step 04</div>
+    <h2><em>Microcopy</em></h2>
+    <p class="section-sub">Words are part of the design. Generate them before you build.</p>
+    <p class="section-body">Generate all UI copy upfront — buttons, errors, empty states, tooltips, onboarding text. When you attach this to your component prompts, Make uses real copy instead of placeholder text. This single change transforms what prototype reviews feel like.</p>
+    <div class="prompt-wrap">
+      <div class="prompt-toggle">
+        <button class="toggle-btn active" onclick="switchTab(this,'p4e','p4t')">Example</button>
+        <button class="toggle-btn" onclick="switchTab(this,'p4t','p4e')">Template</button>
+      </div>
+      <div class="prompt-block">
+        <div class="prompt-header">
+          <span class="prompt-label-txt">Figma Make Prompt</span>
+          <button class="copy-btn" onclick="copyActive(this)"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="4" y="4" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.2"></rect><path d="M2 8H1.5A.5.5 0 011 7.5v-6A.5.5 0 011.5 1h6a.5.5 0 01.5.5V2" stroke="currentColor" stroke-width="1.2"></path></svg> Copy prompt</button>
+        </div>
+        <div class="prompt-text active" id="p4e">Generate a <span class="hi">complete UI microcopy document</span> for Luma's project dashboard, new project creation flow, and onboarding sequence.
+
+Tone guidance — this is important:
+Write like a smart friend who also happens to be a good project manager. Direct. A little dry. Never chirpy. No exclamation marks anywhere in the product. No words like "simply", "easily", "just", "quick", or "seamlessly" — these are filler words that make copy feel dishonest. Don't say "Oops!" for errors. Don't say "Woohoo!" for success. The user is a professional; treat them like one.
+
+Screens to cover:
+
+1. Dashboard — empty state (user has no projects yet)
+   Write a headline (max 6 words), one sentence of context, and a CTA button label. The tone should acknowledge the blankness without being apologetic about it.
+
+2. Project list — partial empty state (user has projects but none match a filter they've applied)
+   Different from above — the user isn't new, they just filtered to nothing. Don't repeat the onboarding energy.
+
+3. Invoices tab — empty state
+   This one can be slightly warmer — an empty invoice list is actually a good reminder, not a failure state.
+
+4. New project form — all placeholder text
+   Fields: Project name, Client name, Deadline (optional), Notes, Hourly rate. Each placeholder should feel like a helpful hint, not filler.
+
+5. Error states: network timeout, duplicate project name, invoice amount over $99,999 (validation)
+
+6. Success messages: project created, invoice sent, timer stopped
+
+7. Navigation labels: 5 top-level nav items that feel considered, not generic ("Dashboard" is lazy — is there something better?)
+
+8. Onboarding tooltip sequence: 3 coach marks for first-time users. Keep each under 20 words. No "Welcome to Luma!" energy.
+
+Output as markdown with each screen as a section header.</div>
+        <div class="prompt-text" id="p4t">Generate a <span class="hi">complete UI microcopy document</span> for <span class="ph">[product name]</span>'s <span class="ph">[screen or flow]</span>.
+
+Cover:
+- Page titles and headings
+- Primary and secondary CTA labels
+- Empty states: headline + 1 sentence + CTA for each major empty state
+- Error messages: network, validation, limits
+- Success and confirmation copy
+- Tooltip text for key features
+- Onboarding text and coach marks
+- Input placeholder text
+
+Tone: <span class="ph">[describe voice]</span>. Avoid: <span class="ph">[words or patterns to exclude]</span>.
+
+Output as structured markdown by UI section.</div>
+      </div>
+    </div>
+    <div class="insight">
+      <div class="insight-eyebrow">Why this matters</div>
+      <p>Placeholder copy causes stakeholders to <strong>react to the layout instead of the experience</strong>. Real copy shifts the entire conversation in review. Generate it first, attach it when building — the difference in feedback quality is immediate.</p>
+    </div>
+    <div class="step-nav-strip">
+      <a href="#sec-4">← Brand Brief</a>
+      <a class="next-link" href="#sec-6">Next: User Flow →</a>
+    </div>
+  </div>
+</section>
+
+<!-- STEP 5 -->
+<section class="section" id="sec-6">
+  <div class="section-inner">
+    <div class="section-label">Step 05</div>
+    <h2>User <em>Flow</em></h2>
+    <p class="section-sub">Map the journey before you build any screen.</p>
+    <p class="section-body">Ask Make to generate a clickable HTML user flow — an interactive diagram of screens and decision points. Faster to produce than a Figma flow, works in any browser, and is far easier for non-designers to review asynchronously.</p>
+    <div class="prompt-wrap">
+      <div class="prompt-toggle">
+        <button class="toggle-btn active" onclick="switchTab(this,'p5e','p5t')">Example</button>
+        <button class="toggle-btn" onclick="switchTab(this,'p5t','p5e')">Template</button>
+      </div>
+      <div class="prompt-block">
+        <div class="prompt-header">
+          <span class="prompt-label-txt">Figma Make Prompt</span>
+          <button class="copy-btn" onclick="copyActive(this)"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="4" y="4" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.2"></rect><path d="M2 8H1.5A.5.5 0 011 7.5v-6A.5.5 0 011.5 1h6a.5.5 0 01.5.5V2" stroke="currentColor" stroke-width="1.2"></path></svg> Copy prompt</button>
+        </div>
+        <div class="prompt-text active" id="p5e">Build an <span class="hi">interactive HTML user flow diagram</span> for the Luma new project creation flow.
+
+Here's exactly what happens:
+
+Entry point: User clicks the "New project" button from the dashboard (top-right, primary CTA). They might also land here from the empty state CTA on first use — same flow, different entry.
+
+Step 1 — Project name
+Single text input, autofocused. Inline validation: if a project with this name already exists for this user, show an inline error before they move on ("You already have a project called this — want to rename it?"). Do not wait for form submission.
+
+Step 2 — Client
+Dropdown with search. Three paths:
+  A. Select an existing client → move to Step 3
+  B. Type a name that doesn't match → offer "Create '[typed name]' as a new client" as the last option in the dropdown
+  C. Skip entirely → "No client" option at the top of the dropdown
+
+Step 3 — Billing type
+Three options displayed as a radio card group: Hourly, Fixed price, Retainer.
+  - Selecting Hourly reveals a rate input ($/hr)
+  - Selecting Fixed reveals a total amount input
+  - Selecting Retainer reveals a monthly amount + billing date input
+  - Any of these can be left blank and set later — show a "Set later" affordance
+
+Step 4 — Deadline (optional)
+Date picker. Optional — visible "Skip for now" link. If the project has a client with other projects, suggest pulling the pattern from those (show last used deadline range as a ghost suggestion).
+
+Step 5 — Review &amp; create
+Show a summary card of everything selected. Editable inline. Primary CTA: "Create project". This step only exists if at least 3 fields are filled in — if the user filled in only name and client, skip straight to creation.
+
+Error states to show:
+- Duplicate name (Step 1, inline)
+- Network failure on save (Step 5, toast)
+
+Show the happy path in one colour, skip paths in a muted variant, error paths in a third. Label every arrow. Style it as a shareable dark-background diagram. Nodes should be rounded rectangles with the step name and a one-line description inside.</div>
+        <div class="prompt-text" id="p5t">Build an <span class="hi">interactive HTML user flow diagram</span> for <span class="ph">[product name]</span>'s <span class="ph">[flow name]</span>.
+
+Flow starts: <span class="ph">[trigger action]</span>
+Flow ends: <span class="ph">[success state]</span>
+
+Steps:
+<span class="ph">[List key steps and decision points]</span>
+
+Show: happy path, any skip paths, <span class="ph">[N]</span> error states.
+
+Style: dark background, styled nodes, directional arrows. Shareable with non-technical stakeholders.</div>
+      </div>
+    </div>
+    <div class="insight">
+      <div class="insight-eyebrow">Unexpected use case</div>
+      <p>Generate the flow <strong>before you have any opinion on it</strong> — just describe the user goal. Make will often surface steps you forgot or decision points you hadn't considered. Use it as a <strong>thinking tool first</strong>, documentation tool second.</p>
+    </div>
+    <div class="step-nav-strip">
+      <a href="#sec-5">← Microcopy</a>
+      <a class="next-link" href="#sec-7">Next: Build →</a>
+    </div>
+  </div>
+</section>
+
+<!-- STEP 6 -->
+<section class="section" id="sec-7">
+  <div class="section-inner">
+    <div class="section-label">Step 06</div>
+    <h2>Build the <em>Component</em></h2>
+    <p class="section-sub">Now you're ready. And you have context behind you.</p>
+    <p class="section-body">This is the prompt most people start with. Starting here without steps 1–5 means Make guesses at the problem, the user, the brand, and the copy. With those artifacts attached via the <strong>+ button</strong>, this becomes a fundamentally different request.</p>
+    <div class="prompt-wrap">
+      <div class="prompt-toggle">
+        <button class="toggle-btn active" onclick="switchTab(this,'p6e','p6t')">Example</button>
+        <button class="toggle-btn" onclick="switchTab(this,'p6t','p6e')">Template</button>
+      </div>
+      <div class="prompt-block">
+        <div class="prompt-header">
+          <span class="prompt-label-txt">Attach: brief · personas · brand doc · microcopy</span>
+          <button class="copy-btn" onclick="copyActive(this)"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="4" y="4" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.2"></rect><path d="M2 8H1.5A.5.5 0 011 7.5v-6A.5.5 0 011.5 1h6a.5.5 0 01.5.5V2" stroke="currentColor" stroke-width="1.2"></path></svg> Copy prompt</button>
+        </div>
+        <div class="prompt-text active" id="p6e">Build Luma's <span class="hi">project dashboard screen</span> as a React component. I'm attaching the design brief, persona doc, brand system, and microcopy doc — use them. Don't guess at brand decisions; if the brand doc specifies something, follow it exactly.
+
+Layout I want to see:
+
+Left sidebar (fixed, 220px):
+- Luma wordmark at the top with a subtle version indicator
+- Navigation: Overview, Projects, Clients, Invoices, Time Log — each with an icon and label
+- Active state must be clear but not heavy
+- Bottom of sidebar: user avatar + name + a settings gear icon
+- The sidebar should feel substantial but not take over — this is where users orient, not where they work
+
+Main content area:
+- Greeting header: "Good morning, [First name]" — use the name "Maya" for the prototype. Below it, today's date and a one-line status ("3 projects due this week"). This should feel glanceable, not dashboard-y.
+- Three KPI cards in a row: Active projects (count), Pending invoice amount (£ value), Hours logged this week (number + bar showing progress toward a weekly goal). These are read-only — clicking one navigates to that section.
+- Project list below: show 5 projects. Each row: project name, client name, a coloured status pill (In progress / Awaiting feedback / Overdue / On hold), next deadline, and a quick-action button ("Log time" or "Send invoice" depending on status). The Overdue row should feel visually different — not alarming, just notable.
+- Empty state: if the project list were empty, show the copy from the attached microcopy doc (do not write new copy here).
+
+Specific requirements:
+- No purple. No blue. Follow the brand doc colour palette.
+- Use the mono font from the brand doc for all numerical values (times, amounts, counts)
+- Overdue status pill: use the semantic error colour from the brand doc, low opacity fill, not a bright red badge
+- Hover state on each project row should reveal the quick-action button — don't show it all the time
+- The whole component should be keyboard navigable — tab order should be logical
+
+Tech: React functional component, Tailwind for styling, no other dependencies. Single file.</div>
+        <div class="prompt-text" id="p6t">Build <span class="ph">[product name]</span>'s <span class="hi"><span class="ph">[screen or component name]</span></span> as a <span class="ph">[React component / HTML page]</span>.
+
+Using the attached design brief, personas, brand doc, and microcopy as your guide:
+
+Layout:
+<span class="ph">[Describe key sections and hierarchy]</span>
+
+Requirements:
+- Match brand tokens from the attached doc exactly
+- Use copy from the microcopy doc — no placeholder text
+- Optimise for <span class="ph">[primary persona + key behaviour]</span>
+- Hover states and transitions throughout
+
+Tech: <span class="ph">[React + Tailwind / HTML + CSS]</span>. Single file.</div>
+      </div>
+    </div>
+    <div class="insight">
+      <div class="insight-eyebrow">The compounding effect</div>
+      <p>By attaching 4 documents, you're giving Make the equivalent of a <strong>design system + user research + creative brief + content strategy</strong> in one session. The output difference compared to a blank prompt is categorical, not incremental.</p>
+    </div>
+    <div class="tips" style="margin-top:20px;">
+      <div class="tip"><span class="tip-arrow">→</span><span>Use <strong>Website mode</strong> for full pages, <strong>Component mode</strong> for isolated UI elements.</span></div>
+      <div class="tip"><span class="tip-arrow">→</span><span><strong>One screen at a time.</strong> Scope creep in the prompt produces scope creep in the output.</span></div>
+    </div>
+    <div class="step-nav-strip">
+      <a href="#sec-6">← User Flow</a>
+      <a class="next-link" href="#sec-8">Next: Iterate →</a>
+    </div>
+  </div>
+</section>
+
+<!-- STEP 7 -->
+<section class="section" id="sec-8">
+  <div class="section-inner">
+    <div class="section-label">Step 07</div>
+    <h2>Iterate &amp; <em>Refine</em></h2>
+    <p class="section-sub">The first output is a skeleton. These prompts shape it.</p>
+    <p class="section-body">Follow-up prompts are where most of the craft happens. These six patterns each target a different failure mode in generated output. Use them individually — one at a time — and always describe what you want rather than what went wrong.</p>
+    <div class="prompt-wrap">
+      <div class="prompt-toggle">
+        <button class="toggle-btn active" onclick="switchTab(this,'p7e','p7t')">Example Prompts</button>
+        <button class="toggle-btn" onclick="switchTab(this,'p7t','p7e')">Template Patterns</button>
+      </div>
+      <div class="prompt-block">
+        <div class="prompt-header">
+          <span class="prompt-label-txt">High-Leverage Follow-Up Prompts</span>
+          <button class="copy-btn" onclick="copyActive(this)"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="4" y="4" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.2"></rect><path d="M2 8H1.5A.5.5 0 011 7.5v-6A.5.5 0 011.5 1h6a.5.5 0 01.5.5V2" stroke="currentColor" stroke-width="1.2"></path></svg> Copy prompt</button>
+        </div>
+        <div class="prompt-text active" id="p7e"><span class="hi">// Hierarchy problem — the KPI cards are competing with the project list</span>
+"Right now my eye goes to the three KPI cards first, but they're read-only information — the project list is where I actually need to take action. Reduce the visual weight of the KPI cards by about 40%: smaller type, less contrast, lighter borders. The project list rows should feel like the primary content. Don't move anything — just adjust hierarchy."
+
+<span class="hi">// Accessibility — focus states are invisible</span>
+"Tab through the entire component and fix everything you find: any interactive element without a visible focus ring, any colour combination that fails WCAG AA contrast (check the status pills especially — the Overdue pill is probably failing), and the project rows should be focusable as a unit with keyboard Enter triggering the quick action."
+
+<span class="hi">// Responsive — sidebar breaks below 900px</span>
+"At viewport widths below 900px: collapse the sidebar to 64px (icons only, no labels), with a toggle button to expand it to full width as an overlay. At below 600px: move navigation to a bottom tab bar with 5 icons (hide labels). The KPI cards should stack to a single column below 600px. The project list stays full width throughout."
+
+<span class="hi">// The greeting header feels generic — fix the personalisation</span>
+"The 'Good morning, Maya' header is working but the status line underneath ('3 projects due this week') is too vague to be useful. Replace it with something context-aware: if there's a project overdue, surface that specifically. If the nearest deadline is today, say that. If everything is on track, say something that actually reflects that. Write 4 different versions of this line for different states and implement the logic to show the right one."
+
+<span class="hi">// Data states — the component only handles the happy path</span>
+"Add three missing states to the project list: (1) Loading — skeleton rows using the same dimensions as the real rows, animated shimmer effect, show 5 of them. (2) Empty — use the copy from the attached microcopy doc exactly as written. (3) Error — a network request failed. Show an inline error message with a retry button. All three should match the existing brand exactly."
+
+<span class="hi">// Persona check — run it against the overwhelmed persona</span>
+"Read the second persona in the attached personas doc — the one who uses spreadsheets and describes themselves as 'organised in my own chaotic way'. She's opened Luma for the first time and is looking at this dashboard. Based on what you know about her, tell me: what are the 3 things most likely to confuse or frustrate her in the first 30 seconds? Then fix those 3 things without breaking what's already working for the other personas."</div>
+        <div class="prompt-text" id="p7t"><span class="hi">// Hierarchy Fix</span>
+"The most important action is <span class="ph">[action]</span>. Redesign visual hierarchy so it draws the eye first."
+
+<span class="hi">// Accessibility</span>
+"Run an accessibility review. Fix contrast, focus states, missing labels, and form field associations."
+
+<span class="hi">// Responsive</span>
+"Update for mobile: <span class="ph">[describe breakpoint behaviour]</span>."
+
+<span class="hi">// Motion</span>
+"Add micro-interactions: <span class="ph">[hover states, transitions, load animations]</span>."
+
+<span class="hi">// Data States</span>
+"Add: loading skeleton, empty state with copy '<span class="ph">[microcopy]</span>', error state. All on-brand."
+
+<span class="hi">// Persona Check</span>
+"Review against the <span class="ph">[persona name]</span> persona in the attached doc. What frustrates them? Fix the top 3 issues."</div>
+      </div>
+    </div>
+    <div class="insight">
+      <div class="insight-eyebrow">The Persona Check</div>
+      <p>The last prompt is the most underused. Asking Make to critique its own output through the eyes of a specific user — with the persona doc attached — <strong>surfaces issues that no amount of visual polish will fix</strong>. Run it before you call any screen done.</p>
+    </div>
+    <div class="tips" style="margin-top:20px;">
+      <div class="tip"><span class="tip-arrow">→</span><span><strong>One change at a time.</strong> Stacking instructions leads to unpredictable changes across the component.</span></div>
+      <div class="tip"><span class="tip-arrow">→</span><span>If a change goes wrong, <strong>describe what you wanted</strong> rather than what you got.</span></div>
+      <div class="tip"><span class="tip-arrow">→</span><span><strong>Save versions you like</strong> before making significant changes — Make doesn't have granular undo.</span></div>
+    </div>
+    <div class="step-nav-strip">
+      <a href="#sec-7">← Build the Component</a>
+      <a class="next-link" href="#sec-2">↩ Start from Step 1</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>Figma Make · Starter Kit · 2026</span>
+  <span>7 Steps · Prompt Templates · Attach artifacts across sessions</span>
+</footer>
+
+<script>
+  const sectionIds = ['sec-0','sec-1','sec-2','sec-3','sec-4','sec-5','sec-6','sec-7','sec-8'];
+  const dots = document.querySelectorAll('.nav-dot');
+
+  function scrollTo(i) {
+    document.getElementById(sectionIds[i]).scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function switchTab(btn, showId, hideId) {
+    const wrap = btn.closest('.prompt-wrap');
+    wrap.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(showId).classList.add('active');
+    document.getElementById(hideId).classList.remove('active');
+  }
+
+  function copyActive(btn) {
+    const block = btn.closest('.prompt-block');
+    const active = block.querySelector('.prompt-text.active');
+    navigator.clipboard.writeText(active ? active.innerText : '').then(() => {
+      const orig = btn.innerHTML;
+      btn.classList.add('copied');
+      btn.innerHTML = '<svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Copied';
+      setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = orig; }, 2000);
+    });
+  }
+
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY;
+    const total = document.body.scrollHeight - window.innerHeight;
+    document.getElementById('prog').style.width = (scrolled / total * 100) + '%';
+    let cur = 0;
+    sectionIds.forEach((id, i) => {
+      const el = document.getElementById(id);
+      if (el && el.getBoundingClientRect().top <= window.innerHeight * 0.45) cur = i;
+    });
+    dots.forEach((d, i) => d.classList.toggle('active', i === cur));
+  });
+</script>
+
+
+</body></html>
