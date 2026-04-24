@@ -79,6 +79,8 @@
 
   ensureIconoirStylesheet();
 
+  var reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   // ── Styles ────────────────────────────────────────────────────────────────
   var style = document.createElement('style');
   style.textContent =
@@ -142,7 +144,79 @@
 
     // Step entrance animation
     '@keyframes navStepIn{from{opacity:0;transform:translateY(-7px)}to{opacity:1;transform:translateY(0)}}' +
+    '@keyframes navItemReveal{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}' +
     '@media(prefers-reduced-motion:reduce){.nav-sub-step,.nav-sub-arrow{animation:none;opacity:1;transform:none;}}' +
+
+    // ── Hamburger button ──────────────────────────────────────────────────
+    '.nav-hamburger{display:none;align-items:center;justify-content:center;' +
+    'width:40px;height:40px;margin-left:auto;background:none;border:none;' +
+    'cursor:pointer;padding:0;color:#b1adc4;transition:color .2s;flex-shrink:0;border-radius:8px;}' +
+    '.nav-hamburger:hover{color:#fff;background:rgba(255,255,255,.06);}' +
+    '.nav-hamburger:focus-visible{outline:2px solid #4f9990;outline-offset:2px;}' +
+    '.nav-ham-icon{display:flex;flex-direction:column;gap:5px;width:20px;pointer-events:none;}' +
+    '.nav-ham-line{display:block;height:2px;background:currentColor;border-radius:2px;' +
+    'transition:transform .28s cubic-bezier(.4,0,.2,1),opacity .2s ease;}' +
+    '.nav-wrapper.nav-menu-open .nav-ham-line:nth-child(1){transform:translateY(7px) rotate(45deg);}' +
+    '.nav-wrapper.nav-menu-open .nav-ham-line:nth-child(2){opacity:0;transform:scaleX(0);}' +
+    '.nav-wrapper.nav-menu-open .nav-ham-line:nth-child(3){transform:translateY(-7px) rotate(-45deg);}' +
+    '@media(prefers-reduced-motion:reduce){.nav-ham-line{transition:none;}}' +
+
+    // ── Mobile overlay ────────────────────────────────────────────────────
+    '.nav-mobile-overlay{position:fixed;left:0;right:0;bottom:0;z-index:999;' +
+    'background:#180b28;overflow-y:auto;overflow-x:hidden;' +
+    'display:flex;flex-direction:column;' +
+    'opacity:0;pointer-events:none;' +
+    'transition:opacity .28s ease;}' +
+    '.nav-mobile-overlay.nav-overlay-open{opacity:1;pointer-events:auto;}' +
+    '@media(prefers-reduced-motion:reduce){.nav-mobile-overlay{transition:none;}}' +
+
+    '.nav-overlay-body{padding:8px 20px 60px;display:flex;flex-direction:column;}' +
+
+    '.nav-overlay-craft-group{margin-bottom:4px;}' +
+
+    '.nav-overlay-craft-label{' +
+    'display:flex;align-items:center;gap:10px;' +
+    'font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;' +
+    'color:var(--nc,#b1adc4);padding:20px 4px 8px;cursor:default;}' +
+    '.nav-overlay-craft-label::after{content:"";flex:1;height:1px;background:rgba(255,255,255,.08);}' +
+    '.nav-overlay-craft-label.active-craft{color:var(--nc,#fff);}' +
+
+    '.nav-overlay-page-link{' +
+    'display:flex;align-items:center;gap:14px;' +
+    'padding:13px 16px;border-radius:10px;' +
+    'text-decoration:none;color:#a8a4bc;' +
+    'font-size:15px;font-weight:500;line-height:1.3;' +
+    'border:1px solid transparent;' +
+    'transition:background .18s ease,color .18s ease,border-color .18s ease;' +
+    'opacity:0;}' +
+    '.nav-overlay-page-link.nav-ol-animate{animation:navItemReveal .26s ease forwards;}' +
+    '.nav-overlay-page-link.nav-ol-visible{opacity:1;}' +
+    '.nav-overlay-page-link:hover{background:rgba(255,255,255,.06);color:#fff;border-color:rgba(255,255,255,.1);}' +
+    '.nav-overlay-page-link.active{' +
+    'background:rgba(255,255,255,.08);color:#fff;' +
+    'border-color:rgba(255,255,255,.12);}' +
+    '@media(prefers-reduced-motion:reduce){.nav-overlay-page-link{animation:none!important;opacity:1;}}' +
+
+    '.nav-ol-num{font-size:11px;font-weight:700;letter-spacing:.06em;' +
+    'color:var(--nc,#8f8aa6);flex-shrink:0;width:18px;text-align:right;}' +
+    '.nav-overlay-page-link.active .nav-ol-num{color:var(--nc,#fff);}' +
+    '.nav-ol-title{flex:1;min-width:0;}' +
+    '.nav-ol-active-dot{width:6px;height:6px;border-radius:50%;' +
+    'background:var(--nc,#4f9990);flex-shrink:0;opacity:0;transition:opacity .2s;}' +
+    '.nav-overlay-page-link.active .nav-ol-active-dot{opacity:1;}' +
+
+    // Home link inside overlay
+    '.nav-overlay-home{' +
+    'display:flex;align-items:center;gap:12px;padding:16px 16px 12px;' +
+    'text-decoration:none;color:#b1adc4;' +
+    'border-bottom:1px solid rgba(255,255,255,.08);' +
+    'font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;' +
+    'transition:color .18s;opacity:0;}' +
+    '.nav-overlay-home.nav-ol-animate{animation:navItemReveal .22s ease forwards;}' +
+    '.nav-overlay-home.nav-ol-visible{opacity:1;}' +
+    '.nav-overlay-home:hover{color:#fff;}' +
+    '.nav-overlay-home.active{color:#fff;}' +
+    '@media(prefers-reduced-motion:reduce){.nav-overlay-home{animation:none!important;opacity:1;}}' +
 
     // Shared previous / next band
     '.nav-next-banner{position:relative;background:linear-gradient(180deg,#271344 0%,#210f36 100%);border-top:1px solid rgba(255,255,255,.14);box-shadow:0 -18px 44px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.04);}' +
@@ -165,11 +239,13 @@
     '.nav-next-arrow{position:relative;z-index:1;font-size:24px;line-height:1;flex:0 0 auto;transition:transform .36s cubic-bezier(.18,.72,.2,1);}' +
     '.nav-sequence-card--next:hover .nav-next-arrow{transform:translateX(6px);}' +
     '.nav-sequence-card--prev:hover .nav-next-arrow{transform:translateX(-6px);}' +
+
+    // ── Responsive ────────────────────────────────────────────────────────
     '@media(max-width:768px){' +
-    '.nav-top{padding:0 16px;}.nav-sub{padding:0 16px;}' +
-    '.nav-craft-name{font-size:12px;letter-spacing:.04em;}' +
-    '.nav-sub-label{display:none;}' +
-    '.nav-sub-step{padding:0 5px;}' +
+    '.nav-top{padding:0 16px;}' +
+    '.nav-sub{display:none;}' +
+    '.nav-hamburger{display:flex;}' +
+    '.nav-vdivider,.nav-craft{display:none;}' +
     '.nav-sequence-grid{grid-template-columns:1fr;gap:14px;padding:22px 16px 18px;}' +
     '.nav-sequence-card{min-height:96px;padding:20px;}' +
     '.nav-next-title{font-size:18px;max-width:none;}' +
@@ -226,6 +302,20 @@
     topRow.appendChild(craftEl);
   });
 
+  // ── Hamburger button ──────────────────────────────────────────────────────
+  var hamburgerBtn = document.createElement('button');
+  hamburgerBtn.className = 'nav-hamburger';
+  hamburgerBtn.setAttribute('aria-label', 'Open navigation menu');
+  hamburgerBtn.setAttribute('aria-expanded', 'false');
+  hamburgerBtn.setAttribute('aria-controls', 'nav-mobile-overlay');
+  hamburgerBtn.innerHTML =
+    '<span class="nav-ham-icon" aria-hidden="true">' +
+      '<span class="nav-ham-line"></span>' +
+      '<span class="nav-ham-line"></span>' +
+      '<span class="nav-ham-line"></span>' +
+    '</span>';
+  topRow.appendChild(hamburgerBtn);
+
   navEl.appendChild(topRow);
 
   // ── Sub row (steps for active craft only) ─────────────────────────────────
@@ -242,7 +332,6 @@
         var arrow = document.createElement('span');
         arrow.className = 'nav-sub-arrow';
         arrow.textContent = '›';
-        // Arrows animate slightly after the preceding step
         arrow.style.animationDelay = (i * 90 - 30) + 'ms';
         subRow.appendChild(arrow);
       }
@@ -269,6 +358,147 @@
   var currentScript = document.currentScript;
   currentScript.parentNode.insertBefore(navEl, currentScript);
 
+  // ── Mobile overlay ─────────────────────────────────────────────────────────
+  var overlay = document.createElement('div');
+  overlay.id = 'nav-mobile-overlay';
+  overlay.className = 'nav-mobile-overlay';
+  overlay.setAttribute('aria-hidden', 'true');
+  overlay.setAttribute('role', 'dialog');
+  overlay.setAttribute('aria-label', 'Navigation menu');
+
+  var overlayBody = document.createElement('div');
+  overlayBody.className = 'nav-overlay-body';
+
+  // Home link at top
+  var overlayHome = document.createElement('a');
+  overlayHome.href = root + 'index.html';
+  overlayHome.className = 'nav-overlay-home' + (isHome ? ' active' : '');
+  overlayHome.innerHTML =
+    '<i class="iconoir-book" aria-hidden="true" style="font-size:16px;flex-shrink:0;"></i>' +
+    '<span>SDLC Playbook</span>';
+  overlayBody.appendChild(overlayHome);
+
+  // Craft groups with page links
+  var allOverlayLinks = [overlayHome];
+
+  CRAFTS.forEach(function (craft) {
+    if (!craft.pages.length) return;
+
+    var group = document.createElement('div');
+    group.className = 'nav-overlay-craft-group';
+
+    var isCraftActive = craft.id === craftFolder;
+
+    var craftLabel = document.createElement('div');
+    craftLabel.className = 'nav-overlay-craft-label' + (isCraftActive ? ' active-craft' : '');
+    craftLabel.style.setProperty('--nc', craft.navColor || craft.color);
+    craftLabel.textContent = craft.label;
+    group.appendChild(craftLabel);
+
+    craft.pages.forEach(function (pageName) {
+      var filename = pageName + '.html';
+      var isActive = isCraftActive && currentFile === filename;
+      var numMatch = pageName.match(/^(\d+)/);
+      var num = numMatch ? numMatch[1].replace(/^0+/, '') : '';
+      var title = pageName.replace(/^\d+\s+/, '');
+
+      var link = document.createElement('a');
+      link.href = root + 'pages/' + craft.id + '/' + encodeURIComponent(filename);
+      link.className = 'nav-overlay-page-link' + (isActive ? ' active' : '');
+      link.style.setProperty('--nc', craft.navColor || craft.color);
+      link.setAttribute('aria-current', isActive ? 'page' : '');
+      link.innerHTML =
+        '<span class="nav-ol-num">' + num + '</span>' +
+        '<span class="nav-ol-title">' + title + '</span>' +
+        '<span class="nav-ol-active-dot" aria-hidden="true"></span>';
+
+      group.appendChild(link);
+      allOverlayLinks.push(link);
+    });
+
+    overlayBody.appendChild(group);
+  });
+
+  overlay.appendChild(overlayBody);
+
+  // ── Overlay open / close ──────────────────────────────────────────────────
+  var menuOpen = false;
+  var scrollLockY = 0;
+
+  function openMenu() {
+    menuOpen = true;
+    navEl.classList.add('nav-menu-open');
+    overlay.classList.add('nav-overlay-open');
+    overlay.setAttribute('aria-hidden', 'false');
+    hamburgerBtn.setAttribute('aria-expanded', 'true');
+    hamburgerBtn.setAttribute('aria-label', 'Close navigation menu');
+
+    // Position overlay top flush with nav bottom
+    overlay.style.top = navEl.offsetHeight + 'px';
+
+    // Scroll lock
+    scrollLockY = window.scrollY;
+    document.body.style.overflow = 'hidden';
+
+    // Staggered item reveal
+    if (!reducedMotion) {
+      allOverlayLinks.forEach(function (el, i) {
+        el.classList.remove('nav-ol-animate', 'nav-ol-visible');
+        el.style.animationDelay = (i * 45 + 40) + 'ms';
+        // Force reflow to restart animation
+        void el.offsetWidth;
+        el.classList.add('nav-ol-animate');
+      });
+    } else {
+      allOverlayLinks.forEach(function (el) {
+        el.classList.add('nav-ol-visible');
+      });
+    }
+  }
+
+  function closeMenu() {
+    menuOpen = false;
+    navEl.classList.remove('nav-menu-open');
+    overlay.classList.remove('nav-overlay-open');
+    overlay.setAttribute('aria-hidden', 'true');
+    hamburgerBtn.setAttribute('aria-expanded', 'false');
+    hamburgerBtn.setAttribute('aria-label', 'Open navigation menu');
+
+    // Restore scroll
+    document.body.style.overflow = '';
+  }
+
+  hamburgerBtn.addEventListener('click', function () {
+    if (menuOpen) closeMenu(); else openMenu();
+  });
+
+  // Close on overlay link click
+  allOverlayLinks.forEach(function (el) {
+    el.addEventListener('click', function () {
+      closeMenu();
+    });
+  });
+
+  // Close on Escape
+  document.addEventListener('keydown', function (e) {
+    if (menuOpen && (e.key === 'Escape' || e.keyCode === 27)) {
+      closeMenu();
+      hamburgerBtn.focus();
+    }
+  });
+
+  // Close when viewport goes wide (e.g. rotate to landscape tablet)
+  window.addEventListener('resize', function () {
+    if (menuOpen && window.innerWidth > 768) closeMenu();
+    // Keep overlay top aligned
+    if (overlay.classList.contains('nav-overlay-open')) {
+      overlay.style.top = navEl.offsetHeight + 'px';
+    }
+  }, { passive: true });
+
+  // Append overlay to body after nav is in DOM
+  document.body.appendChild(overlay);
+
   // Sync body padding to nav height (accounts for one or two rows)
   function syncBodyPadding() {
     document.body.style.paddingTop = navEl.offsetHeight + 'px';
@@ -284,6 +514,8 @@
   function hideNav() { if (navVisible)  { navEl.classList.add('nav-hidden');    navVisible = false; } }
 
   window.addEventListener('scroll', function () {
+    // Never hide while mobile menu is open
+    if (menuOpen) return;
     var y = window.scrollY;
     if (y < 60) { showNav(); navEl.classList.remove('nav-scrolled'); }
     else {
@@ -402,7 +634,7 @@
   // ── Tip-trick scroll reveal ───────────────────────────────────────────────
   (function initTipReveal() {
     if (!window.IntersectionObserver) return;
-    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (reducedMotion) return;
 
     function revealCard(card) {
       card.classList.add('tt-visible');
@@ -413,7 +645,6 @@
       if (!cards.length) return;
 
       var vh = window.innerHeight;
-      // Bail out if layout isn't ready — leave cards visible
       if (!vh) return;
 
       var observer = new IntersectionObserver(function (entries) {
@@ -427,7 +658,6 @@
 
       var toAnimate = [];
       cards.forEach(function (card) {
-        // Only animate cards that start below the fold
         if (card.getBoundingClientRect().top > vh - 40) {
           card.classList.add('tt-anim');
           observer.observe(card);
@@ -435,7 +665,6 @@
         }
       });
 
-      // Safety net: if a card hasn't revealed after 1.5s, force it visible
       if (toAnimate.length) {
         setTimeout(function () {
           toAnimate.forEach(function (card) {

@@ -5,6 +5,44 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>MCP, Context Hygiene &amp; Scaling</title>
 <link rel="stylesheet" href="../../styles/shared.css"/>
+<style>
+/* ── MCP architecture diagram ── */
+.mcp-arch { display: flex; flex-direction: column; gap: 0; margin: 44px 0 8px; }
+.mcp-row  { display: flex; align-items: stretch; gap: 0; }
+.mcp-cell {
+  flex: 1;
+  border: 1px solid rgba(255,255,255,.12);
+  padding: 18px 16px;
+  font-size: 13px;
+  line-height: 1.5;
+  text-align: center;
+  color: rgba(255,255,255,.75);
+}
+.mcp-cell--model   { background: rgba(47,107,102,.25); border-color: #4f9990; color: #4f9990; font-weight: 700; }
+.mcp-cell--server  { background: rgba(43,104,128,.25); border-color: #7dd3e8; color: #7dd3e8; font-weight: 700; }
+.mcp-cell--system  { background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.15); font-size: 12px; }
+.mcp-cell-label    { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; display: block; margin-bottom: 5px; color: rgba(255,255,255,.35); font-family: 'Roboto Mono', monospace; }
+.mcp-arrow-row     { display: flex; align-items: center; justify-content: center; gap: 0; }
+.mcp-arrow-cell    { flex: 1; text-align: center; font-size: 13px; color: rgba(255,255,255,.25); padding: 4px 0; }
+.mcp-arrow-cell--active { color: #4f9990; }
+@media (max-width: 768px) {
+  .mcp-row { flex-direction: column; }
+  .mcp-arrow-row { display: none; }
+}
+
+/* ── Context budget bar ── */
+.ctx-budget { margin-top: 44px; }
+.ctx-budget-label { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.35); margin-bottom: 16px; font-family: 'Roboto Mono', monospace; }
+.ctx-bar-row  { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; font-size: 13px; }
+.ctx-bar-name { width: 130px; flex-shrink: 0; color: rgba(255,255,255,.55); font-size: 12px; text-align: right; }
+.ctx-bar-track { flex: 1; background: rgba(255,255,255,.07); border-radius: 4px; height: 20px; overflow: hidden; }
+.ctx-bar-fill  { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 10px; font-size: 11px; font-weight: 700; font-family: 'Roboto Mono', monospace; white-space: nowrap; }
+.ctx-bar-fill--sys    { background: rgba(196,181,253,.35); color: #c4b5fd; width: 12%; }
+.ctx-bar-fill--files  { background: rgba(79,153,144,.45); color: #4f9990; width: 28%; }
+.ctx-bar-fill--hist   { background: rgba(232,163,23,.35); color: #e8a317; width: 35%; }
+.ctx-bar-fill--tools  { background: rgba(125,211,232,.2); color: #7dd3e8; width: 18%; }
+.ctx-bar-fill--prompt { background: rgba(255,255,255,.2); color: rgba(255,255,255,.7); width: 7%; }
+</style>
 </head>
 <body>
 <script src="../../footer.js"></script>
@@ -48,6 +86,32 @@
         <span class="dev-flow-num">3</span>
         <h3>The result re-enters the context window</h3>
         <p>The next model turn can inspect that output, decide what it means, and choose the next action. That loop is what makes tool use agentic instead of decorative.</p>
+      </div>
+    </div>
+
+    <div class="mcp-arch">
+      <div class="mcp-row">
+        <div class="mcp-cell mcp-cell--model">
+          <span class="mcp-cell-label">Layer 1</span>
+          AI Model<br><small style="font-weight:400;font-size:11px;opacity:.7;">Claude / Copilot</small>
+        </div>
+        <div class="mcp-cell" style="flex:0.25; display:flex; align-items:center; justify-content:center; font-size:18px; color:rgba(79,153,144,.6);">⇄</div>
+        <div class="mcp-cell mcp-cell--server">
+          <span class="mcp-cell-label">Layer 2</span>
+          MCP Server<br><small style="font-weight:400;font-size:11px;opacity:.7;">routes tool calls</small>
+        </div>
+        <div class="mcp-cell" style="flex:0.25; display:flex; align-items:center; justify-content:center; font-size:18px; color:rgba(125,211,232,.4);">⇄</div>
+        <div class="mcp-cell mcp-cell--system">
+          <span class="mcp-cell-label">Layer 3</span>
+          External Systems<br><small style="opacity:.55;">GitHub · DB · Jira · Filesystem</small>
+        </div>
+      </div>
+      <div class="mcp-arrow-row" style="margin-top:8px;">
+        <div class="mcp-arrow-cell mcp-arrow-cell--active">① tool_call JSON →</div>
+        <div class="mcp-arrow-cell"></div>
+        <div class="mcp-arrow-cell mcp-arrow-cell--active">② executes request</div>
+        <div class="mcp-arrow-cell"></div>
+        <div class="mcp-arrow-cell" style="color:rgba(125,211,232,.5);">③ ← structured result</div>
       </div>
     </div>
 
@@ -142,6 +206,38 @@
     <div class="callout dark">
       <div class="callout-label">Operating principle</div>
       <div class="callout-body"><strong>Better context beats more context.</strong> The deck treats session hygiene as a first-order engineering skill, not a courtesy to the model.</div>
+    </div>
+
+    <div class="ctx-budget">
+      <div class="ctx-budget-label">Typical context window — what consumes the budget</div>
+      <div class="ctx-bar-row">
+        <div class="ctx-bar-name">System / CLAUDE.md</div>
+        <div class="ctx-bar-track"><div class="ctx-bar-fill ctx-bar-fill--sys">~12%</div></div>
+      </div>
+      <div class="ctx-bar-row">
+        <div class="ctx-bar-name">Opened files</div>
+        <div class="ctx-bar-track"><div class="ctx-bar-fill ctx-bar-fill--files">~28%</div></div>
+      </div>
+      <div class="ctx-bar-row">
+        <div class="ctx-bar-name">Chat history</div>
+        <div class="ctx-bar-track"><div class="ctx-bar-fill ctx-bar-fill--hist">~35%</div></div>
+      </div>
+      <div class="ctx-bar-row">
+        <div class="ctx-bar-name">Tool results</div>
+        <div class="ctx-bar-track"><div class="ctx-bar-fill ctx-bar-fill--tools">~18%</div></div>
+      </div>
+      <div class="ctx-bar-row">
+        <div class="ctx-bar-name">New prompt</div>
+        <div class="ctx-bar-track"><div class="ctx-bar-fill ctx-bar-fill--prompt">~7%</div></div>
+      </div>
+    </div>
+
+    <div class="tip-trick tip-trick--dark" style="margin-top: 32px;">
+      <div class="tip-trick-icon" aria-hidden="true">✦</div>
+      <div class="tip-trick-copy">
+        <div class="tip-trick-label">Tips &amp; Tricks</div>
+        <p><strong>Chat history is usually the biggest controllable variable.</strong> A compacted summary replaces a growing transcript; the model keeps the substance without the dead-end turns that shaped earlier answers.</p>
+      </div>
     </div>
 
   </div>

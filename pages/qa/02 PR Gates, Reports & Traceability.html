@@ -91,6 +91,50 @@
       </div>
     </div>
 
+    <div class="code-wrap" style="margin: 40px 0 8px;">
+      <div class="code-topbar">
+        <span class="cb-dot" style="background: #ff5f57;"></span>
+        <span class="cb-dot" style="background: #ffbd2e;"></span>
+        <span class="cb-dot" style="background: #28c840;"></span>
+        <span class="code-label">.github/workflows/test.yml — sample CI pipeline</span>
+      </div>
+      <div class="code-body">
+        <pre><span class="comment"># Triggers on pull requests targeting main or develop</span>
+<span class="violet">on</span>:
+  <span class="green">pull_request</span>:
+    branches: [main, develop]
+
+<span class="violet">jobs</span>:
+  <span class="green">test</span>:
+    runs-on: ubuntu-latest
+    steps:
+      - <span class="amber">uses</span>: actions/checkout@v4
+
+      - <span class="amber">name</span>: Install dependencies
+        <span class="amber">run</span>: npm ci
+
+      - <span class="amber">name</span>: Run tests with coverage
+        <span class="amber">run</span>: npm test -- --coverage <span class="comment"># enforces 90% gate in jest.config</span>
+
+      - <span class="amber">name</span>: Upload test artifacts
+        <span class="amber">uses</span>: actions/upload-artifact@v4
+        <span class="amber">with</span>:
+          <span class="amber">name</span>: test-report-${{ github.sha }}
+          <span class="amber">path</span>: coverage/
+
+      - <span class="amber">name</span>: Comment results on PR
+        <span class="amber">uses</span>: actions/github-script@v7
+        <span class="amber">with</span>:
+          <span class="amber">script</span>: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: <span class="dim">'✅ Tests passed · Coverage: 92% · [REQ-HT-012] ✓'</span>
+            })</pre>
+      </div>
+    </div>
+
     <div class="dev-chip-row">
       <span class="dev-chip">pull_request</span>
       <span class="dev-chip">npm test --coverage</span>
@@ -129,6 +173,14 @@
     <div class="callout light">
       <div class="callout-label">Prompt Reference</div>
       <div class="callout-body">The deck includes reusable prompts for generating unit tests, integration tests, coverage-improvement passes, and PR-result summaries. The consistent pattern is the same one used everywhere else: identify the feature, specify the expected behavior, include <strong>[REQ-ID]</strong>, and request an explicit output format.</div>
+    </div>
+
+    <div class="tip-trick" style="margin-top: 32px;">
+      <div class="tip-trick-icon" aria-hidden="true">✦</div>
+      <div class="tip-trick-copy">
+        <div class="tip-trick-label">Tips &amp; Tricks</div>
+        <p><strong>Add the requirement tag grep to the CI comment step.</strong> A one-liner like <code>grep -ro '\[REQ-[A-Z0-9-]*\]' src/__tests__/</code> gives you a live traceability report without a separate tool.</p>
+      </div>
     </div>
   </div>
 </section>
