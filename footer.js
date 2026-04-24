@@ -11,9 +11,9 @@
     var style = document.createElement('style');
     style.id = 'shared-footer-component-styles';
     style.textContent =
-      '.nav-site-footer{position:relative;display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:28px;background:linear-gradient(180deg,#1d0d31 0%,#160924 100%);padding:28px max(64px,calc((100% - 1280px) / 2)) 36px;border-top:1px solid rgba(255,255,255,.08);overflow:hidden;}' +
+      '.nav-site-footer{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:28px;background:linear-gradient(180deg,#1d0d31 0%,#160924 100%);padding:28px max(64px,calc((100% - 1280px) / 2)) 36px;border-top:1px solid rgba(255,255,255,.08);overflow:hidden;}' +
       '.nav-site-footer::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 18% 0%,rgba(196,181,253,.1),transparent 35%),linear-gradient(90deg,transparent,rgba(110,231,223,.05));pointer-events:none;}' +
-      '.nav-site-footer .brand-link{position:relative;z-index:1;align-self:start;padding-top:4px;}' +
+      '.nav-site-footer .brand-link{position:relative;z-index:1;align-self:center;justify-self:end;padding-top:0;}' +
       '.nav-site-footer .footer-logo{--logo-height:52px;height:52px;width:calc(var(--logo-height) * 114 / 60);}' +
       '.nav-footer-copy{position:relative;z-index:1;display:grid;gap:8px;min-width:0;}' +
       '.nav-footer-kicker{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#c4b5fd;}' +
@@ -23,6 +23,7 @@
       '.nav-footer-stage{display:inline-flex;align-items:center;padding:7px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#f4f2fb;}' +
       '@media(max-width:768px){' +
       '.nav-site-footer{grid-template-columns:1fr;gap:18px;padding:24px 16px 28px;}' +
+      '.nav-site-footer .brand-link{justify-self:end;}' +
       '.nav-site-footer .footer-logo{--logo-height:46px;height:46px;}' +
       '.nav-footer-title{font-size:18px;}' +
       '.nav-footer-text{max-width:none;}' +
@@ -43,20 +44,20 @@
     footer.className = 'page-footer nav-site-footer';
     footer.removeAttribute('style');
     footer.innerHTML =
-      '<a href="https://nimblegravity.com/" class="brand-link" target="_blank" rel="noopener noreferrer" aria-label="Nimble Gravity">' +
-        WORDMARK_SVG +
-      '</a>' +
       '<div class="nav-footer-copy">' +
         '<div class="nav-footer-kicker">Nimble Gravity × Medpace</div>' +
         '<div class="nav-footer-title">AI-Powered SDLC Playbook</div>' +
         '<div class="nav-footer-text">A shared project reference for requirements, design, development, and QA workflows, built to show how Nimble Gravity approaches the software delivery lifecycle with AI-native methods and clearer handoffs.</div>' +
         '<div class="nav-footer-stages" aria-label="Project stages">' +
-          '<span class="nav-footer-stage">Requirements</span>' +
+          '<span class="nav-footer-stage">Product</span>' +
           '<span class="nav-footer-stage">Design</span>' +
           '<span class="nav-footer-stage">Development</span>' +
           '<span class="nav-footer-stage">QA &amp; Testing</span>' +
         '</div>' +
-      '</div>';
+      '</div>' +
+      '<a href="https://nimblegravity.com/" class="brand-link" target="_blank" rel="noopener noreferrer" aria-label="Nimble Gravity">' +
+        WORDMARK_SVG +
+      '</a>';
 
     return footer;
   }

@@ -8,8 +8,13 @@ A static HTML documentation/workshop site for a UX design team at Medpace — a 
 
 To run locally:
 ```bash
-python -m http.server
+./serve
 # Visit http://localhost:8000
+```
+
+For a plain static server without live reload:
+```bash
+python -m http.server
 ```
 
 ## Architecture

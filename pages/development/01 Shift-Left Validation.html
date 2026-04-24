@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Shift-Left Validation</title>
+<link rel="stylesheet" href="../../styles/shared.css"/>
+</head>
+<body>
+<script src="../../footer.js"></script>
+<script src="../../nav.js"></script>
+
+<section class="hero" id="sec-0">
+  <div class="hero-inner">
+    <div class="eyebrow">Development · Phase 03 of 04</div>
+    <h1>Shift <em>validation</em><br>left, not later.</h1>
+    <p class="hero-desc">The source deck is fundamentally about moving validation upstream: requirements land in Helix earlier, draft test cases exist before coding is done, and business review becomes structured instead of improvisational. For Development, that means building the automation layer that makes earlier validation possible.</p>
+  </div>
+</section>
+
+<section class="section" id="sec-1">
+  <div class="section-inner">
+    <div class="section-label">Where The Current Flow Breaks</div>
+    <h2>The bottleneck is not just testing. <em>It is timing.</em></h2>
+    <p class="section-sub">The PDF’s core finding is that validation gets compressed to the end of the project, where every defect is more expensive and every requirement change multiplies rework.</p>
+
+    <div class="dev-grid-2">
+      <div class="dev-card">
+        <div class="dev-kicker">Pain Point 01</div>
+        <h3>Late requirements block validation</h3>
+        <p>Requirements do not become Helix-ready until development is almost complete. Validation cannot begin authoring test assets with confidence, so the team either waits or starts early knowing it will have to redo the work.</p>
+        <div class="dev-quote">Validation ends up writing hundreds of cases under compressed timelines, exactly when errors are hardest to catch.</div>
+        <span class="dev-attribution">Becky Ross · Head of System Validation</span>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Pain Point 02</div>
+        <h3>Manual test creation consumes senior attention</h3>
+        <p>Field verification, character limits, required fields, and data types are still authored manually feature by feature. The repetitive work crowds out the expert judgment that should be reserved for high-risk business logic.</p>
+        <div class="dev-quote">The team spends time producing documentation that a machine could draft, instead of focusing on scenarios where clinical and operational expertise actually matters.</div>
+        <span class="dev-attribution">Validation Discovery Summary</span>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Pain Point 03</div>
+        <h3>Requirement changes cascade during testing</h3>
+        <p>When testing reveals that the requirement was wrong rather than the code, every downstream artifact must be reconciled: PBIs, Helix FRS entries, code, traceability, and signatures. Each mismatch restarts the loop.</p>
+        <div class="dev-quote">A single mid-stream requirement correction can create a multi-week re-validation cycle.</div>
+        <span class="dev-attribution">Frank Sikorski · Development Manager</span>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Pain Point 04</div>
+        <h3>Context decays across approvals</h3>
+        <p>Business stakeholders approve artifacts they do not fully understand, then object later when UAT reveals the real system behavior. The failure is not only communication. It is the absence of structured, guided review points before UAT.</p>
+        <div class="dev-quote">Late surprise is usually a symptom of poor context transfer, not a lack of effort.</div>
+        <span class="dev-attribution">Business Analysis Discovery Summary</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="section dark" id="sec-2">
+  <div class="section-inner">
+    <div class="section-label">Future State</div>
+    <h2>Build the system so validation starts <em>before the sprint ends.</em></h2>
+    <p class="section-sub">The deck’s future state is not “more testing.” It is a development workflow that emits usable requirements, draft tests, and guided business review material earlier in the lifecycle.</p>
+
+    <div class="dev-state-grid">
+      <div class="dev-state dev-state--today">
+        <div class="dev-state-label">Today</div>
+        <h3>Requirements arrive after the build is mostly done</h3>
+        <ul class="dev-list">
+          <li>BAs translate information multiple times across meetings, PBIs, and Helix artifacts.</li>
+          <li>Validation waits on stable FRS content before serious planning can begin.</li>
+          <li>Structured UAT happens late, when every surprise creates new scope or rework.</li>
+        </ul>
+      </div>
+
+      <div class="dev-state dev-state--future">
+        <div class="dev-state-label">Future</div>
+        <h3>Development emits validation-ready artifacts continuously</h3>
+        <ul class="dev-list">
+          <li>AI drafts URS and FRS content from transcripts, legacy context, and stabilized requirements.</li>
+          <li>Draft test cases are generated from FRS items while implementation is still underway.</li>
+          <li>Guided UAT checklists and walkthroughs reduce ambiguity before formal testing and sign-off.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="dev-band">
+      <p><strong>The Development implication:</strong> your job is not only to ship code. It is to ship the automation hooks, APIs, evidence capture, and structured artifact generation that allow Validation to run in parallel with engineering instead of behind it.</p>
+    </div>
+
+  </div>
+</section>
+
+<section class="section" id="sec-3">
+  <div class="section-inner">
+    <div class="section-label">Development Capabilities</div>
+    <h2>Three capabilities that make shift-left validation <em>real.</em></h2>
+    <p class="section-sub">These are the parts of the future-state model that engineering must operationalize.</p>
+
+    <div class="dev-grid-3">
+      <div class="dev-card">
+        <div class="dev-kicker">Capability 01</div>
+        <h3>AI-generated requirements to Helix</h3>
+        <p>Use transcripts, legacy code, and requirement templates to draft Helix-ready URS and FRS content earlier. The BA becomes an editor and approver rather than the sole transcriber of stakeholder intent.</p>
+        <div class="dev-chip-row">
+          <span class="dev-chip">Claude</span>
+          <span class="dev-chip">Spec Kit</span>
+          <span class="dev-chip">M365 Copilot</span>
+          <span class="dev-chip">Helix API</span>
+        </div>
+        <div class="dev-quote">Target: 50%+ reduction in time to Helix-ready requirements.</div>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Capability 02</div>
+        <h3>AI-generated test cases from FRS</h3>
+        <p>Each functional requirement should produce a corresponding draft test case, expected result, and traceability relationship. Validation still reviews and approves, but no longer starts from a blank page.</p>
+        <div class="dev-chip-row">
+          <span class="dev-chip">Claude</span>
+          <span class="dev-chip">Helix ALM API</span>
+          <span class="dev-chip">Traceability</span>
+        </div>
+        <div class="dev-quote">Target: 60%+ reduction in test case creation time.</div>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Capability 03</div>
+        <h3>Guided UAT instead of open-ended review</h3>
+        <p>Generate structured UAT checklists and AI-assisted walkthroughs from user requirements so stakeholders react to concrete workflows, not abstract mockups or generic review sessions.</p>
+        <div class="dev-chip-row">
+          <span class="dev-chip">URS Export</span>
+          <span class="dev-chip">Checklist Templates</span>
+          <span class="dev-chip">Async Review</span>
+        </div>
+        <div class="dev-quote">Target: 40%+ reduction in new scope discovered during UAT.</div>
+      </div>
+    </div>
+
+    <div class="insight">
+      <div class="insight-eyebrow">The common thread</div>
+      <p>The PDF keeps returning to the same idea: <strong>draft earlier, review later</strong>. Development is what turns that from a process aspiration into a repeatable system. Without APIs, automation, and artifact generation, “shift left” remains just a meeting slogan.</p>
+    </div>
+
+  </div>
+</section>
+
+<section class="section" id="sec-4">
+  <div class="section-inner">
+    <div class="section-label">Outcome Targets</div>
+    <h2>The outcomes this section is trying to <em>unlock.</em></h2>
+    <p class="section-sub">These targets come directly from the validation deck and define the bar for whether the development work is worth doing.</p>
+
+    <div class="dev-metric-grid">
+      <div class="dev-metric">
+        <span class="dev-metric-value">50%</span>
+        <span class="dev-metric-label">Faster to Helix</span>
+        <p>Requirements reach validation artifacts weeks sooner instead of appearing only when implementation is already stabilizing.</p>
+      </div>
+      <div class="dev-metric">
+        <span class="dev-metric-value">60%</span>
+        <span class="dev-metric-label">Less manual drafting</span>
+        <p>Draft cases, steps, and expected results are machine-generated from FRS content instead of written entirely by hand.</p>
+      </div>
+      <div class="dev-metric">
+        <span class="dev-metric-value">40%</span>
+        <span class="dev-metric-label">Less late scope</span>
+        <p>Guided review and earlier involvement reduce surprise change requests discovered during UAT.</p>
+      </div>
+    </div>
+
+    <div class="callout light">
+      <div class="callout-label">Development takeaway</div>
+      <div class="callout-body">Treat validation as a product of the development system itself. If you only automate build and deploy, but not requirements translation, test generation, or review guidance, you have optimized the wrong part of the SDLC.</div>
+    </div>
+
+  </div>
+</section>
+
+<footer></footer>
+</body>
+</html>

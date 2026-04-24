@@ -4,7 +4,7 @@
   var CRAFTS = [
     {
       id: 'requirements',
-      label: 'Requirements',
+      label: 'Product',
       color: '#8c47e4',
       navColor: '#c4b5fd',
       pages: [
@@ -29,7 +29,11 @@
       label: 'Development',
       color: '#2b6880',
       navColor: '#7dd3e8',
-      pages: []
+      pages: [
+        '01 Shift-Left Validation',
+        '02 Playwright + Helix Parallel Execution',
+        '03 Audit-Ready Release Automation'
+      ]
     },
     {
       id: 'qa',
@@ -48,6 +52,18 @@
   var currentFile = inPages ? decodeURIComponent(pathParts[pathParts.length - 1]) : '';
   var root        = inPages ? '../../' : '';
   var isHome      = !inPages;
+
+  function ensureIconoirStylesheet() {
+    if (document.getElementById('iconoir-css')) return;
+
+    var link = document.createElement('link');
+    link.id = 'iconoir-css';
+    link.rel = 'stylesheet';
+    link.href = 'https://cdn.jsdelivr.net/gh/iconoir-icons/iconoir@main/css/iconoir.css';
+    document.head.appendChild(link);
+  }
+
+  ensureIconoirStylesheet();
 
   // ── Styles ────────────────────────────────────────────────────────────────
   var style = document.createElement('style');
@@ -70,14 +86,14 @@
     "border-top:1px solid rgba(255,255,255,.06);overflow:hidden;}" +
 
     // Home link
-    '.nav-home{display:flex;align-items:center;gap:7px;text-decoration:none;' +
+    '.nav-home{display:flex;align-items:center;gap:9px;text-decoration:none;' +
     'padding:0 12px 0 0;margin-right:4px;flex-shrink:0;' +
     'border-bottom:2px solid transparent;transition:border-color .2s;}' +
     '.nav-home.active{border-bottom-color:#4f9990;}' +
-    '.nav-home-num{font-size:11px;font-weight:700;color:#6ee7df;letter-spacing:.08em;}' +
-    '.nav-home-label{font-size:13px;font-weight:500;color:#b1adc4;white-space:nowrap;transition:color .2s;}' +
-    '.nav-home:hover .nav-home-label{color:#c8c8d8;}' +
-    '.nav-home.active .nav-home-label{color:#fff;font-weight:600;}' +
+    '.nav-home-icon{display:inline-flex;align-items:center;justify-content:center;font-size:15px;line-height:1;color:#b1adc4;flex-shrink:0;transition:color .2s;}' +
+    '.nav-home-label{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#b1adc4;white-space:nowrap;transition:color .2s;}' +
+    '.nav-home:hover .nav-home-label,.nav-home:hover .nav-home-icon{color:#ffffff;}' +
+    '.nav-home.active .nav-home-label,.nav-home.active .nav-home-icon{color:#fff;}' +
 
     // Vertical divider
     '.nav-vdivider{width:1px;background:rgba(255,255,255,.1);align-self:stretch;flex-shrink:0;margin:0 4px;}' +
@@ -124,14 +140,14 @@
     '.nav-sequence-card:hover{transform:translateY(-1px);background:linear-gradient(180deg,rgba(255,255,255,.07) 0%,rgba(255,255,255,.04) 100%);border-color:rgba(255,255,255,.18);box-shadow:0 18px 36px rgba(0,0,0,.18);}' +
     '.nav-sequence-card--prev{justify-content:flex-start;}' +
     '.nav-sequence-card--next{justify-content:flex-end;text-align:right;}' +
-    '.nav-next-copy{position:relative;display:flex;flex-direction:column;gap:9px;min-width:0;z-index:1;}' +
-    '.nav-sequence-card--next .nav-next-copy{align-items:flex-end;text-align:right;}' +
-    '.nav-sequence-card--prev .nav-next-copy{align-items:flex-start;text-align:left;}' +
+    '.nav-next-copy{position:relative;display:flex;flex:1 1 auto;width:100%;flex-direction:column;gap:9px;min-width:0;z-index:1;}' +
+    '.nav-sequence-card--next .nav-next-copy{align-items:stretch;text-align:right;}' +
+    '.nav-sequence-card--prev .nav-next-copy{align-items:stretch;text-align:left;}' +
     '.nav-next-meta{display:flex;align-items:center;gap:10px;min-width:0;}' +
     '.nav-sequence-card--next .nav-next-meta{justify-content:flex-end;}' +
     '.nav-next-direction,.nav-next-craft{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;}' +
     '.nav-next-divider{width:1px;height:12px;background:rgba(255,255,255,.18);flex:0 0 auto;}' +
-    '.nav-next-title{font-size:21px;font-weight:600;color:#fff;line-height:1.18;letter-spacing:-.01em;max-width:28ch;}' +
+    '.nav-next-title{display:block;width:100%;font-size:21px;font-weight:600;color:#fff;line-height:1.18;letter-spacing:-.01em;max-width:none;}' +
     '.nav-next-arrow{position:relative;z-index:1;font-size:24px;line-height:1;flex:0 0 auto;transition:transform .36s cubic-bezier(.18,.72,.2,1);}' +
     '.nav-sequence-card--next:hover .nav-next-arrow{transform:translateX(6px);}' +
     '.nav-sequence-card--prev:hover .nav-next-arrow{transform:translateX(-6px);}' +
@@ -161,7 +177,7 @@
   homeEl.href = root + 'index.html';
   homeEl.className = 'nav-home' + (isHome ? ' active' : '');
   homeEl.innerHTML =
-    '<span class="nav-home-num">00</span>' +
+    '<i class="nav-home-icon iconoir-book" aria-hidden="true"></i>' +
     '<span class="nav-home-label">SDLC Playbook</span>';
   topRow.appendChild(homeEl);
 
