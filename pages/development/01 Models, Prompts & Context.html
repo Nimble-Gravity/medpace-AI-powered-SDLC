@@ -263,35 +263,35 @@
       </div>
     </div>
 
-    <div class=”insight”>
-      <div class=”insight-eyebrow”>Prompt takeaway</div>
+    <div class="insight">
+      <div class="insight-eyebrow">Prompt takeaway</div>
       <p>The workshop’s “bad vs good” example is making a narrow point: better prompting is mostly better scoping. A strong coding prompt describes the codebase, the goal, the boundaries, and the pattern to imitate before the agent writes anything.</p>
     </div>
 
-    <div class=”prompt-anatomy”>
-      <div class=”pa-panel”>
-        <div class=”pa-header pa-header--weak”><span>✗</span> Weak prompt</div>
-        <div class=”pa-big-code”>Fix the bug.</div>
-        <div class=”pa-why-label”>Why it fails</div>
-        <ul class=”pa-why-list”>
+    <div class="prompt-anatomy">
+      <div class="pa-panel">
+        <div class="pa-header pa-header--weak"><span>✗</span> Weak prompt</div>
+        <div class="pa-big-code">Fix the bug.</div>
+        <div class="pa-why-label">Why it fails</div>
+        <ul class="pa-why-list">
           <li>No context — which bug?</li>
           <li>No scope — what files?</li>
           <li>No role or pattern constraints</li>
         </ul>
       </div>
-      <div class=”pa-panel”>
-        <div class=”pa-header pa-header--strong”><span>✓</span> Strong CRISP prompt</div>
-        <div class=”pa-code-dark”>
-          <pre><span class=”pa-tag pa-tag--amber”>[Context]</span> TypeScript/Express API, Node 22, vitest.
-<span class=”pa-tag pa-tag--teal”>[Role]</span> Act as a senior backend engineer.
-<span class=”pa-tag pa-tag--violet”>[Intent]</span> Fix the 401 error in src/auth/middleware.ts.
-<span class=”pa-tag pa-tag--slate”>[Scope]</span> Only middleware.ts. Don’t touch test files.
-<span class=”pa-tag pa-tag--blue”>[Pattern]</span> Use the same try/catch style as utils/errors.ts.</pre>
+      <div class="pa-panel">
+        <div class="pa-header pa-header--strong"><span>✓</span> Strong CRISP prompt</div>
+        <div class="pa-code-dark">
+          <pre><span class="pa-tag pa-tag--amber">[Context]</span> TypeScript/Express API, Node 22, vitest.
+<span class="pa-tag pa-tag--teal">[Role]</span> Act as a senior backend engineer.
+<span class="pa-tag pa-tag--violet">[Intent]</span> Fix the 401 error in src/auth/middleware.ts.
+<span class="pa-tag pa-tag--slate">[Scope]</span> Only middleware.ts. Don’t touch test files.
+<span class="pa-tag pa-tag--blue">[Pattern]</span> Use the same try/catch style as utils/errors.ts.</pre>
         </div>
       </div>
     </div>
 
-    <div class=”tip-trick”>
+    <div class="tip-trick">
       <div class="tip-trick-icon" aria-hidden="true">✦</div>
       <div class="tip-trick-copy">
         <div class="tip-trick-label">Tips &amp; Tricks</div>
