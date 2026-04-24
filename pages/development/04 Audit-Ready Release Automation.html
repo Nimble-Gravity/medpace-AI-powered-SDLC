@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Audit-Ready Release Automation</title>
+<link rel="stylesheet" href="../../styles/shared.css"/>
+</head>
+<body>
+<script src="../../footer.js"></script>
+<script src="../../nav.js"></script>
+
+<section class="hero" id="sec-0">
+  <div class="hero-inner">
+    <div class="eyebrow">Development · Phase 04 of 04</div>
+    <h1>Make deployment<br>a governed <em>release event.</em></h1>
+    <p class="hero-desc">In a regulated environment, release automation is not just CI/CD convenience. It is the control surface that determines whether requirements, validation evidence, human approvals, and deployment records stay synchronized. The pipeline below is strong in structure, but it only becomes audit-defensible when the key system-of-record checks are enforced as hard gates.</p>
+    <div class="dev-chip-row">
+      <span class="dev-chip">Figma Gate</span>
+      <span class="dev-chip">Helix State</span>
+      <span class="dev-chip">ADO Hooks</span>
+      <span class="dev-chip">Coverage Gate</span>
+      <span class="dev-chip">Part 11 Review</span>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="sec-1">
+  <div class="section-inner">
+    <div class="section-label">What Already Works</div>
+    <h2>The current flow has the right <em>bones.</em></h2>
+    <p class="section-sub">Several parts of the proposed pipeline are already aligned with a GxP-friendly release model. Those are worth preserving because they reduce ambiguity before code, testing, and deployment diverge.</p>
+
+    <div class="dev-grid-3">
+      <div class="dev-card">
+        <div class="dev-kicker">Strength 01</div>
+        <h3>Figma asset validation runs as a hard entry gate</h3>
+        <p>Checking that all required UI assets exist before SpecKit runs is exactly the right move. It prevents underspecified screens from becoming compliant-looking but incomplete implementation work.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Strength 02</div>
+        <h3>The traceability chain is coherent end to end</h3>
+        <p>Figma screen to PBI to URS/FS to <code>spec.md</code> to test case to Helix is the right structural answer to requirements-to-test coverage. The release process should reinforce that chain, not bypass it.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Strength 03</div>
+        <h3>Audit records are event-driven instead of manual</h3>
+        <p>ADO hooks on <code>workitem.created</code>, <code>workitem.updated</code>, <code>build.complete</code>, and <code>deployment.completed</code> make the evidence trail timestamped and reproducible.</p>
+      </div>
+    </div>
+
+    <div class="callout light">
+      <div class="callout-label">Preserve this principle</div>
+      <div class="callout-body"><strong>Release automation should confirm system state, not assume it.</strong> The structure is already sound. The main gap is enforcement.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section dark" id="sec-2">
+  <div class="section-inner">
+    <div class="section-label">Required Hard Gates</div>
+    <h2>Three controls need to be explicit before deployment is truly <em>defensible.</em></h2>
+    <p class="section-sub">These are the highest-value additions because they turn informal expectations into system-enforced release criteria.</p>
+
+    <div class="dev-grid-3">
+      <div class="dev-card">
+        <div class="dev-kicker">Gate 01</div>
+        <h3>Helix must be enforced, not implied</h3>
+        <p>If Phase 3 can continue after ADO approval while Helix is incomplete, then Helix is not really the source of truth. Add a GitHub Action check that queries Helix before triggering the next phase and block <code>repository_dispatch</code> if linked requirements are not approved or lack risk linkage.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Gate 02</div>
+        <h3>Replace polling with a deterministic trigger</h3>
+        <p>Cron polling creates timing ambiguity. A Helix webhook or an ADO <code>workitem.updated</code> hook on transition to <strong>Requirements Approved</strong> is cleaner because the release package can point to a single trigger event and timestamp.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Gate 03</div>
+        <h3>Agent-generated Part 11 content needs a human review gate</h3>
+        <p>Agent 5 output should be treated as draft narrative only. Insert a QA or Regulatory Affairs review step before certificate sign-off so the AI-generated text is editorially reviewed before it enters a regulated approval flow.</p>
+      </div>
+    </div>
+
+    <div class="insight insight--violet">
+      <div class="insight-eyebrow">Release rule</div>
+      <p><strong>If a required system can be bypassed by process memory, it is not a gate.</strong> In this workflow, Helix state, deterministic triggering, and human review of AI-generated compliance language need to be machine-visible release criteria.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="sec-3">
+  <div class="section-inner">
+    <div class="section-label">Rejected Paths</div>
+    <h2>A compliant SDLC needs failure and re-entry paths, not only the <em>happy path.</em></h2>
+    <p class="section-sub">One of the biggest audit weaknesses in automation diagrams is omission of blocked-gate behavior. The release model should show what happens when approvals, verification, or compliance review fail.</p>
+
+    <div class="dev-phase-grid">
+      <div class="dev-phase">
+        <span class="dev-phase-num">1</span>
+        <h3>Requirements rejected</h3>
+        <p>If BA review fails, route the work back to Agent 1 re-intake or clarification. The rejected state should be visible in ADO and tied to the original requirement record.</p>
+      </div>
+
+      <div class="dev-phase">
+        <span class="dev-phase-num">2</span>
+        <h3>Helix compliance check fails</h3>
+        <p>If requirement state, risk linkage, or validation plan metadata are incomplete in Helix, stop phase progression and reopen the requirement package instead of allowing code work to continue.</p>
+      </div>
+
+      <div class="dev-phase">
+        <span class="dev-phase-num">3</span>
+        <h3>Verification fails</h3>
+        <p>Failed validation or open critical defects should create a defect-linked ADO item and send the release back to Phase 3 implementation rather than leaving the result as an informal note on the run.</p>
+      </div>
+
+      <div class="dev-phase">
+        <span class="dev-phase-num">4</span>
+        <h3>Part 11 narrative rejected</h3>
+        <p>If QA or Regulatory Affairs rejects the narrative package, send it back for agent revision and human rewrite before certificate workflow resumes.</p>
+      </div>
+    </div>
+
+    <div class="callout light">
+      <div class="callout-label">Why this matters</div>
+      <div class="callout-body">Deviation handling is part of the SDLC, not an exception to it. Auditors will ask what happens when a gate blocks. The answer must exist in the process model itself.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section dark" id="sec-4">
+  <div class="section-inner">
+    <div class="section-label">Operational Thresholds</div>
+    <h2>Define the thresholds in code or config so release timing stays <em>predictable.</em></h2>
+    <p class="section-sub">The remaining gaps are mostly threshold problems: the workflow references tests, clarification, and approvals, but not always the measurable conditions that determine pass or fail.</p>
+
+    <div class="dev-grid-3">
+      <div class="dev-card">
+        <div class="dev-kicker">Threshold 01</div>
+        <h3>Coverage must have a minimum enforced value</h3>
+        <p>Add a coverage gate in GitHub Actions such as <code>pytest --cov --cov-fail-under=&lt;threshold&gt;</code> or the equivalent for the stack. Store the threshold in <code>constitution.md</code> or SpecKit config so it is traceable to the validation plan.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Threshold 02</div>
+        <h3>The <code>/speckit.clarify</code> loop needs a max round count</h3>
+        <p>Set an explicit ceiling such as two clarification rounds. After that, unresolved items should escalate to a PO scoping decision rather than silently turning the release pipeline into informal discovery work.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Threshold 03</div>
+        <h3>Release readiness needs a declared stop line</h3>
+        <p>Before deployment, require code freeze confirmation, zero open P1 defects, completed traceability artifacts, and approved SDS or equivalent system documentation where applicable.</p>
+      </div>
+    </div>
+
+    <div class="dev-band">
+      <p><strong>Practical rule:</strong> every threshold that matters to release should live in version-controlled automation or configuration, not only in team memory or meeting notes.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="sec-5">
+  <div class="section-inner">
+    <div class="section-label">Reusable Checklist</div>
+    <h2>Use a phase-based release checklist so each gate has a named owner and a visible <em>decision.</em></h2>
+    <p class="section-sub">This format works well because it maps the release conversation to concrete checkpoints rather than a generic “ready to deploy” question.</p>
+
+    <div class="dev-grid-3">
+      <div class="dev-card">
+        <div class="dev-kicker">Phase 0 · Figma GH Action</div>
+        <h3>Design assets complete</h3>
+        <ul class="dev-list">
+          <li>All screens linked.</li>
+          <li>No assets-missing block.</li>
+          <li>Spec generation only starts after the design gate passes.</li>
+        </ul>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Phase 1 · BA / PO / QA</div>
+        <h3>Requirements package approved</h3>
+        <ul class="dev-list">
+          <li>URS and FS exist on the <code>drafts/</code> branch.</li>
+          <li>Helix requirements are in Approved state.</li>
+          <li>Required risk linkage is present before engineering proceeds.</li>
+        </ul>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Phase 2 · Validation Lead / QA</div>
+        <h3>Validation readiness confirmed</h3>
+        <ul class="dev-list">
+          <li>Risk register is complete.</li>
+          <li>Validation plan is approved in Helix.</li>
+          <li>ADO state is explicitly set to Ready.</li>
+        </ul>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Phase 3 · Engineering / System Owner</div>
+        <h3>Implementation release gate</h3>
+        <ul class="dev-list">
+          <li>All PRs are reviewed.</li>
+          <li>SDS is approved where required.</li>
+          <li>Unit test coverage meets the configured threshold.</li>
+          <li>Code freeze is confirmed.</li>
+        </ul>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Phase 4 · Independent Review / PO UAT</div>
+        <h3>Verification evidence complete</h3>
+        <ul class="dev-list">
+          <li>All test cases are executed.</li>
+          <li>Trace matrix is complete in <code>drafts/</code>.</li>
+          <li>There are zero open P1 defects.</li>
+        </ul>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Phase 5 · Review Team</div>
+        <h3>Deployment approval package complete</h3>
+        <ul class="dev-list">
+          <li>Agent 5 draft is QA-reviewed before sign-off.</li>
+          <li>Certificate is signed.</li>
+          <li>Part 11 narrative is approved.</li>
+          <li>DevOps deployment event is confirmed and recorded.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section dark" id="sec-6">
+  <div class="section-inner">
+    <div class="section-label">Hints &amp; Tips</div>
+    <h2>Small implementation choices make the release package much easier to <em>defend.</em></h2>
+    <p class="section-sub">These are not headline architecture changes. They are the details that make evidence cleaner during internal review and external audit.</p>
+
+    <div class="dev-grid-2">
+      <div class="dev-card">
+        <div class="dev-kicker">Tip 01</div>
+        <h3>Store trigger metadata with every gate decision</h3>
+        <p>Capture the source event, timestamp, actor or service principal, and linked work item IDs in the same record. This removes ambiguity about what actually caused a phase transition.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Tip 02</div>
+        <h3>Version-control the gate logic</h3>
+        <p>Coverage thresholds, Helix validation checks, and allowable state transitions should live in workflow code or checked-in config so the release standard is inspectable and reviewable over time.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Tip 03</div>
+        <h3>Treat failures as evidence too</h3>
+        <p>Do not only archive successful runs. Blocked releases, rejected narratives, and failed verification passes should all leave durable records that show how the process handled deviations.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Tip 04</div>
+        <h3>Do not let narrative documents stand alone</h3>
+        <p>The Part 11 package should reference actual system records such as Helix IDs, ADO IDs, PR links, test reports, and deployment events. Narrative without linked evidence is weak control documentation.</p>
+      </div>
+    </div>
+
+    <div class="callout dark">
+      <div class="callout-label">Section takeaway</div>
+      <div class="callout-body"><strong>Deployment readiness in a regulated pipeline is a state-verification problem.</strong> The strongest version of this workflow keeps human approvals, Helix records, test thresholds, traceability artifacts, and the deployment event aligned by automation rather than by memory.</div>
+    </div>
+  </div>
+</section>
+
+<footer></footer>
+</body>
+</html>

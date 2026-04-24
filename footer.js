@@ -47,10 +47,11 @@
       '<div class="nav-footer-copy">' +
         '<div class="nav-footer-kicker">Nimble Gravity × Medpace</div>' +
         '<div class="nav-footer-title">AI-Powered SDLC Playbook</div>' +
-        '<div class="nav-footer-text">A shared project reference for requirements, design, development, and QA workflows, built to show how Nimble Gravity approaches the software delivery lifecycle with AI-native methods and clearer handoffs.</div>' +
+        '<div class="nav-footer-text">A shared project reference for requirements, design, dev handoff, development, and QA workflows, built to show how Nimble Gravity approaches the software delivery lifecycle with AI-native methods and clearer handoffs.</div>' +
         '<div class="nav-footer-stages" aria-label="Project stages">' +
           '<span class="nav-footer-stage">Product</span>' +
           '<span class="nav-footer-stage">Design</span>' +
+          '<span class="nav-footer-stage">DevHandoff</span>' +
           '<span class="nav-footer-stage">Development</span>' +
           '<span class="nav-footer-stage">QA &amp; Testing</span>' +
         '</div>' +

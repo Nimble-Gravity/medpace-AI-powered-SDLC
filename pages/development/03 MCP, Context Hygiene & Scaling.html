@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MCP, Context Hygiene &amp; Scaling</title>
+<link rel="stylesheet" href="../../styles/shared.css"/>
+</head>
+<body>
+<script src="../../footer.js"></script>
+<script src="../../nav.js"></script>
+
+<section class="hero" id="sec-0">
+  <div class="hero-inner">
+    <div class="eyebrow">Development · Phase 04 of 05</div>
+    <h1>Plug tools into the model.<br>Scale with <em>discipline.</em></h1>
+    <p class="hero-desc">The final section of the workshop deck moves beyond prompting and single-agent sessions. It explains MCP as the bridge between the model and external systems, codifies context hygiene as a daily engineering habit, and shows where AI fits across the SDLC without defaulting to the heaviest orchestration pattern every time.</p>
+    <div class="dev-chip-row">
+      <span class="dev-chip">MCP</span>
+      <span class="dev-chip">Context Hygiene</span>
+      <span class="dev-chip">Subagents</span>
+      <span class="dev-chip">Agent Teams</span>
+      <span class="dev-chip">CI/CD Agents</span>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="sec-1">
+  <div class="section-inner">
+    <div class="section-label">Model Context Protocol</div>
+    <h2>MCP turns external systems into first-class agent <em>tools.</em></h2>
+    <p class="section-sub">The deck describes MCP as the open standard that lets models call tools and data sources as built-in capabilities. The key architectural point is that tool results come back into the context window, where the agent can reason over them in the next step.</p>
+
+    <div class="dev-flow-grid">
+      <div class="dev-flow-step">
+        <span class="dev-flow-num">1</span>
+        <h3>The model emits a structured tool call</h3>
+        <p>Instead of only returning prose, the agent can ask for a GitHub query, a database lookup, a file read, or another supported MCP action.</p>
+      </div>
+
+      <div class="dev-flow-step">
+        <span class="dev-flow-num">2</span>
+        <h3>The runtime executes the request</h3>
+        <p>The MCP server handles the real-world operation and returns structured results rather than forcing the user to copy context in manually.</p>
+      </div>
+
+      <div class="dev-flow-step">
+        <span class="dev-flow-num">3</span>
+        <h3>The result re-enters the context window</h3>
+        <p>The next model turn can inspect that output, decide what it means, and choose the next action. That loop is what makes tool use agentic instead of decorative.</p>
+      </div>
+    </div>
+
+    <div class="dev-grid-3">
+      <div class="dev-card">
+        <div class="dev-kicker">Common Server</div>
+        <h3>GitHub</h3>
+        <p>Issues, PRs, commits, and branch context become directly accessible instead of being summarized second-hand by a developer.</p>
+      </div>
+      <div class="dev-card">
+        <div class="dev-kicker">Common Server</div>
+        <h3>Databases</h3>
+        <p>Postgres, SQLite, and other stores can be queried directly when the workflow permits it, turning runtime data into usable context.</p>
+      </div>
+      <div class="dev-card">
+        <div class="dev-kicker">Common Server</div>
+        <h3>Filesystem</h3>
+        <p>Controlled read and write access lets the agent inspect local assets, generated files, and project structure without extra glue code.</p>
+      </div>
+      <div class="dev-card">
+        <div class="dev-kicker">Common Server</div>
+        <h3>Web Search</h3>
+        <p>Useful for docs and reference material mid-task, with the same warning as always: irrelevant results still consume budget.</p>
+      </div>
+      <div class="dev-card">
+        <div class="dev-kicker">Common Server</div>
+        <h3>Jira / Linear</h3>
+        <p>Ticket context, status, and workflow details can flow into the coding session without developers translating everything by hand.</p>
+      </div>
+      <div class="dev-card">
+        <div class="dev-kicker">Common Server</div>
+        <h3>Slack</h3>
+        <p>Thread context and posted summaries can become part of the execution loop when communication itself is part of the task.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="section dark" id="sec-2">
+  <div class="section-inner">
+    <div class="section-label">Context Hygiene</div>
+    <h2>Most bad AI output is really bad session management in <em>disguise.</em></h2>
+    <p class="section-sub">The workshop calls this out directly: garbage context in, garbage answers out. Better results come from repeated session hygiene, not from hoping the model will sort through noise on its own.</p>
+
+    <div class="dev-grid-3">
+      <div class="dev-card">
+        <div class="dev-kicker">Practice 01</div>
+        <h3>Load structured context once</h3>
+        <p>Use <code>CLAUDE.md</code> and skill files so the model gets stable instructions without repeating the same walls of text in every prompt.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Practice 02</div>
+        <h3>Compact frequently</h3>
+        <p>Claude Code’s <code>/compact</code> exists because older history keeps shaping future answers. Summarize before starting the next subtask.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Practice 03</div>
+        <h3>Scope files explicitly</h3>
+        <p>Five focused files beat twenty noisy ones. The workshop treats file selection as part of prompt engineering, not a separate concern.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Practice 04</div>
+        <h3>Summarize error logs</h3>
+        <p>The model needs the key lines and stack traces, not an unfiltered dump. Distilled failure context is cheaper and easier to reason about.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Practice 05</div>
+        <h3>Start new tasks with fresh context</h3>
+        <p>Task A can poison Task B if the model keeps dragging old assumptions forward. New summary or new session is often the cleaner choice.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Practice 06</div>
+        <h3>Use ignore files aggressively</h3>
+        <p>Generated code, lock files, and irrelevant artifacts should be excluded so the model does not waste attention on noise the team never intended to discuss.</p>
+      </div>
+    </div>
+
+    <div class="callout dark">
+      <div class="callout-label">Operating principle</div>
+      <div class="callout-body"><strong>Better context beats more context.</strong> The deck treats session hygiene as a first-order engineering skill, not a courtesy to the model.</div>
+    </div>
+
+  </div>
+</section>
+
+<section class="section" id="sec-3">
+  <div class="section-inner">
+    <div class="section-label">Agentic SDLC</div>
+    <h2>The workshop extends AI across the software lifecycle, not just the <em>build step.</em></h2>
+    <p class="section-sub">One of the more useful slides reframes AI coding as an SDLC capability. Define, design, build, test, and deploy can all use agentic assistance if the outputs are governed and evaluated instead of trusted by default.</p>
+
+    <div class="dev-grid-3">
+      <div class="dev-card">
+        <div class="dev-kicker">Define</div>
+        <h3>Spec and backlog generation</h3>
+        <p>Meeting transcripts, RAID logs, and edge-case mining can all start earlier when the model helps structure ambiguous input.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Design</div>
+        <h3>Architecture and prototype scaffolding</h3>
+        <p>System outlines, API specs, threat-model starters, and early UI concepts become faster to draft and easier to compare.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Build</div>
+        <h3>Scaffolding, refactors, and review</h3>
+        <p>Agents help create code, generate tests, and review pull requests, especially when paired with the right model and autonomy level.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Test</div>
+        <h3>Case generation and failure clustering</h3>
+        <p>Large test suites, synthetic edge cases, and failure-pattern analysis all benefit from the same prompting and orchestration patterns.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Deploy</div>
+        <h3>CI/CD agents and runbook generation</h3>
+        <p>Non-interactive sessions such as <code>claude -p</code> make release notes, user guides, and ops-oriented automation viable parts of the pipeline.</p>
+      </div>
+    </div>
+
+    <div class="insight insight--violet">
+      <div class="insight-eyebrow">Guardrail</div>
+      <p>The slide’s most important sentence is the guardrail: <strong>every AI-generated output still needs an evaluation threshold before it counts as done.</strong> Speed without acceptance criteria is just faster error production.</p>
+    </div>
+
+  </div>
+</section>
+
+<section class="section" id="sec-4">
+  <div class="section-inner">
+    <div class="section-label">Decision Framework</div>
+    <h2>Choose the lightest pattern that can actually finish the <em>task.</em></h2>
+    <p class="section-sub">The deck closes with a practical matrix: pick the tool, model, and orchestration pattern that fits the job instead of reaching for the most autonomous option by default.</p>
+
+    <div class="dev-grid-3">
+      <div class="dev-card">
+        <div class="dev-kicker">Best Fit</div>
+        <h3>Quick inline edit</h3>
+        <p>Use Copilot with autocomplete or lightweight chat support. Do not start an orchestration workflow for trivial boilerplate.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Best Fit</div>
+        <h3>Explain code or ask questions</h3>
+        <p>Either tool works well here. The deck prefers a fast, cheap model such as Sonnet 4.6 for general Q&amp;A and understanding work.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Best Fit</div>
+        <h3>Single-file refactor</h3>
+        <p>Copilot Edit or a tightly scoped agent session is enough. The key is explicit scope and a clear reference pattern.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Best Fit</div>
+        <h3>Multi-file feature</h3>
+        <p>Claude Code with Sonnet 4.6 and plan mode is the workshop’s default pattern for real development work that crosses boundaries.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Best Fit</div>
+        <h3>Complex refactor or deep review</h3>
+        <p>Step up to Opus 4.6, subagents, or agent teams only when the coordination and reasoning load justify the extra cost.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Best Fit</div>
+        <h3>CI/CD or backlog automation</h3>
+        <p>Use non-interactive runs such as <code>claude -p</code> or async issue assignment through Copilot Coding Agent when the work is well-bounded and review happens on the output artifact.</p>
+      </div>
+    </div>
+
+    <div class="dev-band">
+      <p><strong>Section takeaway:</strong> the workshop is arguing for AI-native engineering habits, not indiscriminate autonomy. Use MCP when outside context matters, keep sessions clean, and scale from single-agent to multi-agent only when the task genuinely needs it.</p>
+    </div>
+
+  </div>
+</section>
+
+<footer></footer>
+</body>
+</html>

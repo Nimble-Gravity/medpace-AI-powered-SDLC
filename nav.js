@@ -21,7 +21,16 @@
       pages: [
         '01 PRD UX Analysis Skill',
         '02 Example PRD Interview',
-        '03 Figma Make — Starter Kit'
+        '03 Designing with LLMs'
+      ]
+    },
+    {
+      id: 'handoff',
+      label: 'Handoff',
+      color: '#3c7a6b',
+      navColor: '#8dd8c5',
+      pages: [
+        '01 Handoff'
       ]
     },
     {
@@ -30,9 +39,10 @@
       color: '#2b6880',
       navColor: '#7dd3e8',
       pages: [
-        '01 Shift-Left Validation',
-        '02 Playwright + Helix Parallel Execution',
-        '03 Audit-Ready Release Automation'
+        '01 Models, Prompts & Context',
+        '02 Agents, Skills & Planning',
+        '03 MCP, Context Hygiene & Scaling',
+        '04 Audit-Ready Release Automation'
       ]
     },
     {
@@ -40,7 +50,11 @@
       label: 'QA & Testing',
       color: '#e8a317',
       navColor: '#f2c56b',
-      pages: []
+      pages: [
+        '01 AI-Assisted Test Generation',
+        '02 PR Gates, Reports & Traceability',
+        '03 Playwright, Evidence & GxP'
+      ]
     }
   ];
 

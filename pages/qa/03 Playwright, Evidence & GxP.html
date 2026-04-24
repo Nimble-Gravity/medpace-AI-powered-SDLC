@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Playwright, Evidence &amp; GxP</title>
+<link rel="stylesheet" href="../../styles/shared.css"/>
+</head>
+<body>
+<script src="../../footer.js"></script>
+<script src="../../nav.js"></script>
+
+<section class="hero" id="sec-0">
+  <div class="hero-inner">
+    <div class="eyebrow">QA &amp; Testing · Phase 05 of 05</div>
+    <h1>Use Playwright for the UI.<br>Keep the report as the<br><em>evidence.</em></h1>
+    <p class="hero-desc">The second half of the workshop deck expands the same automation model to end-to-end testing. Playwright is presented as the browser layer in the broader pipeline: AI generates UI tests, GitHub Actions runs them, and HTML reports, screenshots, and traces become validation artifacts instead of just developer debugging tools.</p>
+    <div class="dev-chip-row">
+      <span class="dev-chip">Playwright</span>
+      <span class="dev-chip">TypeScript</span>
+      <span class="dev-chip">HTML Reports</span>
+      <span class="dev-chip">Screenshots</span>
+      <span class="dev-chip">Trace Viewer</span>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="sec-1">
+  <div class="section-inner">
+    <div class="section-label">What Playwright Adds</div>
+    <h2>Playwright covers what unit tests cannot: the real browser, the real UI, and the rendered <em>state.</em></h2>
+    <p class="section-sub">The deck positions Playwright as the browser-driven complement to unit and integration testing, not a replacement for them.</p>
+
+    <div class="dev-grid-3">
+      <div class="dev-card">
+        <div class="dev-kicker">Capability 01</div>
+        <h3>Cross-browser execution</h3>
+        <p>One test suite can drive Chromium, Firefox, and WebKit so teams validate user-visible behavior without multiplying authoring effort.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Capability 02</div>
+        <h3>Real user actions</h3>
+        <p>Clicking, typing, hovering, uploads, dialogs, and navigation all happen in a real browser context rather than in mocked logic alone.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Capability 03</div>
+        <h3>Rendered-state assertions</h3>
+        <p>Playwright validates what the user actually sees: text, visibility, field values, URLs, network results, and browser state after the interaction.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Capability 04</div>
+        <h3>Screenshots and video</h3>
+        <p>The framework captures what rendered at failure time, which makes the artifact useful for both debugging and validation evidence review.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Capability 05</div>
+        <h3>Agent-friendly authoring</h3>
+        <p>The workshop uses the same prompt model as Jest generation, just with Playwright-specific locators, routes, and output requirements.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section dark" id="sec-2">
+  <div class="section-inner">
+    <div class="section-label">Authoring Model</div>
+    <h2>The preferred Playwright style is role-based, async, and intentionally <em>resilient.</em></h2>
+    <p class="section-sub">The deck’s code walkthrough is teaching habits as much as syntax: use user-facing locators, let Playwright auto-wait, and attach requirement tags at the test level.</p>
+
+    <div class="dev-lane-grid">
+      <div class="dev-lane">
+        <div class="dev-lane-label">Locator strategy</div>
+        <h3>Find elements the way users understand them</h3>
+        <div class="dev-lane-row">
+          <div class="dev-lane-topic">Preferred</div>
+          <div class="dev-lane-copy"><code>getByRole()</code>, <code>getByLabel()</code>, visible text, and explicit test IDs when needed.</div>
+        </div>
+        <div class="dev-lane-row">
+          <div class="dev-lane-topic">Reason</div>
+          <div class="dev-lane-copy">These locators survive CSS and layout changes better than brittle selectors tied to implementation detail.</div>
+        </div>
+      </div>
+
+      <div class="dev-lane">
+        <div class="dev-lane-label">Execution model</div>
+        <h3>Let Playwright wait and retry</h3>
+        <div class="dev-lane-row">
+          <div class="dev-lane-topic">Actions</div>
+          <div class="dev-lane-copy">Fill, click, select, upload, and navigate through async calls that wait for readiness automatically.</div>
+        </div>
+        <div class="dev-lane-row">
+          <div class="dev-lane-topic">Assertions</div>
+          <div class="dev-lane-copy"><code>expect().toHaveText()</code> and related checks retry until the condition passes or the timeout expires.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dev-grid-3">
+      <div class="dev-card">
+        <div class="dev-kicker">Prompt Add-on</div>
+        <h3>Include the route or screen URL</h3>
+        <p>The deck says to add the screen route and, where relevant, the Figma reference so the model can anchor the browser journey.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Prompt Add-on</div>
+        <h3>Ask for one test per acceptance criterion</h3>
+        <p>That keeps the generated suite readable and makes requirement-tagged reporting cleaner later.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Prompt Add-on</div>
+        <h3>Add screenshot-on-failure and a11y checks</h3>
+        <p>The prompt reference card explicitly recommends attaching failure screenshots and adding accessibility assertions alongside functional ones.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="sec-3">
+  <div class="section-inner">
+    <div class="section-label">CI &amp; Reports</div>
+    <h2>Playwright’s report is treated as a first-class validation artifact, not just a developer <em>debug view.</em></h2>
+    <p class="section-sub">This is the most important reframing in the Playwright section of the deck: HTML reports, screenshots, traces, and tagged test names can serve as evidence a QA lead can actually review.</p>
+
+    <div class="dev-flow-grid">
+      <div class="dev-flow-step">
+        <span class="dev-flow-num">1</span>
+        <h3>Run Playwright on every PR</h3>
+        <p>The sample GitHub Actions workflow installs browsers, runs the suite, and points at a staging URL rather than production.</p>
+      </div>
+
+      <div class="dev-flow-step">
+        <span class="dev-flow-num">2</span>
+        <h3>Always upload the report</h3>
+        <p>The workflow uploads the Playwright report even on failure, so the run always leaves behind reviewable evidence rather than just a red check.</p>
+      </div>
+
+      <div class="dev-flow-step">
+        <span class="dev-flow-num">3</span>
+        <h3>Keep artifacts long enough for review</h3>
+        <p>The deck’s example keeps reports for 30 days, explicitly long enough for a GxP review cycle following a release.</p>
+      </div>
+    </div>
+
+    <div class="dev-grid-3">
+      <div class="dev-card">
+        <div class="dev-kicker">Report Artifact</div>
+        <h3>Screenshots on failure</h3>
+        <p>Each failed assertion can capture the exact UI state the user would have seen at the moment of error.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Report Artifact</div>
+        <h3>Trace viewer</h3>
+        <p>The trace file records the execution timeline, including network activity, DOM changes, and screenshots, so failures are reproducible after the run.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Report Artifact</div>
+        <h3>REQ tags in report groups</h3>
+        <p>With requirement IDs embedded in describe blocks and test names, the report becomes a partial traceability matrix instead of only a technical log.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="sec-4">
+  <div class="section-inner">
+    <div class="section-label">Rollout</div>
+    <h2>The deck closes with a small, concrete rollout: start with one function, then make the pattern the <em>standard.</em></h2>
+    <p class="section-sub">The implementation plan is intentionally modest so the workflow becomes normal team behavior instead of a one-off workshop exercise.</p>
+
+    <div class="dev-phase-grid">
+      <div class="dev-phase">
+        <span class="dev-phase-num">1</span>
+        <h3>This week</h3>
+        <p>Run the exercise on one real Hours Tracking function, generate the tests, and open a draft PR to watch the pipeline execute end to end.</p>
+      </div>
+
+      <div class="dev-phase">
+        <span class="dev-phase-num">2</span>
+        <h3>Week 2</h3>
+        <p>Add a coverage threshold gate in GitHub Actions. The deck suggests starting at 80% before moving toward the stronger standard.</p>
+      </div>
+
+      <div class="dev-phase">
+        <span class="dev-phase-num">3</span>
+        <h3>Week 3</h3>
+        <p>Generate a traceability report from the requirement tags in merged PRs and bring it into Becky’s review process.</p>
+      </div>
+
+      <div class="dev-phase">
+        <span class="dev-phase-num">4</span>
+        <h3>Ongoing</h3>
+        <p>Every new feature gets a test prompt and a test file. The deck’s message is that this becomes the default workflow, not an occasional accelerator.</p>
+      </div>
+    </div>
+
+    <div class="callout light">
+      <div class="callout-label">Section takeaway</div>
+      <div class="callout-body"><strong>Automated testing is presented here as GxP-friendly by construction.</strong> The combination of AI-generated tests, PR gates, Playwright evidence, and requirement-tagged outputs is meant to reduce both engineering friction and audit friction at the same time.</div>
+    </div>
+  </div>
+</section>
+
+<footer></footer>
+</body>
+</html>

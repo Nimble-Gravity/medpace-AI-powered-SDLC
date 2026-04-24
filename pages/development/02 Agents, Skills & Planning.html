@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Agents, Skills &amp; Planning</title>
+<link rel="stylesheet" href="../../styles/shared.css"/>
+</head>
+<body>
+<script src="../../footer.js"></script>
+<script src="../../nav.js"></script>
+
+<section class="hero" id="sec-0">
+  <div class="hero-inner">
+    <div class="eyebrow">Development · Phase 04 of 05</div>
+    <h1>Teach the model,<br>then let the <em>agent</em> work.</h1>
+    <p class="hero-desc">The middle of the workshop deck shifts from prompting into agent behavior. It distinguishes passive knowledge from active autonomy, shows how Ask/Edit/Agent/Plan modes change the risk profile of a task, and outlines how Claude Code sessions should be structured before developers hand over execution.</p>
+    <div class="dev-chip-row">
+      <span class="dev-chip">Ask Mode</span>
+      <span class="dev-chip">Edit Mode</span>
+      <span class="dev-chip">Agent Mode</span>
+      <span class="dev-chip">Plan Mode</span>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="sec-1">
+  <div class="section-inner">
+    <div class="section-label">Core Distinction</div>
+    <h2>Skills are reusable <em>knowledge.</em> Agents are autonomous <em>behavior.</em></h2>
+    <p class="section-sub">The deck spends real time on this because teams routinely blur the two. A skill file gives the model domain expertise. An agent reasons, calls tools, inspects results, retries, and decides what to do next.</p>
+
+    <div class="dev-lane-grid">
+      <div class="dev-lane">
+        <div class="dev-lane-label">Skill = passive context</div>
+        <h3>Static instructions that teach the codebase</h3>
+        <div class="dev-lane-row">
+          <div class="dev-lane-topic">Form</div>
+          <div class="dev-lane-copy">Markdown documents such as <code>CLAUDE.md</code>, <code>SKILL.md</code>, or project instruction files.</div>
+        </div>
+        <div class="dev-lane-row">
+          <div class="dev-lane-topic">Purpose</div>
+          <div class="dev-lane-copy">Capture conventions, file locations, architectural patterns, and domain constraints once.</div>
+        </div>
+        <div class="dev-lane-row">
+          <div class="dev-lane-topic">Behavior</div>
+          <div class="dev-lane-copy">No tools, no loops, no decisions. Skills inform the model but do not act.</div>
+        </div>
+        <div class="dev-lane-row">
+          <div class="dev-lane-topic">Cost profile</div>
+          <div class="dev-lane-copy">Loaded once into context, which makes them cheap compared with iterative agent loops.</div>
+        </div>
+      </div>
+
+      <div class="dev-lane">
+        <div class="dev-lane-label">Agent = active execution</div>
+        <h3>Reasoning loop with tools and feedback</h3>
+        <div class="dev-lane-row">
+          <div class="dev-lane-topic">Form</div>
+          <div class="dev-lane-copy">Claude Code, Copilot Agent, subagents, and other runtimes that can read, edit, search, and run commands.</div>
+        </div>
+        <div class="dev-lane-row">
+          <div class="dev-lane-topic">Purpose</div>
+          <div class="dev-lane-copy">Inspect the repo, choose files, call tools, handle errors, and continue until the task is done.</div>
+        </div>
+        <div class="dev-lane-row">
+          <div class="dev-lane-topic">Behavior</div>
+          <div class="dev-lane-copy">Dynamic and stateful. Tool results land back in context and influence the next action.</div>
+        </div>
+        <div class="dev-lane-row">
+          <div class="dev-lane-topic">Cost profile</div>
+          <div class="dev-lane-copy">More expensive because every step consumes turns, tokens, and sometimes multiple cooperating workers.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="section dark" id="sec-2">
+  <div class="section-inner">
+    <div class="section-label">Interaction Modes</div>
+    <h2>Match the mode to the task before you grant <em>autonomy.</em></h2>
+    <p class="section-sub">Both Copilot and Claude Code support multiple ways of working. The deck’s recommendation is to start with lower-autonomy modes when the task is simple and switch up only when scope, uncertainty, or execution needs justify it.</p>
+
+    <div class="dev-grid-2">
+      <div class="dev-card">
+        <div class="dev-kicker">Mode 01</div>
+        <h3>Ask</h3>
+        <p>Q&amp;A, explanation, architecture understanding, and lightweight exploration. No files change. This is the cheapest place to clarify intent before you risk code churn.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Mode 02</div>
+        <h3>Edit</h3>
+        <p>You choose the file set and the AI proposes diffs inside that boundary. This is the workshop’s controlled middle ground for refactors, renames, and contained changes.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Mode 03</div>
+        <h3>Agent</h3>
+        <p>The model decides what to inspect and modify, runs tools, and loops until it believes the job is complete. Powerful, but only safe when the task and constraints are already clear.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Mode 04</div>
+        <h3>Plan</h3>
+        <p>Think first, then execute. The deck repeatedly treats planning mode as the default starting point for multi-file work because it exposes file impact, edge cases, and risk before edits begin.</p>
+      </div>
+    </div>
+
+    <div class="dev-chip-row">
+      <span class="dev-chip">Copilot Ask</span>
+      <span class="dev-chip">Copilot Edit</span>
+      <span class="dev-chip">Copilot Agent</span>
+      <span class="dev-chip">Claude --plan</span>
+    </div>
+
+  </div>
+</section>
+
+<section class="section" id="sec-3">
+  <div class="section-inner">
+    <div class="section-label">Instruction Stack</div>
+    <h2>Project guidance belongs in layers, not one bloated <em>system prompt.</em></h2>
+    <p class="section-sub">One of the strongest pages in the deck is the skill-file ecosystem diagram. It separates always-on instructions from demand-loaded expertise so the model gets the right knowledge at the right time without carrying unnecessary weight every turn.</p>
+
+    <div class="dev-grid-3">
+      <div class="dev-card">
+        <div class="dev-kicker">Always On</div>
+        <h3><code>CLAUDE.md</code></h3>
+        <p>Project-wide Claude Code instructions. The deck’s guidance is to keep it tight because it loads every turn and therefore costs tokens every turn.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">On Demand</div>
+        <h3><code>/skills/*/SKILL.md</code></h3>
+        <p>Domain-specific expertise such as auth, billing, or release patterns. Skills are where detailed conventions belong once they stop being universal.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Agents</div>
+        <h3><code>.claude/agents/*.md</code></h3>
+        <p>Custom subagents with specific tools or roles. The workshop positions these as a way to standardize specialized workers rather than keep reteaching the same behavior.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Shared</div>
+        <h3><code>AGENTS.md</code></h3>
+        <p>Cross-agent coordination instructions that can keep Claude, Copilot, and other agent runtimes aligned on team standards.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Copilot</div>
+        <h3><code>.github/copilot-instructions.md</code></h3>
+        <p>Copilot-specific project guidance, with optional custom agents under <code>.github/agents</code> when the team wants more structured behavior inside GitHub tooling.</p>
+      </div>
+    </div>
+
+    <div class="insight">
+      <div class="insight-eyebrow">Instruction rule</div>
+      <p>The deck’s practical guidance is simple: <strong>system prompts should stay compact, skills should hold depth.</strong> That split keeps always-loaded context lean while preserving detailed domain knowledge when an agent actually needs it.</p>
+    </div>
+
+  </div>
+</section>
+
+<section class="section" id="sec-4">
+  <div class="section-inner">
+    <div class="section-label">Claude Code Workflow</div>
+    <h2>The terminal workflow is agentic, but it still needs <em>checkpoints.</em></h2>
+    <p class="section-sub">The workshop’s Claude Code section is intentionally operational. It walks through how to start a session, describe a task, force a plan, execute, then review and compact before moving on.</p>
+
+    <div class="dev-phase-grid">
+      <div class="dev-phase">
+        <span class="dev-phase-num">1</span>
+        <h3>Launch</h3>
+        <p>Open Claude Code at the project root so it can read <code>CLAUDE.md</code>, discover available skills, and start with the right repository context.</p>
+      </div>
+      <div class="dev-phase">
+        <span class="dev-phase-num">2</span>
+        <h3>Describe</h3>
+        <p>Use plain English, but keep it specific. Files, errors, constraints, and desired outcomes matter more than polished prose.</p>
+      </div>
+      <div class="dev-phase">
+        <span class="dev-phase-num">3</span>
+        <h3>Plan</h3>
+        <p>Use <code>--plan</code> or explicitly ask for a plan first. Review touched files, edge cases, and what the agent says it will not change.</p>
+      </div>
+      <div class="dev-phase">
+        <span class="dev-phase-num">4</span>
+        <h3>Execute</h3>
+        <p>Only after the plan is approved should the agent read, write, test, and call tools in a loop. The deck treats this as a governed handoff, not blind trust.</p>
+      </div>
+      <div class="dev-phase">
+        <span class="dev-phase-num">5</span>
+        <h3>Review</h3>
+        <p>Check the diff, inspect test results, and compact or reset before the next task so stale assumptions do not leak across sessions.</p>
+      </div>
+    </div>
+
+    <div class="dev-grid-2">
+      <div class="dev-card">
+        <div class="dev-kicker">Parallelism</div>
+        <h3>Subagents are the default scale-up pattern</h3>
+        <p>They work in a hub-and-spoke model: focused workers with separate context windows that report back to a parent session. The deck recommends them for exploration, test runs, and code review.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">High-End Scale</div>
+        <h3>Agent teams are for coordinated, peer-to-peer work</h3>
+        <p>The deck positions agent teams as a more expensive option for full-stack features and complex parallel reviews where workers need to coordinate directly instead of reporting only to a parent.</p>
+      </div>
+    </div>
+
+    <div class="callout light">
+      <div class="callout-label">Page takeaway</div>
+      <div class="callout-body"><strong>Plan mode is the safety boundary.</strong> Skills sharpen the agent, but planning is what keeps autonomy reviewable and compatible with normal engineering controls.</div>
+    </div>
+  </div>
+</section>
+
+<footer></footer>
+</body>
+</html>

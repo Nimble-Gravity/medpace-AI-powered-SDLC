@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Handoff</title>
+<link rel="stylesheet" href="../../styles/shared.css"/>
+</head>
+<body>
+<script src="../../footer.js"></script>
+<script src="../../nav.js"></script>
+
+<section class="hero" id="sec-0">
+  <div class="hero-inner">
+    <div class="eyebrow">Handoff · Phase 03 of 05</div>
+    <h1>The handoff didn’t disappear.<br>It became more <em>code-native.</em></h1>
+    <p class="hero-desc">The workshops kept circling the same point: “design to dev handoff” is no longer just a Figma file plus annotations. When designers can prototype in real code, inspect the real codebase, and generate evolved specs from the working artifact, the handoff moves upstream and gets much more concrete.</p>
+    <div class="dev-chip-row">
+      <span class="dev-chip">Prototype HTML</span>
+      <span class="dev-chip">Evolved Spec</span>
+      <span class="dev-chip">Cursor + Claude Code</span>
+      <span class="dev-chip">Angular Material</span>
+      <span class="dev-chip">Design Decisions</span>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="sec-1">
+  <div class="section-inner">
+    <div class="section-label">What Changed</div>
+    <h2>Old handoff was interpretive. Modern handoff is closer to a <em>working brief.</em></h2>
+    <p class="section-sub">The old pattern was familiar: Figma screens, callouts, redlines, and a meeting where design intent had to be reconstructed verbally. The newer pattern uses working prototypes and AI extraction to preserve more of that intent before it reaches engineering.</p>
+
+    <div class="dev-state-grid">
+      <div class="dev-state dev-state--today">
+        <div class="dev-state-label">Old Model</div>
+        <h3>Design output required translation</h3>
+        <ul class="dev-list">
+          <li>Developers received Figma files and had to infer behavior, state logic, and edge cases.</li>
+          <li>Key decisions stayed implicit inside the prototype rather than becoming documented requirements.</li>
+          <li>Handoff meetings did a lot of explanatory work because the artifact itself was incomplete.</li>
+        </ul>
+      </div>
+
+      <div class="dev-state dev-state--future">
+        <div class="dev-state-label">Current Model</div>
+        <h3>Design output can include executable intent</h3>
+        <ul class="dev-list">
+          <li>Designers can prototype in code, not only on the canvas.</li>
+          <li>The prototype can be re-read by AI to extract locked decisions, open questions, and missing requirements.</li>
+          <li>The handoff package gets closer to implementation reality before engineering starts translating it.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="insight">
+      <div class="insight-eyebrow">The important nuance</div>
+      <p>Handoff is not “solved” just because the prototype is code. The handoff becomes <strong>less lossy</strong>, but the team still needs a clear package of decisions, constraints, and ownership boundaries so engineering knows what is locked and what is still flexible.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section dark" id="sec-2">
+  <div class="section-inner">
+    <div class="section-label">Why It Matters</div>
+    <h2>The real shift is that designers can now get much closer to the <em>implementation layer.</em></h2>
+    <p class="section-sub">That changes the handoff conversation. Instead of only describing what the screen should look like, the designer can help define how the system should behave, what component patterns it uses, and where the implementation constraints actually are.</p>
+
+    <div class="dev-grid-3">
+      <div class="dev-card">
+        <div class="dev-kicker">Shift 01</div>
+        <h3>Prototype behavior becomes inspectable</h3>
+        <p>Once the prototype exists as HTML, CSS, and interactions, AI can read it and surface design decisions that would otherwise stay trapped inside the artifact.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Shift 02</div>
+        <h3>Design can target the real stack earlier</h3>
+        <p>The workshops were explicit here: Cursor + Claude Code can generate toward Angular Material conventions when the prompt and codebase context are specific enough.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Shift 03</div>
+        <h3>Designers can interrogate the codebase</h3>
+        <p>With AI in the loop, a designer can ask what components already exist, what variants are available, and where a new idea would conflict with the current system.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Shift 04</div>
+        <h3>Handoff artifacts get generated faster</h3>
+        <p>Component inventories, interaction notes, acceptance criteria updates, and implementation caveats can be extracted from the prototype instead of authored from scratch after every review.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Shift 05</div>
+        <h3>The gap moves from visuals to judgment</h3>
+        <p>The hard part is no longer copying pixels into tickets. It is deciding which prototype choices are real requirements, which are provisional, and which conflict with the production system.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="sec-3">
+  <div class="section-inner">
+    <div class="section-label">What The Package Should Include</div>
+    <h2>A strong Handoff page is lighter than a full spec and more concrete than a <em>mockup.</em></h2>
+    <p class="section-sub">The artifact should help engineering start with fewer interpretation loops, while still being honest about what needs review.</p>
+
+    <div class="dev-grid-2">
+      <div class="dev-card">
+        <div class="dev-kicker">Include</div>
+        <h3>Working prototype or code artifact</h3>
+        <p>If a coded prototype exists, it should be part of the handoff. This is where layout decisions, interaction behavior, and visible states are most legible.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Include</div>
+        <h3>Evolved spec summary</h3>
+        <p>Extract the design decisions the prototype implies: what is locked, what needs revisiting, what requirements appear to be missing, and what engineering constraints are already visible.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Include</div>
+        <h3>Component and token references</h3>
+        <p>Call out whether the work should map to existing Angular Material components, team-specific overrides, or genuinely new patterns.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Include</div>
+        <h3>Explicit open questions</h3>
+        <p>The handoff should not pretend every choice is finished. Unresolved tradeoffs need to be surfaced so development does not treat prototype guesses as production mandates.</p>
+      </div>
+    </div>
+
+    <div class="callout light">
+      <div class="callout-label">Practical Rule</div>
+      <div class="callout-body">The prototype is not the whole handoff. The useful handoff is <strong>prototype + extracted decisions + implementation context</strong>. That combination gives development something concrete to build from without forcing them to reverse-engineer design intent.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="sec-4">
+  <div class="section-inner">
+    <div class="section-label">Team Boundary</div>
+    <h2>Designers can get deeper into code now. That does not erase engineering <em>ownership.</em></h2>
+    <p class="section-sub">This is where the page needs to stay sober. AI shortens the distance between design and implementation, but it does not eliminate the need for developer review, integration judgment, and production constraints.</p>
+
+    <div class="dev-grid-3">
+      <div class="dev-card">
+        <div class="dev-kicker">Designer Role</div>
+        <h3>Push intent further downstream</h3>
+        <p>Design can now hand over richer artifacts: code prototypes, clearer state models, and better-articulated decisions.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Developer Role</div>
+        <h3>Translate into the real system</h3>
+        <p>Engineering still decides how the artifact maps into the production architecture, component library, API contracts, and release constraints.</p>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-kicker">Shared Role</div>
+        <h3>Reduce ambiguity before build</h3>
+        <p>The best handoff is a shared review moment where both sides can point at concrete code-backed behavior instead of debating static frames abstractly.</p>
+      </div>
+    </div>
+
+    <div class="dev-band">
+      <p><strong>Page takeaway:</strong> Handoff still exists, but the artifact has changed. In an AI-native workflow, the handoff is no longer “here are the screens.” It is “here is the working direction, here are the extracted decisions, and here is how this should meet the real system.”</p>
+    </div>
+  </div>
+</section>
+
+<footer></footer>
+</body>
+</html>

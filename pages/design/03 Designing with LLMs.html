@@ -1,0 +1,783 @@
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Designing with LLMs</title>
+<link rel="stylesheet" href="../../styles/shared.css"/>
+</head>
+<body>
+<script src="../../footer.js"></script>
+<script src="../../nav.js"></script>
+
+<header>
+  <div class="header-left">
+    <strong>Designing</strong>
+    <span class="sep">·</span>
+    <span>with LLMs</span>
+  </div>
+  <div class="header-right">Tool-agnostic · 5 Steps · Medpace Examples</div>
+</header>
+
+<div class="progress-strip"><div class="progress-fill" id="prog" style="width: 15.075298%;"></div></div>
+
+<!-- HERO -->
+<section class="hero" id="sec-0">
+  <div class="hero-inner">
+    <div class="eyebrow">LLM Design Workflow</div>
+    <h1>Brief it like a<br>collaborator,<br><em>not a button.</em></h1>
+    <p class="hero-desc">Most teams treat LLM design tools like magic generators. The teams that get better results treat them like collaborators that need context, constraints, and iteration. This guide walks through the 5-step workflow behind good output, using Figma Make as one example of a broader class of tools.</p>
+    <div class="compat-tags">
+      <span class="tag"><span class="dot-g"></span>Works across LLM design tools</span>
+      <span class="tag"><span class="dot-g"></span>Reusable context across steps</span>
+      <span class="tag"><span class="dot-g"></span>Example + template for each prompt</span>
+      <span class="tag"><span class="dot-g"></span>One-click copy</span>
+    </div>
+    <div class="meta-row">
+      <div class="meta-item"><div class="meta-label">Pattern</div><div class="meta-val">Context-first prompting</div></div>
+      <div class="meta-item"><div class="meta-label">Inputs</div><div class="meta-val">Briefs · personas · brand docs · constraints</div></div>
+      <div class="meta-item"><div class="meta-label">Output</div><div class="meta-val">Screens · components · HTML prototypes · docs</div></div>
+      <div class="meta-item"><div class="meta-label">Best for</div><div class="meta-val">Claude Design, Figma Make, Cursor, similar tools</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- OVERVIEW -->
+<section class="section" id="sec-1">
+  <div class="section-inner">
+    <div class="section-label">Overview</div>
+    <h2>What this kit <em>produces</em></h2>
+    <p class="section-sub">Five artifacts that chain together — each one feeding the next.</p>
+    <div class="numbered-items">
+      <div class="numbered-item"><div class="item-num">1</div><div class="item-content"><h3>Problem Brief</h3><p>A markdown document defining the core problem, design priorities, edge cases, and success criteria. Keep it in the tool context so every subsequent session builds on the same problem definition.</p></div></div>
+      <div class="numbered-item"><div class="item-num">2</div><div class="item-content"><h3>User Personas</h3><p>Structured persona docs with goals, frustrations, behaviours, and one critical design implication each. When the tool can reference them, it designs for real humans instead of generic SaaS defaults.</p></div></div>
+      <div class="numbered-item"><div class="item-num">3</div><div class="item-content"><h3>Brand Brief</h3><p>A living design token reference — colors, type scale, spacing, tone of voice, and what the brand should never look like. This is the fastest path to consistent output across sessions and tools.</p></div></div>
+      <div class="numbered-item"><div class="item-num">4</div><div class="item-content"><h3>Component Build</h3><p>The actual generation prompt — written to reference all three prior artifacts. With the brief, personas, and brand doc loaded, the output quality difference versus a blank prompt is categorical, not incremental.</p></div></div>
+      <div class="numbered-item"><div class="item-num">5</div><div class="item-content"><h3>Iteration Prompts</h3><p>Six high-leverage follow-up prompts for hierarchy, accessibility, responsiveness, data states, and the Persona Check — the most underused review in the kit.</p></div></div>
+    </div>
+    <div class="notice">
+      <span class="notice-dot">●</span>
+      <span>All steps use <strong>Medpace clinical monitoring</strong> as the running example — the Patient Enrollment Management Platform for trial ONCO-2024-003. Each step has an <strong>Example</strong> tab and a <strong>Template</strong> tab.</span>
+    </div>
+    <div class="step-nav-strip">
+      <span></span>
+      <a class="next-link" href="#sec-prep">Before You Prompt →</a>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE YOU PROMPT -->
+<section class="section" id="sec-prep">
+  <div class="section-inner">
+    <div class="section-label">Before You Type Anything</div>
+    <h2>Context before <em>pixels.</em></h2>
+    <p class="section-sub">The biggest unlock in LLM design tools isn't a better prompt. It's the context you load before the first generation.</p>
+
+    <div class="setup-grid">
+      <div class="setup-card">
+        <div class="setup-top" style="background:var(--text-muted);"></div>
+        <div class="setup-cbody">
+          <span class="setup-badge" style="background:var(--bg);color:var(--text-muted);">When you first open a design generator</span>
+          <h3>The intro screen offers single-click sample options</h3>
+          <p>When you open a tool like Figma Make or Claude Design, the intro screen usually offers fast sample generations. These demonstrate what the tool can produce and are useful for exploring range. They're capability demos, not a starting point for real product work. The output reflects no knowledge of your users, your problem, or your brand.</p>
+          <div class="setup-note" style="color:var(--text-muted);border-color:var(--border);">Explore the samples to understand what's possible. But for work that needs to reflect actual users and a real design problem — start from step 1 of this kit instead.</div>
+        </div>
+      </div>
+      <div class="setup-card">
+        <div class="setup-top" style="background:var(--accent);"></div>
+        <div class="setup-cbody">
+          <span class="setup-badge" style="background:var(--accent-light);color:var(--accent);">Recommended path</span>
+          <h3>Build your context files before you design</h3>
+          <p>Steps 1–3 of this guide generate markdown documents: your problem brief, user personas, and brand tokens. Keep these in whatever context layer your tool supports: a guidelines folder, project knowledge, attached docs, or pinned reference files. When you finally prompt for a screen, the tool already understands the user, the problem, and the brand. None of that has to be re-explained from scratch.</p>
+          <div class="setup-note"><strong>Add to tool context:</strong> problem-brief.md · personas.md · brand-tokens.md. Different tools package this differently, but the principle is the same.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-label" style="margin-bottom:12px;">What specificity looks like</div>
+    <p style="font-size:0.87rem;color:var(--text-muted);font-style:italic;margin-bottom:24px;">Your context files handle the "who" and "why" — your prompt handles the "what and how." These examples show what a specific, context-informed prompt produces versus a blank one.</p>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px;">
+
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
+        <div style="background:var(--dark);height:148px;padding:14px;display:flex;flex-direction:column;gap:6px;">
+          <div style="background:rgba(255,255,255,.06);border-radius:3px;height:24px;display:flex;align-items:center;padding:0 10px;gap:8px;">
+            <div style="width:38%;height:6px;background:rgba(255,255,255,.18);border-radius:2px;"></div>
+            <div style="margin-left:auto;display:flex;gap:5px;">
+              <div style="width:52px;height:14px;background:rgba(47,107,102,.35);border-radius:2px;"></div>
+              <div style="width:36px;height:14px;background:rgba(255,255,255,.08);border-radius:2px;"></div>
+            </div>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column;gap:5px;padding:4px 0;">
+            <div style="display:grid;grid-template-columns:2fr 1.5fr 1fr 0.8fr;gap:6px;padding:0 2px;"><div style="height:5px;background:rgba(255,255,255,.1);border-radius:1px;"></div><div style="height:5px;background:rgba(255,255,255,.06);border-radius:1px;"></div><div style="height:5px;background:rgba(255,255,255,.06);border-radius:1px;"></div><div style="height:5px;background:rgba(255,255,255,.06);border-radius:1px;"></div></div>
+            <div style="display:grid;grid-template-columns:2fr 1.5fr 1fr 0.8fr;gap:6px;padding:4px 2px;border-top:1px solid rgba(255,255,255,.04);"><div style="height:5px;background:rgba(255,255,255,.12);border-radius:1px;"></div><div style="height:5px;background:rgba(255,255,255,.07);border-radius:1px;"></div><div style="height:5px;background:rgba(255,255,255,.07);border-radius:1px;"></div><div style="width:18px;height:12px;background:#c43b31;border-radius:2px;"></div></div>
+            <div style="display:grid;grid-template-columns:2fr 1.5fr 1fr 0.8fr;gap:6px;padding:4px 2px;border-top:1px solid rgba(255,255,255,.04);"><div style="height:5px;background:rgba(255,255,255,.12);border-radius:1px;"></div><div style="height:5px;background:rgba(255,255,255,.07);border-radius:1px;"></div><div style="height:5px;background:rgba(255,255,255,.07);border-radius:1px;"></div><div style="width:18px;height:12px;background:#e8a317;border-radius:2px;"></div></div>
+            <div style="display:grid;grid-template-columns:2fr 1.5fr 1fr 0.8fr;gap:6px;padding:4px 2px;border-top:1px solid rgba(255,255,255,.04);"><div style="height:5px;background:rgba(255,255,255,.12);border-radius:1px;"></div><div style="height:5px;background:rgba(255,255,255,.07);border-radius:1px;"></div><div style="height:5px;background:rgba(255,255,255,.07);border-radius:1px;"></div><div style="width:18px;height:12px;background:rgba(47,107,102,.4);border-radius:2px;"></div></div>
+          </div>
+        </div>
+        <div style="padding:12px 14px;">
+          <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);margin-bottom:7px;">Data tables &amp; dashboards</div>
+          <div style="font-size:0.75rem;color:var(--text);line-height:1.6;font-family:'Roboto Mono',monospace;background:var(--accent-light);padding:7px 9px;border-radius:3px;">"...8-column patient table, risk flags colour-coded red/amber/green by clinical threshold, sticky header, 'show flagged only' toggle..."</div>
+        </div>
+      </div>
+
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
+        <div style="background:#f3f2f7;height:148px;padding:14px;display:flex;flex-direction:column;gap:8px;">
+          <div style="background:white;border:1px solid var(--border);border-radius:4px;padding:10px 12px;display:flex;flex-direction:column;gap:6px;">
+            <div style="width:32%;height:5px;background:rgba(0,0,0,.14);border-radius:1px;"></div>
+            <div style="width:100%;height:20px;background:white;border:1px solid #d8d8d8;border-radius:3px;"></div>
+          </div>
+          <div style="background:white;border:1px solid var(--border);border-radius:4px;padding:10px 12px;display:flex;flex-direction:column;gap:6px;">
+            <div style="width:26%;height:5px;background:rgba(0,0,0,.14);border-radius:1px;"></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;"><div style="height:20px;background:white;border:1px solid #d8d8d8;border-radius:3px;"></div><div style="height:20px;background:white;border:1px solid #d8d8d8;border-radius:3px;"></div></div>
+          </div>
+          <div style="display:flex;justify-content:flex-end;gap:8px;"><div style="width:56px;height:22px;background:rgba(0,0,0,.07);border-radius:3px;"></div><div style="width:72px;height:22px;background:var(--accent);border-radius:3px;"></div></div>
+        </div>
+        <div style="padding:12px 14px;">
+          <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);margin-bottom:7px;">Forms &amp; structured input</div>
+          <div style="font-size:0.75rem;color:var(--text);line-height:1.6;font-family:'Roboto Mono',monospace;background:var(--accent-light);padding:7px 9px;border-radius:3px;">"...flag-review modal, protocol deviation path vs. all other types, required fields, audit-trail confirmation copy from microcopy doc..."</div>
+        </div>
+      </div>
+
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
+        <div style="background:var(--dark2);height:148px;padding:14px;display:flex;gap:12px;align-items:flex-start;">
+          <div style="width:58px;flex-shrink:0;background:rgba(255,255,255,.04);border-radius:6px;border:1px solid rgba(255,255,255,.08);padding:10px 8px;display:flex;flex-direction:column;gap:6px;height:120px;">
+            <div style="width:100%;height:6px;background:rgba(255,255,255,.18);border-radius:2px;"></div>
+            <div style="width:70%;height:5px;background:rgba(255,255,255,.07);border-radius:2px;"></div>
+            <div style="width:90%;height:5px;background:rgba(255,255,255,.07);border-radius:2px;"></div>
+            <div style="width:60%;height:5px;background:rgba(255,255,255,.07);border-radius:2px;"></div>
+            <div style="margin-top:auto;width:100%;height:18px;background:rgba(47,107,102,.35);border-radius:3px;"></div>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column;gap:6px;padding-top:2px;">
+            <div style="width:65%;height:7px;background:rgba(255,255,255,.22);border-radius:2px;"></div>
+            <div style="width:90%;height:5px;background:rgba(255,255,255,.08);border-radius:2px;"></div>
+            <div style="width:75%;height:5px;background:rgba(255,255,255,.08);border-radius:2px;"></div>
+            <div style="width:50%;height:5px;background:rgba(255,255,255,.08);border-radius:2px;"></div>
+            <div style="margin-top:8px;width:100%;height:20px;background:rgba(47,107,102,.4);border-radius:3px;"></div>
+          </div>
+        </div>
+        <div style="padding:12px 14px;">
+          <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);margin-bottom:7px;">Mobile &amp; constrained views</div>
+          <div style="font-size:0.75rem;color:var(--text);line-height:1.6;font-family:'Roboto Mono',monospace;background:var(--accent-light);padding:7px 9px;border-radius:3px;">"...390px viewport, CRA pre-visit summary, tap targets ≥44px, single primary action per screen..."</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="insight">
+      <div class="insight-eyebrow">Use Claude to build context before you open the design tool</div>
+      <p>You don't have to write your context documents alone. <strong>Describe what you're building to Claude first</strong> — the screen, the user, what they need to accomplish — and ask it to draft the problem brief or persona doc. A short conversation builds the files that make your first generation session significantly more productive.</p>
+    </div>
+    <div class="step-nav-strip">
+      <a href="#sec-1">← Overview</a>
+      <a class="next-link" href="#sec-2">Step 01: Problem Framing →</a>
+    </div>
+  </div>
+</section>
+
+<!-- STEP 1 -->
+<section class="section" id="sec-2">
+  <div class="section-inner">
+    <div class="section-label">Step 01</div>
+    <h2>Problem <em>Framing</em></h2>
+    <p class="section-sub">Do this before you touch a single frame.</p>
+    <p class="section-body">Ask the tool to generate a design brief first. This forces clarity on what you're actually solving and gives you the first document to keep in your reusable tool context. Once it's there, every later generation has the "why" behind the design without you re-explaining it.</p>
+    <div class="prompt-wrap">
+      <div class="prompt-toggle">
+        <button class="toggle-btn active" onclick="switchTab(this,'p1e','p1t')">Example</button>
+        <button class="toggle-btn" onclick="switchTab(this,'p1t','p1e')">Template</button>
+      </div>
+      <div class="prompt-block">
+        <div class="prompt-header">
+          <span class="prompt-label-txt">Prompt Template</span>
+          <button class="copy-btn" onclick="copyActive(this)"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="4" y="4" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.2"></rect><path d="M2 8H1.5A.5.5 0 011 7.5v-6A.5.5 0 011.5 1h6a.5.5 0 01.5.5V2" stroke="currentColor" stroke-width="1.2"></path></svg> Copy prompt</button>
+        </div>
+        <div class="prompt-text active" id="p1e">Generate a <span class="hi">design brief as a markdown document</span> for the Medpace Patient Enrollment Management Platform.
+
+Context: CRAs (Clinical Research Associates) manage 10 to 40 patients across 3 to 8 active trial sites at once. Current workflow: spreadsheets and email. The platform needs to give a CRA one place to see what needs attention, what's overdue, and whether they're ready for the next monitoring visit. The reference trial is ONCO-2024-003, with 12 patients across Cedars-Sinai Medical Center (LA), Mayo Clinic Rochester MN, and Johns Hopkins Hospital Baltimore MD.
+
+The core tension: CRAs need dense clinical data to do their job accurately, but they also need to triage fast — pre-visit the morning before travel, on-site with limited time and focus. The design must support both modes without switching views.
+
+For the brief, include:
+- The core user problem stated in one honest sentence — not a marketing sentence, a real one
+- 3 genuine design tensions we'll have to make calls on (e.g. "displaying complete patient data vs. enabling fast pre-visit triage")
+- 5 specific edge cases: a protocol deviation requiring PI escalation, a site where all patients are on treatment hold, a visit window expiring on a day the site is closed, a withdrawn patient still under an open query, a study amendment that changes required visit counts mid-trial
+- What "done for the day" actually looks like for a CRA — not just task completion, but the professional confidence state we're designing toward (she should be able to close the laptop and trust the work is in order)
+- 3 products this should never feel like, and why each one is a cautionary tale for us specifically in the clinical context
+- 4 success metrics that are actually measurable, not vanity metrics
+
+Format with clear markdown headers. Save this file as a reusable reference document and keep it in your tool context for subsequent sessions.</div>
+        <div class="prompt-text" id="p1t">Generate a <span class="hi">design brief as a markdown document</span> for an app called <span class="ph">[product name]</span> — <span class="ph">[what it does and who it's for]</span>.
+
+Include:
+- The core user problem in one sentence
+- 3 competing design priorities
+- 5 edge cases the design must account for
+- What "done" looks like for the user
+- 3 things this product should never feel like
+- Success metrics we could track
+
+Format with clear headers. Save this file into your reusable design context.</div>
+      </div>
+    </div>
+    <div class="insight">
+      <div class="insight-eyebrow">Why this works</div>
+      <p>The brief becomes a <strong>reusable artifact</strong>. Keep it in the tool context layer your workflow supports so future sessions start with the same problem definition already loaded.</p>
+    </div>
+    <div class="tips" style="margin-top:20px;">
+      <div class="tip"><span class="tip-arrow">→</span><span><strong>Save the output</strong> as a .md file and add it to your reusable context immediately. Don't wait until all four documents are ready.</span></div>
+      <div class="tip"><span class="tip-arrow">→</span><span><strong>Be specific about what it shouldn't feel like</strong> — that constraint is often more useful than describing what it should be.</span></div>
+      <div class="tip"><span class="tip-arrow">→</span><span><strong>Not sure what your problem actually is?</strong> Ask Claude: <em>"I want to design [X]. Help me find the real design problem before I write a brief."</em> Use it to think out loud before committing to a direction.</span></div>
+    </div>
+    <div class="step-nav-strip">
+      <a href="#sec-prep">← Before You Prompt</a>
+      <a class="next-link" href="#sec-3">Next: User Personas →</a>
+    </div>
+  </div>
+</section>
+
+<!-- STEP 2 -->
+<section class="section" id="sec-3">
+  <div class="section-inner">
+    <div class="section-label">Step 02</div>
+    <h2>User <em>Personas</em></h2>
+    <p class="section-sub">Give the model a human to design for.</p>
+    <p class="section-body">Generate structured persona documents as markdown. These aren't just for your team. They become part of your reusable context so every generated component reflects real user needs, not generic patterns. The more specific the persona, the more distinctive the output.</p>
+    <div class="prompt-wrap">
+      <div class="prompt-toggle">
+        <button class="toggle-btn active" onclick="switchTab(this,'p2e','p2t')">Example</button>
+        <button class="toggle-btn" onclick="switchTab(this,'p2t','p2e')">Template</button>
+      </div>
+      <div class="prompt-block">
+        <div class="prompt-header">
+          <span class="prompt-label-txt">Prompt Template</span>
+          <button class="copy-btn" onclick="copyActive(this)"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="4" y="4" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.2"></rect><path d="M2 8H1.5A.5.5 0 011 7.5v-6A.5.5 0 011.5 1h6a.5.5 0 01.5.5V2" stroke="currentColor" stroke-width="1.2"></path></svg> Copy prompt</button>
+        </div>
+        <div class="prompt-text active" id="p2e">Generate <span class="hi">3 user personas as a markdown document</span> for the Medpace Patient Enrollment Management Platform.
+
+I want these to feel like people I could debrief with after a site visit, not composite sketches. Here's the starting direction for each:
+
+Persona 1: A CRA, approximately 28–36, travels three days a week to trial sites. Currently managing 6 active sites across two protocols. Her primary systems are Medidata Rave for data entry and Excel plus email for visit prep and follow-up. Master's degree in life sciences. Gets anxious the night before site visits when she hasn't had time to prep properly — the anxiety isn't about the site, it's about not knowing what she's walking into.
+
+Persona 2: A Site Coordinator — the person at the academic medical center who receives CRA visits, not the person conducting them. Late 30s. Has been at the same institution for 8 years. Manages 25–40 patients across two active trials simultaneously, using the EHR, an EDC, and her own Excel tracking spreadsheet at the same time. Deeply skeptical of new software — not because she's averse to technology, but because every system change creates compliance risk until the SOPs are updated and the team is retrained. She has been burned before.
+
+Persona 3: A Clinical Ops Manager, 40s, oversight role. Reviews monitoring reports, responsible for escalation decisions, rarely looks at individual patient data — she needs site-level risk at a glance. Describes herself as "a dashboard person." Has previously tried to get useful summary reporting out of Medidata Rave and found it practically unusable for her purposes. Approves the platform budget but isn't the daily user.
+
+For each persona, give me:
+- Their name, age, location, and job title exactly as it would appear on their business card
+- The 3 systems they use daily and what specifically frustrates them about each one
+- The thought in their head at 7am on the morning of a site visit (or Monday 8am for the Ops Manager)
+- A verbatim quote — something they'd actually say in a handoff meeting, unfiltered
+- The moment in their week when this platform would give them the most relief
+- Their gut reaction to new internal tools: compliance-cautious / pragmatic / cautiously enthusiastic
+- One specific thing in the UI that would make them immediately distrust the data
+
+Save this file into your reusable design context.</div>
+        <div class="prompt-text" id="p2t">Generate <span class="hi">3 detailed user personas as a markdown document</span> for <span class="ph">[product name]</span>, <span class="ph">[one sentence description]</span>.
+
+For each persona include:
+- Name, age, location, job title
+- Tools they use and what they hate about them
+- Their biggest daily frustration
+- What they wish existed
+- A quote they'd actually say out loud
+- How they define a successful workday
+- Relationship with technology: comfortable / reluctant / power-user
+- One thing they'd notice immediately if the design got it wrong
+
+Make them feel like real people, not archetypes. Save this file into your reusable design context.</div>
+      </div>
+    </div>
+    <div class="insight">
+      <div class="insight-eyebrow">Less obvious use</div>
+      <p>After generating personas, ask the tool to <strong>pick the most underserved persona</strong> and explain what a design optimised specifically for them would prioritise differently. This surfaces directions you wouldn't reach any other way.</p>
+    </div>
+    <div class="tips" style="margin-top:20px;">
+      <div class="tip"><span class="tip-arrow">→</span><span><strong>Ask for conflict</strong> — request personas with competing needs. Design tension found early is easier to resolve than tension found in review.</span></div>
+      <div class="tip"><span class="tip-arrow">→</span><span>Follow up with: <strong>"Generate an interactive HTML version of these personas"</strong> — shareable with anyone, no Figma access needed.</span></div>
+    </div>
+    <div class="step-nav-strip">
+      <a href="#sec-2">← Problem Framing</a>
+      <a class="next-link" href="#sec-4">Next: Brand Brief →</a>
+    </div>
+  </div>
+</section>
+
+<!-- STEP 3 -->
+<section class="section" id="sec-4">
+  <div class="section-inner">
+    <div class="section-label">Step 03</div>
+    <h2>Brand <em>Brief</em></h2>
+    <p class="section-sub">Stop the tool from going off-brand before it starts.</p>
+    <p class="section-body">Generate a design token and style reference document and keep it in your reusable tool context. It's the single most efficient way to get consistently on-brand output, far more effective than repeating style instructions in every prompt.</p>
+    <div class="prompt-wrap">
+      <div class="prompt-toggle">
+        <button class="toggle-btn active" onclick="switchTab(this,'p3e','p3t')">Example</button>
+        <button class="toggle-btn" onclick="switchTab(this,'p3t','p3e')">Template</button>
+      </div>
+      <div class="prompt-block">
+        <div class="prompt-header">
+          <span class="prompt-label-txt">Prompt Template</span>
+          <button class="copy-btn" onclick="copyActive(this)"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="4" y="4" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.2"></rect><path d="M2 8H1.5A.5.5 0 011 7.5v-6A.5.5 0 011.5 1h6a.5.5 0 01.5.5V2" stroke="currentColor" stroke-width="1.2"></path></svg> Copy prompt</button>
+        </div>
+        <div class="prompt-text active" id="p3e">Create a <span class="hi">brand and design system reference document</span> for the Medpace Patient Enrollment Management Platform.
+
+I have a clear point of view on the brand direction, which I want you to develop into a full system:
+
+The feeling: this platform should feel like a reliable professional instrument. Not a dashboard, not a portal — a clinical instrument a CRA trusts because it's never wrong. References for the feeling I'm after: aircraft cockpit indicator clarity (critical information is always visible, hierarchy is non-negotiable), clinical lab report authority (structured, precise, no decoration that doesn't carry meaning), Bloomberg Terminal density (high information per square centimetre without visual chaos).
+
+What it absolutely must not feel like:
+- Salesforce default configuration: too much chrome, navigation hierarchy that prioritises navigation over content, "sky blue" that reads as generic enterprise
+- Apple Health or any consumer health app: wrong register entirely for a regulated clinical environment — the warmth and encouragement that works for fitness tracking is inappropriate when a CRA is reviewing a protocol deviation
+- Legacy EDC systems like Medidata Rave: dated visual design that creates friction, slows clinical judgment, and signals that the tool wasn't designed with the user in mind
+
+Colour direction is defined. Work with it:
+- Primary surface: white (#FFFFFF)
+- Action / status: clinical teal (#028090)
+- Navigation / headers: deep navy (#0D1B2A)
+- Risk states must be red and amber, but color-blind safe — deuteranopia and protanopia both occur in the user base. Color-alone communication is not acceptable. Every status must pair color with an icon or label.
+
+Please develop:
+- Full primary / secondary / accent / semantic palette. Hex values and explicit usage rules for each. Semantic colors must include: Critical (with background tint and foreground color passing WCAG AA on white), Warning, Success, Info — all four.
+- Typography: a serif for page-level titles that communicates authority, not warmth (rule out anything typically used for lifestyle brands); a clean sans-serif for data labels and UI copy that remains legible at 12–13px in dense tables; a monospace for patient IDs, timestamps, and protocol codes. Full scale from 11px to 32px with usage notes at each size.
+- Spacing scale, 4px base unit. Tokens space-1 through space-10.
+- Table-specific tokens: row height (compact / default / spacious), cell padding, header background, border weight. This is a data-dense tool — table tokens matter as much as component tokens.
+- Tone of voice: 4 example UI strings written in the correct clinical register — precise, direct, assumes expertise. Then: 5 words that must never appear anywhere in this product's copy.
+
+Format as markdown with clear section headers. Save this file into your reusable tool context so later sessions inherit the brand rules automatically.</div>
+        <div class="prompt-text" id="p3t">Create a <span class="hi">brand and design token reference document</span> for <span class="ph">[product name]</span>. The brand should feel <span class="ph">[3 adjectives]</span>. Not <span class="ph">[what to avoid]</span>.
+
+Include:
+- Color palette with hex values and usage rules
+- Typography: heading, body, mono fonts with size scale
+- Spacing system (4px base unit)
+- Border radius and shadow definitions
+- Tone of voice: 3 adjectives, 3 anti-adjectives, writing example
+- 2 brands as anti-inspiration
+- Component personality notes (buttons, inputs, empty states)
+
+Format as markdown. Save this file into your reusable tool context.</div>
+      </div>
+    </div>
+    <div class="insight">
+      <div class="insight-eyebrow">Pro move</div>
+      <p>Ask the tool to generate a <strong>visual HTML style guide</strong> instead of markdown — a living reference page that renders the actual colors, type scale, and component styles in the browser. Far more useful to share with a team or client than a text document.</p>
+    </div>
+    <div class="step-nav-strip">
+      <a href="#sec-3">← User Personas</a>
+      <a class="next-link" href="#sec-7">Next: Build →</a>
+    </div>
+  </div>
+</section>
+
+<!-- STEP 4 REMOVED (Microcopy) AND STEP 5 REMOVED (User Flow) - see below for new Step 04 Build -->
+<section class="section" id="sec-5-removed" style="display:none">
+  <div class="section-inner">
+    <div class="section-label">Step 04</div>
+    <h2><em>Microcopy</em></h2>
+    <p class="section-sub">Words are part of the design. Generate them before you build.</p>
+    <p class="section-body">Generate all UI copy upfront — buttons, errors, empty states, tooltips, onboarding text. Add this to your reusable tool context and the generator will use real copy instead of placeholder text automatically. This single change transforms what prototype reviews feel like.</p>
+    <div class="prompt-wrap">
+      <div class="prompt-toggle">
+        <button class="toggle-btn active" onclick="switchTab(this,'p4e','p4t')">Example</button>
+        <button class="toggle-btn" onclick="switchTab(this,'p4t','p4e')">Template</button>
+      </div>
+      <div class="prompt-block">
+        <div class="prompt-header">
+          <span class="prompt-label-txt">Prompt Template</span>
+          <button class="copy-btn" onclick="copyActive(this)"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="4" y="4" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.2"></rect><path d="M2 8H1.5A.5.5 0 011 7.5v-6A.5.5 0 011.5 1h6a.5.5 0 01.5.5V2" stroke="currentColor" stroke-width="1.2"></path></svg> Copy prompt</button>
+        </div>
+        <div class="prompt-text active" id="p4e">Generate a <span class="hi">complete UI microcopy document</span> for the Medpace Patient Enrollment Management Platform.
+
+Tone guidance — this is critical:
+Write for a regulated clinical environment. The CRA using this tool is a trained professional operating under 21 CFR Part 11 compliance. Write like a senior colleague who respects their expertise. Precise, direct, zero ambiguity. No "simply", "easily", "just", or "quickly" — these words are filler and they're inappropriate in a compliance context. No exclamation marks anywhere. No success celebrations. Error messages must tell the user what to do next, not just that something went wrong. Confirmations must confirm exactly what was recorded — a CRA may cite these in a monitoring report.
+
+Screens to cover:
+
+1. Patient list — empty state when filters return zero results
+   This is not a new study — data exists, the user has over-filtered. Do not suggest onboarding actions. Acknowledge the filter state and give a clear exit. Do not show a bare empty table.
+
+2. Patient list — newly created study with no enrolled patients yet
+   Genuine zero state. Matter-of-fact. The next action to enroll patients is not in this tool — do not suggest one.
+
+3. Flag review confirmation — after logging a protocol deviation
+   This is a compliance action. The confirmation must be specific about what was recorded. Write it as if the CRA needs to be able to describe what they logged in a monitoring report.
+
+4. Contact attempt logging — field labels and placeholder text
+   Fields: Patient ID (read-only), Contact Date, Contact Method (dropdown), Outcome (dropdown — options: Reached / No Answer / Left Message / Incorrect Contact), Notes (optional). Clinical-precise, not casual.
+
+5. Error states: session timeout during a flag submission (preserve all entered data, prompt re-authentication, return to review step), EDC sync failure (flag queued locally, inform CRA it will submit when connection restores), read-only access attempt (CRA attempting to submit on a site they don't have write access to — be specific about why)
+
+6. Visit window status badge labels
+   Exact label text for each state: Upcoming, Due Soon, Overdue, Missed, Completed. One to two words maximum. Must be unambiguous in a table cell at small size.
+
+7. Navigation labels: 4 top-level nav items. "Dashboard" is technically accurate but generic — what label better reflects a CRA's mental model of her primary view?
+
+Output as markdown with each screen as a section header. Save this file into your reusable tool context.</div>
+        <div class="prompt-text" id="p4t">Generate a <span class="hi">complete UI microcopy document</span> for <span class="ph">[product name]</span>'s <span class="ph">[screen or flow]</span>.
+
+Cover:
+- Page titles and headings
+- Primary and secondary CTA labels
+- Empty states: headline + 1 sentence + CTA for each major empty state
+- Error messages: network, validation, limits
+- Success and confirmation copy
+- Tooltip text for key features
+- Onboarding text and coach marks
+- Input placeholder text
+
+Tone: <span class="ph">[describe voice]</span>. Avoid: <span class="ph">[words or patterns to exclude]</span>.
+
+Output as structured markdown by UI section. Save this file into your reusable tool context.</div>
+      </div>
+    </div>
+    <div class="insight">
+      <div class="insight-eyebrow">Why this matters</div>
+      <p>Placeholder copy causes stakeholders to <strong>react to the layout instead of the experience</strong>. Real copy shifts the entire conversation in review. Generate it first, add it to the reusable context, and the tool can use it without extra instruction in your build prompt.</p>
+    </div>
+    <div class="step-nav-strip">
+      <a href="#sec-4">← Brand Brief</a>
+      <a class="next-link" href="#sec-6">Next: User Flow →</a>
+    </div>
+  </div>
+</section>
+
+<!-- STEP 5 REMOVED (User Flow) -->
+<section class="section" id="sec-6-removed" style="display:none">
+  <div class="section-inner">
+    <div class="section-label">Step 05</div>
+    <h2>User <em>Flow</em></h2>
+    <p class="section-sub">Map the journey before you build any screen.</p>
+    <p class="section-body">Ask the tool to generate a clickable HTML user flow — an interactive diagram of screens and decision points. Faster to produce than a Figma flow, works in any browser, and is far easier for non-designers to review asynchronously.</p>
+    <div class="prompt-wrap">
+      <div class="prompt-toggle">
+        <button class="toggle-btn active" onclick="switchTab(this,'p5e','p5t')">Example</button>
+        <button class="toggle-btn" onclick="switchTab(this,'p5t','p5e')">Template</button>
+      </div>
+      <div class="prompt-block">
+        <div class="prompt-header">
+          <span class="prompt-label-txt">Prompt Template</span>
+          <button class="copy-btn" onclick="copyActive(this)"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="4" y="4" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.2"></rect><path d="M2 8H1.5A.5.5 0 011 7.5v-6A.5.5 0 011.5 1h6a.5.5 0 01.5.5V2" stroke="currentColor" stroke-width="1.2"></path></svg> Copy prompt</button>
+        </div>
+        <div class="prompt-text active" id="p5e">Build an <span class="hi">interactive HTML user flow diagram</span> for the Medpace Patient Enrollment Platform's "Flag Patient for Review" flow.
+
+Here's exactly what happens:
+
+Entry point: CRA is reviewing the patient list, notices an amber "At Risk" badge on a row. She hovers the row — a three-dot action menu appears on the right. She clicks "Flag for Review."
+
+Step 1 — Flag type selection (required)
+Modal opens. Single required selection before proceeding: Protocol Deviation / Missed Visit Window / Unanswered Contact Attempt / Lab Result Pending Review / Other. Selecting "Other" reveals a required note field. Cannot proceed without selecting a flag type.
+
+Step 2 — Details (two paths based on Step 1 selection)
+Path A — Protocol Deviation selected: required fields are Deviation Date (date picker), Protocol Section Reference (free text), Brief Description (required, max 500 characters). Optional: attach supporting document.
+Path B — All other flag types: required field is Brief Description (required, max 500 characters). Optional: attach supporting document.
+
+Step 3 — Assignment
+Dropdown: Assign to Self / Assign to Site Coordinator / Escalate to PI / Escalate to Sponsor.
+If "Escalate to PI" or "Escalate to Sponsor" is selected, a required "Reason for escalation" text field appears. Cannot proceed without completing it.
+
+Step 4 — Review &amp; Submit
+Summary of all entered information. Non-editable except via Back button. Primary CTA: "Submit flag." Visible warning annotation: "This action will be logged in the audit trail and cannot be deleted."
+
+Success state
+Flag submitted confirmation displaying: generated flag ID (format FLAG-YYYYMMDD-XXX), patient ID, flag type, and assigned to. Two CTAs: "Return to patient list" or "View flag in patient record."
+
+Error states to show:
+- Session expired during flag submission: preserve all entered data, prompt re-authentication, return to Review &amp; Submit step with data intact
+- EDC sync failure: flag queued locally, banner informs CRA it will submit automatically when connection restores
+
+Style: dark background diagram. Three distinct path colors — happy path, escalation branch, error recovery. Label every arrow with its trigger action. Rounded rectangle nodes. Include the audit trail warning as a visible annotation on the Submit node. Every node must show the step name and a one-line description inside.</div>
+        <div class="prompt-text" id="p5t">Build an <span class="hi">interactive HTML user flow diagram</span> for <span class="ph">[product name]</span>'s <span class="ph">[flow name]</span>.
+
+Flow starts: <span class="ph">[trigger action]</span>
+Flow ends: <span class="ph">[success state]</span>
+
+Steps:
+<span class="ph">[List key steps and decision points]</span>
+
+Show: happy path, any skip paths, <span class="ph">[N]</span> error states.
+
+Style: dark background, styled nodes, directional arrows. Shareable with non-technical stakeholders.</div>
+      </div>
+    </div>
+    <div class="insight">
+      <div class="insight-eyebrow">Unexpected use case</div>
+      <p>Generate the flow <strong>before you have any opinion on it</strong> — just describe the user goal. The tool will often surface steps you forgot or decision points you hadn't considered. Use it as a <strong>thinking tool first</strong>, documentation tool second.</p>
+    </div>
+    <div class="step-nav-strip">
+      <a href="#sec-5">← Microcopy</a>
+      <a class="next-link" href="#sec-7">Next: Build →</a>
+    </div>
+  </div>
+</section>
+
+<!-- STEP 6 -->
+<section class="section" id="sec-7">
+  <div class="section-inner">
+    <div class="section-label">Step 04</div>
+    <h2>Build the <em>Component</em></h2>
+    <p class="section-sub">Now you're ready. And you have context behind you.</p>
+    <p class="section-body">This is the prompt most people start with. Starting here without steps 1–3 means the tool guesses at the problem, the user, and the brand. With those three documents loaded into the context layer, this becomes a fundamentally different request. The example below is a Medpace clinical monitoring screen, but the principle applies to any screen you're building.</p>
+    <div class="prompt-wrap">
+      <div class="prompt-toggle">
+        <button class="toggle-btn active" onclick="switchTab(this,'p6e','p6t')">Example</button>
+        <button class="toggle-btn" onclick="switchTab(this,'p6t','p6e')">Template</button>
+      </div>
+      <div class="prompt-block">
+        <div class="prompt-header">
+          <span class="prompt-label-txt">Guidelines folder: brief · personas · brand doc</span>
+          <button class="copy-btn" onclick="copyActive(this)"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="4" y="4" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.2"></rect><path d="M2 8H1.5A.5.5 0 011 7.5v-6A.5.5 0 011.5 1h6a.5.5 0 01.5.5V2" stroke="currentColor" stroke-width="1.2"></path></svg> Copy prompt</button>
+        </div>
+        <div class="prompt-text active" id="p6e">Build Medpace's <span class="hi">patient enrollment management screen</span> for ONCO-2024-003 as a React component. The design brief, CRA persona doc, and brand tokens are already loaded in the tool context — use them. Don't guess at brand decisions; if the brand doc specifies something, follow it exactly.
+
+Layout I want to see:
+
+Sticky header strip:
+- Study name "ONCO-2024-003" left-aligned + enrollment progress bar showing 8/15 (53%) right of it
+- Below the title: four stat cards in a row — Total Screened (12) · Enrolled (8) · Withdrawn (1) · Completed (1)
+- These stats are read-only — no click actions
+
+Patient table below the header:
+Columns in this order: Patient ID · Site · Status · Enrolled Date · Last Visit · Days Since Visit · Risk Flag · Next Action
+
+12 rows of realistic clinical data across three sites:
+Cedars-Sinai Medical Center (LA) · Mayo Clinic Rochester MN · Johns Hopkins Hospital MD
+
+Status mix across rows: Screened ×2, Enrolled ×5, On Treatment ×3, Withdrawn ×1, Completed ×1
+Risk flags: 1 Protocol Deviation (red badge), 2 At Risk (amber badge), rest empty
+Days Since Visit: colour-code red if >30 days, amber 15–30, green 0–14 — these are real clinical thresholds
+
+Filter bar above table: Status dropdown · Site dropdown · "Show flagged only" toggle with a live badge count showing how many flagged rows exist. Toggling it filters the table immediately.
+
+Each row: three-dot action menu (rightmost).
+
+Specific requirements:
+- Risk Flag column must be the most visually dominant element in each row — a CRA's eye should land there first
+- Hover on each row: reveal the Next Action button — don't show it when not hovering
+- Empty state when no patients match active filters: "No patients match your current filters." + "Clear all filters" link below it. Do not show a bare empty table.
+- The full table must be keyboard navigable — logical tab order, Enter triggers the row's Next Action
+
+Style: Internal enterprise clinical monitoring tool. White table on light grey background. Teal/navy header strip. High information density. Closer to Salesforce Health Cloud than any consumer app. Not playful. Not rounded.
+
+Tech: React functional component, Tailwind for styling, no other dependencies. Single file.</div>
+        <div class="prompt-text" id="p6t">Build <span class="ph">[product name]</span>'s <span class="hi"><span class="ph">[screen or component name]</span></span> as a <span class="ph">[React component / HTML page]</span>.
+
+Using the design brief, personas, and brand doc from the tool context as your guide:
+
+Layout:
+<span class="ph">[Describe key sections and hierarchy]</span>
+
+Requirements:
+- Match brand tokens from the brand doc exactly
+- Optimise for <span class="ph">[primary persona + key behaviour]</span>
+- Hover states and transitions throughout
+
+Tech: <span class="ph">[React + Tailwind / HTML + CSS]</span>. Single file.</div>
+      </div>
+    </div>
+    <div class="insight">
+      <div class="insight-eyebrow">The compounding effect</div>
+      <p>With 3 documents in the tool context, you're giving the model the equivalent of a <strong>design system + user research + creative brief</strong> automatically loaded into every session. The output difference compared to a blank prompt is categorical, not incremental.</p>
+    </div>
+    <div class="tips" style="margin-top:20px;">
+      <div class="tip"><span class="tip-arrow">→</span><span><strong>One screen at a time.</strong> Scope creep in the prompt produces scope creep in the output.</span></div>
+      <div class="tip"><span class="tip-arrow">→</span><span><strong>Use Claude as a prompt co-author.</strong> Describe the screen in plain language and ask: <em>"Turn this into a precise prompt for my design tool."</em> A 3–4 message conversation usually produces a better first prompt than writing one from scratch alone.</span></div>
+    </div>
+    <div class="step-nav-strip">
+      <a href="#sec-4">← Brand Brief</a>
+      <a class="next-link" href="#sec-8">Next: Iterate →</a>
+    </div>
+  </div>
+</section>
+
+<!-- STEP 7 -->
+<section class="section" id="sec-8">
+  <div class="section-inner">
+    <div class="section-label">Step 05</div>
+    <h2>Iterate &amp; <em>Refine</em></h2>
+    <p class="section-sub">The first output is a skeleton. These prompts shape it.</p>
+    <p class="section-body">Follow-up prompts are where most of the craft happens. These six patterns each target a different failure mode in generated output. Use them individually — one at a time — and always describe what you want rather than what went wrong.</p>
+    <div class="prompt-wrap">
+      <div class="prompt-toggle">
+        <button class="toggle-btn active" onclick="switchTab(this,'p7e','p7t')">Example Prompts</button>
+        <button class="toggle-btn" onclick="switchTab(this,'p7t','p7e')">Template Patterns</button>
+      </div>
+      <div class="prompt-block">
+        <div class="prompt-header">
+          <span class="prompt-label-txt">High-Leverage Follow-Up Prompts</span>
+          <button class="copy-btn" onclick="copyActive(this)"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="4" y="4" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.2"></rect><path d="M2 8H1.5A.5.5 0 011 7.5v-6A.5.5 0 011.5 1h6a.5.5 0 01.5.5V2" stroke="currentColor" stroke-width="1.2"></path></svg> Copy prompt</button>
+        </div>
+        <div class="prompt-text active" id="p7e"><span class="hi">// Hierarchy — risk flags aren't landing first</span>
+"The risk flag column exists but my eye doesn't land there first — it lands on the Patient ID column, which is the least actionable thing in the row. A CRA opening this Monday morning needs to see critical flags immediately. Increase the visual weight of the Risk Flag column: the red Protocol Deviation badge should be the most visually prominent element in the row. Reduce the weight of Patient ID — smaller type, lighter color — it's reference data, not decision data. Don't move columns. Adjust visual hierarchy only."
+
+<span class="hi">// Accessibility — status badges are color-only</span>
+"This table communicates patient status (red Protocol Deviation, amber At Risk) using color alone. This fails WCAG 2.1 AA for color-blind users — deuteranopia affects approximately 8% of males. For every status badge, add a symbol prefix: ▲ for Protocol Deviation, ● for At Risk, leave clean otherwise. Also: tab through the entire table — every row must be keyboard-navigable with Enter triggering the primary action, and the three-dot menu must be reachable without a mouse. Fix the visit window status pills too — check them for contrast."
+
+<span class="hi">// Responsive — tablet use case for on-site CRA review</span>
+"A CRA occasionally checks the patient list on a tablet while physically at a site. At 768px: hide Last Visit Date and Days Since Visit columns — replace with a single 'Last Contact' column showing the most recent of either. Collapse the three-dot action menu to a single 'Review' button visible on row tap. The filter bar should stack to two rows. The header stat cards should scroll horizontally rather than wrap. The table itself must not require horizontal scroll at 768px."
+
+<span class="hi">// Dashboard header — make it visit-aware, not just a label</span>
+"The current header shows the study name and enrollment count, but a CRA uses this as her first view before a monitoring visit — she needs it to tell her something actionable. Replace the static header with a context-aware status line: if a monitoring visit is scheduled in the next 5 days, show 'Monitoring visit: [Site Name] in [N] days — [X] outstanding items to resolve.' If there are critical flags, surface the count. If everything is clear, show 'All sites ready — no critical items.' Write 4 different versions of this line for different states and implement the logic to show the right one."
+
+<span class="hi">// Data states — table only handles the loaded state</span>
+"The patient table has no loading state, no error state, and no empty state. Add all three: (1) Loading — skeleton rows with the same column dimensions as the real rows, animated shimmer, show 8 of them (matching a typical CRA patient load). (2) Error — EDC sync failed; show an inline banner at the top of the table with the timestamp of the last successful sync and a 'Retry sync' button. Do not show a bare empty table. (3) Empty (filtered) — use exactly this copy: 'No patients match your current filters.' with a 'Clear filters' link. No illustrations, no friendly empty-state icons — this is a clinical tool."
+
+<span class="hi">// Persona check — run it against the site coordinator</span>
+"Read the site coordinator persona in the attached personas doc — the one who has been at the same hospital for 8 years, manages 25–40 patients, and is deeply skeptical of new software because every system change creates compliance risk until SOPs are updated. She's been asked to use this dashboard for the first time. Based on what you know about her, tell me: what are the 3 things most likely to make her distrust the data or feel like this tool creates more compliance risk than it eliminates? Then fix those 3 things without breaking the CRA-optimized view."</div>
+        <div class="prompt-text" id="p7t"><span class="hi">// Hierarchy Fix</span>
+"The most important action is <span class="ph">[action]</span>. Redesign visual hierarchy so it draws the eye first."
+
+<span class="hi">// Accessibility</span>
+"Run an accessibility review. Fix contrast, focus states, missing labels, and form field associations."
+
+<span class="hi">// Responsive</span>
+"Update for mobile: <span class="ph">[describe breakpoint behaviour]</span>."
+
+<span class="hi">// Motion</span>
+"Add micro-interactions: <span class="ph">[hover states, transitions, load animations]</span>."
+
+<span class="hi">// Data States</span>
+"Add: loading skeleton, empty state with copy '<span class="ph">[microcopy]</span>', error state. All on-brand."
+
+<span class="hi">// Persona Check</span>
+"Review against the <span class="ph">[persona name]</span> persona in the attached doc. What frustrates them? Fix the top 3 issues."</div>
+      </div>
+    </div>
+    <div class="insight">
+      <div class="insight-eyebrow">The Persona Check</div>
+      <p>The last prompt is the most underused. Asking the tool to critique its own output through the eyes of a specific user — with the persona doc attached — <strong>surfaces issues that no amount of visual polish will fix</strong>. Run it before you call any screen done.</p>
+    </div>
+    <div class="tips" style="margin-top:20px;">
+      <div class="tip"><span class="tip-arrow">→</span><span><strong>One change at a time.</strong> Stacking instructions leads to unpredictable changes across the component.</span></div>
+      <div class="tip"><span class="tip-arrow">→</span><span>If a change goes wrong, <strong>describe what you wanted</strong> rather than what you got.</span></div>
+      <div class="tip"><span class="tip-arrow">→</span><span><strong>Save versions you like</strong> before making significant changes. These tools can make broad edits quickly, and rollback is often coarse.</span></div>
+      <div class="tip"><span class="tip-arrow">→</span><span><strong>Stuck on what to try next?</strong> Explain the problem to Claude: <em>"Here's what the tool generated, here's what I actually need — write me a better follow-up prompt."</em> Let it draft the iteration.</span></div>
+    </div>
+    <div class="step-nav-strip">
+      <a href="#sec-7">← Build the Component</a>
+      <a class="next-link" href="#sec-avoid">What to Avoid →</a>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT TO AVOID -->
+<section class="section" id="sec-avoid">
+  <div class="section-inner">
+    <div class="section-label">Common Mistakes</div>
+    <h2>What to avoid in <em>first prompts.</em></h2>
+    <p class="section-sub">These patterns produce outputs you'll spend more time fighting than refining.</p>
+
+    <div class="pairs">
+
+      <div class="pair">
+        <div class="pair-card bad">
+          <div class="pair-top"></div>
+          <div class="pair-cbody">
+            <div class="pair-label">❌ Too vague</div>
+            <div class="pair-example">"Design a clinical monitoring dashboard"</div>
+            <div class="pair-why">No user, no data, no layout constraints. The tool produces a generic chart grid with placeholder headers. You'll spend the next five prompts trying to recover structure instead of moving forward.</div>
+          </div>
+        </div>
+        <div class="pair-card good">
+          <div class="pair-top"></div>
+          <div class="pair-cbody">
+            <div class="pair-label">✓ Specific — name the user, the data, the column</div>
+            <div class="pair-example">"Design a CRA monitoring screen with an 8-column patient table including Days Since Last Visit (colour-coded red/amber/green), a sticky header showing study ONCO-2024-003 and 8/15 enrollment progress, and a 'Show flagged only' filter toggle."</div>
+            <div class="pair-why">Names the user (CRA), the key differentiating column, a real interaction, a specific study ID, and a concrete UI element. The tool can generate something immediately useful.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pair">
+        <div class="pair-card bad">
+          <div class="pair-top"></div>
+          <div class="pair-cbody">
+            <div class="pair-label">❌ Too much at once</div>
+            <div class="pair-example">"Build a clinical trial management platform with a patient table, site dashboard, sponsor reporting module, protocol deviation tracker, and admin settings."</div>
+            <div class="pair-why">The tool will generate something that looks like an app but works like a wireframe of nothing in particular. Scope one screen. Get it right. Move to the next screen in a separate session.</div>
+          </div>
+        </div>
+        <div class="pair-card good">
+          <div class="pair-top"></div>
+          <div class="pair-cbody">
+            <div class="pair-label">✓ Scoped — one screen, one user, one moment</div>
+            <div class="pair-example">"Design just the patient enrollment table — the main monitoring view a CRA opens on Monday mornings to review all active patients across their 3 assigned sites. That's the whole scope."</div>
+            <div class="pair-why">One screen, one user, one workflow moment. The tool generates the full screen well. The site dashboard comes in its own session once this one is right.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pair">
+        <div class="pair-card bad">
+          <div class="pair-top"></div>
+          <div class="pair-cbody">
+            <div class="pair-label">❌ No style direction</div>
+            <div class="pair-example">"Build a participant eligibility screening form."</div>
+            <div class="pair-why">Without a visual reference, the tool defaults to a generic consumer-app style — rounded, colourful, friendly. Clinical tools need to feel structured and authoritative. The aesthetic mismatch will take 3–4 prompts to correct.</div>
+          </div>
+        </div>
+        <div class="pair-card good">
+          <div class="pair-top"></div>
+          <div class="pair-cbody">
+            <div class="pair-label">✓ Toned — add a reference and a "not this"</div>
+            <div class="pair-example">"Build a participant eligibility screening form. Style: internal clinical research tool — white background, structured section headers, accessible typography. Similar to REDCap but significantly better designed. Not a consumer app, not playful."</div>
+            <div class="pair-why">"Similar to REDCap" gives the model a concrete reference it understands. "Not a consumer app" explicitly rules out the default aesthetic. The first output needs far less correction.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="insight" style="margin-top:32px;">
+      <div class="insight-eyebrow">Before you paste into the design tool</div>
+      <p>Run your prompt by Claude first: <strong>"I'm about to use this design-tool prompt — what's missing or too vague?"</strong> It catches the same gaps the generator will struggle with. This is especially useful for your first prompt on a new screen type, and for writing reusable prompt patterns or skills.</p>
+    </div>
+
+    <div class="pro-tip">
+      <div class="pt-label">Pro Tip</div>
+      <p class="pt-quote">"Treat the first generation as a skeleton, not a final result. Get the structure right first, then iterate on style."</p>
+      <div class="pt-body">
+        <strong>What this means in practice:</strong>
+        If the layout is wrong after two targeted prompts, start over with a tighter brief — don't try to fix structure through style prompts. Once the skeleton is right (correct columns, correct hierarchy, correct sections), follow-ups like <span class="pt-ex">"make the nav sticky"</span> or <span class="pt-ex">"replace the chart with a bar chart"</span> are fast and reliable. A well-structured clinical data table with imperfect styling is three prompts from done. A poorly-structured screen with beautiful styling is a restart.
+      </div>
+    </div>
+
+    <div class="step-nav-strip">
+      <a href="#sec-8">← Iterate &amp; Refine</a>
+      <a class="next-link" href="#sec-2">↩ Start from Step 1</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>Designing with LLMs · Medpace Workshop Guide · 2026</span>
+  <span>Context-first · Tool-agnostic · 5 Steps</span>
+</footer>
+
+<script>
+  function switchTab(btn, showId, hideId) {
+    const wrap = btn.closest('.prompt-wrap');
+    wrap.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(showId).classList.add('active');
+    document.getElementById(hideId).classList.remove('active');
+  }
+
+  function copyActive(btn) {
+    const block = btn.closest('.prompt-block');
+    const active = block.querySelector('.prompt-text.active');
+    navigator.clipboard.writeText(active ? active.innerText : '').then(() => {
+      const orig = btn.innerHTML;
+      btn.classList.add('copied');
+      btn.innerHTML = '<svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Copied';
+      setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = orig; }, 2000);
+    });
+  }
+
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY;
+    const total = document.body.scrollHeight - window.innerHeight;
+    document.getElementById('prog').style.width = (scrolled / total * 100) + '%';
+  });
+</script>
+
+
+</body></html>

@@ -23,21 +23,21 @@
     <img src="Images/medpace_wordmark.svg" alt="Medpace" class="partnership-logo med-logo">
   </div>
   <h1 class="hero-title">AI-Powered <em>SDLC</em><br>Playbook</h1>
-  <p class="hero-sub">A craft-by-craft guide to building clinical trial software with AI — from product intake through QA. Structure your work once and watch it cascade through every tool in the pipeline.</p>
+  <p class="hero-sub">A craft-by-craft guide to building clinical trial software with AI — from product intake through handoff, implementation, and QA. Structure your work once and watch it cascade through every tool in the pipeline.</p>
 </div>
 
 <!-- EXAMPLE FEATURE BANNER -->
 <div class="example-banner">
-  <span class="ex-label">Running example</span>
+  <span class="ex-label">NOTE: Running Mock Example</span>
   <div class="ex-divider"></div>
-  <div class="ex-text">Every guide in this playbook uses the same feature: the <strong>Patient Enrollment Table for trial ONCO-2024-003.</strong> A requirement captured in Phase 01 feeds the design in Phase 02 and the test cases in Phase 04 — no retranslation needed.</div>
+  <div class="ex-text">Every guide in this playbook uses the same feature: the <strong>Patient Enrollment Table for trial ONCO-2024-003.</strong> A requirement captured in Phase 01 feeds the design in Phase 02, the handoff in Phase 03, and the test cases in Phase 05 — no retranslation needed.</div>
 </div>
 
 <!-- CRAFT CARDS -->
 <div class="section">
   <div class="sec-eyebrow">Playbook</div>
   <h2 class="sec-title">Choose Your Craft</h2>
-  <p class="sec-sub">Each craft section is a self-contained module. Start at Product if you're building something new. Jump into Design or Development if you're picking up mid-process.</p>
+  <p class="sec-sub">Each craft section is a self-contained module. Start at Product if you're building something new. Jump into Design, Handoff, or Development if you're picking up mid-process.</p>
 
   <div class="craft-grid">
 
@@ -76,7 +76,7 @@
       <div class="craft-body">
         <div class="craft-phase-num">Phase 02</div>
         <div class="craft-name">Design</div>
-        <div class="craft-desc">Turn structured requirements into screens using Claude Design, Figma Make, and Cursor — each tool suited to a different output and audience.</div>
+        <div class="craft-desc">Turn structured requirements into screens using LLM-powered design tools like Claude Design, Figma Make, and Cursor — each suited to a different output and audience.</div>
         <div class="craft-steps">
           <a href="pages/design/01 PRD UX Analysis Skill.html" class="craft-step">
             <span class="cs-num">01</span>
@@ -86,9 +86,9 @@
             <span class="cs-num">02</span>
             <span class="cs-label">Example PRD Interview</span>
           </a>
-          <a href="pages/design/03 Figma Make — Starter Kit.html" class="craft-step">
+          <a href="pages/design/03 Designing with LLMs.html" class="craft-step">
             <span class="cs-num">03</span>
-            <span class="cs-label">Figma Make — Starter Kit</span>
+            <span class="cs-label">Designing with LLMs</span>
           </a>
         </div>
       </div>
@@ -99,57 +99,82 @@
       </div>
     </div>
 
+    <!-- Handoff -->
+    <div class="craft-card" style="--ccolor:#3c7a6b">
+      <div class="craft-accent"></div>
+      <div class="craft-body">
+        <div class="craft-phase-num">Phase 03</div>
+        <div class="craft-name">Handoff</div>
+        <div class="craft-desc">Capture the modern handoff layer between prototype and implementation: working code artifacts, evolved specs, component mapping, and the decisions that should survive into the real codebase.</div>
+        <div class="craft-steps">
+          <a href="pages/handoff/01 Handoff.html" class="craft-step">
+            <span class="cs-num">01</span>
+            <span class="cs-label">Handoff</span>
+          </a>
+        </div>
+      </div>
+      <div class="craft-body-footer">
+        <div class="craft-cta">
+          <a href="pages/handoff/01 Handoff.html">Start Handoff <span>→</span></a>
+        </div>
+      </div>
+    </div>
+
     <!-- Development -->
     <div class="craft-card" style="--ccolor:#2b6880">
       <div class="craft-accent"></div>
       <div class="craft-body">
-        <div class="craft-phase-num">Phase 03</div>
+        <div class="craft-phase-num">Phase 04</div>
         <div class="craft-name">Development</div>
-        <div class="craft-desc">Build the automation layer that turns AI-ready requirements into earlier validation artifacts, Playwright evidence, and audit-ready release packages.</div>
+        <div class="craft-desc">Learn the AI coding stack end to end: model choice, CRISP prompts, agent workflows, instruction files, MCP, and the release controls that turn agentic delivery into an audit-ready deployment process.</div>
         <div class="craft-steps">
-          <a href="pages/development/01 Shift-Left Validation.html" class="craft-step">
+          <a href="pages/development/01 Models, Prompts &amp; Context.html" class="craft-step">
             <span class="cs-num">01</span>
-            <span class="cs-label">Shift-Left Validation</span>
+            <span class="cs-label">Models, Prompts &amp; Context</span>
           </a>
-          <a href="pages/development/02 Playwright + Helix Parallel Execution.html" class="craft-step">
+          <a href="pages/development/02 Agents, Skills &amp; Planning.html" class="craft-step">
             <span class="cs-num">02</span>
-            <span class="cs-label">Playwright + Helix Parallel Execution</span>
+            <span class="cs-label">Agents, Skills &amp; Planning</span>
           </a>
-          <a href="pages/development/03 Audit-Ready Release Automation.html" class="craft-step">
+          <a href="pages/development/03 MCP, Context Hygiene &amp; Scaling.html" class="craft-step">
             <span class="cs-num">03</span>
+            <span class="cs-label">MCP, Context Hygiene &amp; Scaling</span>
+          </a>
+          <a href="pages/development/04 Audit-Ready Release Automation.html" class="craft-step">
+            <span class="cs-num">04</span>
             <span class="cs-label">Audit-Ready Release Automation</span>
           </a>
         </div>
       </div>
       <div class="craft-body-footer">
         <div class="craft-cta">
-          <a href="pages/development/01 Shift-Left Validation.html">Start Development <span>→</span></a>
+          <a href="pages/development/01 Models, Prompts &amp; Context.html">Start Development <span>→</span></a>
         </div>
       </div>
     </div>
 
-    <!-- QA & Testing (coming soon) -->
-    <div class="craft-card craft-card--soon" style="--ccolor:#9a5a00">
+    <!-- QA & Testing -->
+    <div class="craft-card" style="--ccolor:#9a5a00">
       <div class="craft-accent"></div>
       <div class="craft-body">
-        <div class="craft-phase-num">Phase 04</div>
+        <div class="craft-phase-num">Phase 05</div>
         <div class="craft-name">QA &amp; Testing</div>
-        <div class="craft-desc">Generate test suites, boundary cases, and validation scripts directly from acceptance criteria and compliance notes.</div>
+        <div class="craft-desc">Use prompts, automated test generation, PR gates, GitHub Actions, Playwright evidence, and requirement-tagged artifacts to make testing faster and more audit-ready.</div>
         <div class="craft-steps">
-          <div class="craft-step" style="opacity:.4;pointer-events:none">
-            <span class="cs-num">01</span><span class="cs-label">Test Case Generation</span>
-          </div>
-          <div class="craft-step" style="opacity:.4;pointer-events:none">
-            <span class="cs-num">02</span><span class="cs-label">21 CFR Part 11 Validation</span>
-          </div>
-          <div class="craft-step" style="opacity:.4;pointer-events:none">
-            <span class="cs-num">03</span><span class="cs-label">Helix ALM Traceability</span>
-          </div>
+          <a href="pages/qa/01 AI-Assisted Test Generation.html" class="craft-step">
+            <span class="cs-num">01</span><span class="cs-label">AI-Assisted Test Generation</span>
+          </a>
+          <a href="pages/qa/02 PR Gates, Reports &amp; Traceability.html" class="craft-step">
+            <span class="cs-num">02</span><span class="cs-label">PR Gates, Reports &amp; Traceability</span>
+          </a>
+          <a href="pages/qa/03 Playwright, Evidence &amp; GxP.html" class="craft-step">
+            <span class="cs-num">03</span><span class="cs-label">Playwright, Evidence &amp; GxP</span>
+          </a>
         </div>
       </div>
       <div class="craft-body-footer">
         <div class="craft-cta">
-          <span class="craft-soon-badge">In development</span>
+          <a href="pages/qa/01 AI-Assisted Test Generation.html">Start QA &amp; Testing <span>→</span></a>
         </div>
       </div>
     </div>
